@@ -1,10 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import './semantic/dist/semantic.css'
+import { Grid } from 'semantic-ui-react';
+
+
+import Nav from './components/Nav'
+import LeftPanel from './components/LeftPanel'
+import Footer from './components/Footer'
+import ProductContainer from './components/ProductContainer'
+
 
 
 function App() {
-  return <h1>Project Client</h1>;
+  return (
+  <div className="App">
+      <Nav />
+      <Grid centered stackable padded relaxed>
+        <Grid.Column className='left-column' width={5}>
+          <LeftPanel />
+        </Grid.Column>
+        <Grid.Column width={9}>
+          <ProductContainer />
+        </Grid.Column>
+      </Grid>
+      <Footer />
+  </div>
+  );
 }
 
 export default App;
