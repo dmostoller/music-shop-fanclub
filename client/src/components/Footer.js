@@ -1,10 +1,10 @@
 import React from 'react';
-import { Segment, Menu } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 
 const Footer = () => {
     return (
-        <Segment size='huge' inverted textAlign='center'>
-            Copyright © Your Website 2020
+        <Segment size='mini' inverted textAlign='center'>
+            Copyright © David Mostoller 2024
         </Segment>
     );
 };

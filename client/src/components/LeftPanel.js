@@ -1,11 +1,10 @@
 import React from 'react';
-import { Menu, Image } from 'semantic-ui-react';
-import leftImage from '../img/seities_apparel_logo_small.png'
+import { Menu } from 'semantic-ui-react';
 
 const LeftPanel = () => {
     return (
         <>
-            <Menu vertical size='massive'>
+            <Menu className='ui inverted segment' vertical size='massive'>
             {/* <Image src={leftImage} /> */}
                 <Menu.Item>
                     <Menu.Header>Clothings</Menu.Header>
