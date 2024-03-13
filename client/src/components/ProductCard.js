@@ -4,14 +4,14 @@ import { Card, Grid } from 'semantic-ui-react';
 const ProductCard = ({product}) => {
     console.log(product, 'props from Container')
     return (
-        // <Grid.Column width={5}>
-            <Card 
+        <Grid.Column width={5}>
+            <Card className='ui inverted segment'
                 image={product.image.url}
                 header={product.name}
                 meta={product.price.formatted_with_symbol}
                 description={product.description.replace(/(<([^>]+)>)/ig,"")}
             />
-        // </Grid.Column>
+        </Grid.Column>
     );
 };
 

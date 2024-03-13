@@ -1,46 +1,48 @@
 import React from 'react';
-import { Menu, Image, Icon, Segment, Input } from 'semantic-ui-react'
-import logo from '../img/logo.png'
+import { Menu } from 'semantic-ui-react'
+import { NavLink } from "react-router-dom";
 
-const Nav = () => {
+function Nav() {
     return (
-        <Menu style={{display: 'flex'}} className='ui top fixed centered fluid inverted menu'>
+        <Menu className='ui top fixed inverted menu' style={{marginBottom: "25px"}}>
             <div  className="item">
-                <div style={{marginRight: '5px'}} className="ui inverted violet basic icon button small ">  <i className="home icon"></i></div>
-                <div style={{marginRight: '5px'}}className="ui inverted  violet basic icon button small ">  <i className="user icon"></i></div>
-                <div style={{marginRight: '5px'}}className="ui inverted  violet basic icon button small ">Login</div>
-                <div className="ui inverted  violet basic icon button small ">Signup</div>
+                <NavLink to='/'><i className="galactic republic icon"></i>SuperLuminal</NavLink>
+            </div>   
+            <div className="item">
+                <NavLink to='/'>Music</NavLink>
             </div>
             <div className="item">
-                <a>MyCollection</a>
-            </div>     
-            <div className="item">
-                <a>Music</a>
+                <NavLink to='/'>Video</NavLink>
             </div>
             <div className="item">
-                <a>Video</a>
+                <NavLink to='/'>Events</NavLink>
             </div>
             <div className="item">
-                <a>Events</a>
+                <NavLink to='/'>Bio</NavLink>
             </div>
             <div className="item">
-                <a>Bio</a>
+                <NavLink to='/shop'>Shop</NavLink>
             </div>
             <div className="item">
-                <a>Shop</a>
-            </div>
-            <div className="item">
-                <a>Forum</a>
+                <NavLink to='/'>Forum</NavLink>
             </div>  
-            <div style={{justifyContent: 'flex-end'}} className="ui category search item">
-                <div className="ui transparent inverted icon input">
-                    <input className="prompt" type="text" placeholder="Search..."></input>
-                    <i className="search link icon"></i>
+            {/* <div className="item">
+                <NavLink to="/">MyCollection</NavLink>
+            </div>   */}
+            <div className='right menu'>
+                <div style={{justifyContent: 'flex-end'}} className="ui category search item">
+                    <div className="ui transparent inverted icon input">
+                        <input className="prompt" type="text" placeholder="Search..."></input>
+                        <i className="search link icon"></i>
+                    </div>
+                    <div className="results"></div>
                 </div>
-                <div className="results"></div>
             </div>
-
-
+            <div className="item">
+                <div style={{marginRight: '3px'}} className="ui circular inverted grey icon button small"> <i className="sign in alternate icon"></i></div>
+                <div style={{marginRight: '3px'}} className="ui circular inverted grey icon button small"> <i className="sign out alternate icon"></i></div>
+                <div style={{marginRight: '3px'}} className="ui circular inverted grey icon button small">  <i className="user icon"></i></div>
+            </div>
             {/* <Segment className='nav-segment'>
                 <Menu.Item>
                     <Image src={logo} size='tiny' />

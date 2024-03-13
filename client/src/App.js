@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import './semantic/dist/semantic.css'
-import { Grid } from 'semantic-ui-react';
-
 
 import Nav from './components/Nav'
-import LeftPanel from './components/LeftPanel'
 import Footer from './components/Footer'
-import ProductContainer from './components/ProductContainer'
-
+import Shop from "./components/Shop";
+import HomePage from "./components/HomePage";
 
 
 function App() {
   return (
-  <div className="App">
-      <Nav />
-      <Grid centered stackable padded relaxed>
-        <Grid.Column className='left-column' width={5}>
-          <LeftPanel />
-        </Grid.Column>
-        <Grid.Column width={9}>
-          <ProductContainer />
-        </Grid.Column>
-      </Grid>
-      <Footer />
+//   <div className="ui inverted segment">
+
+  <div style={{backgroundColor: "#303030"}} className="App">
+    <Nav />
+    <Routes>
+        <Route path="/" element={<HomePage/>}/>
+        <Route path="/shop" element={<Shop/>}/>
+    </Routes>
+    <Footer />
   </div>
   );
 }
