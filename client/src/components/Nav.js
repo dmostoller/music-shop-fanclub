@@ -6,11 +6,8 @@ function Nav() {
     return (
         <Menu className='ui top fixed inverted menu' style={{marginBottom: "25px"}}>
             <div  className="item">
-                <NavLink to='/'><i className="home icon"></i></NavLink>
-            </div>
-            <div className="item">
-                <NavLink to="/">MyCollection</NavLink>
-            </div>     
+                <NavLink to='/'><i className="galactic republic icon"></i>SuperLuminal</NavLink>
+            </div>   
             <div className="item">
                 <NavLink to='/'>Music</NavLink>
             </div>
@@ -29,6 +26,9 @@ function Nav() {
             <div className="item">
                 <NavLink to='/'>Forum</NavLink>
             </div>  
+            {/* <div className="item">
+                <NavLink to="/">MyCollection</NavLink>
+            </div>   */}
             <div className='right menu'>
                 <div style={{justifyContent: 'flex-end'}} className="ui category search item">
                     <div className="ui transparent inverted icon input">
@@ -39,9 +39,9 @@ function Nav() {
                 </div>
             </div>
             <div className="item">
-                <div style={{marginRight: '3px'}} className="ui circular inverted secondary icon button small"> <i className="sign in alternate icon"></i></div>
-                <div style={{marginRight: '3px'}} className="ui circular inverted secondary icon button small"> <i className="sign out alternate icon"></i></div>
-                <div style={{marginRight: '3px'}} className="ui circular inverted secondary icon button small">  <i className="user icon"></i></div>
+                <div style={{marginRight: '3px'}} className="ui circular inverted grey icon button small"> <i className="sign in alternate icon"></i></div>
+                <div style={{marginRight: '3px'}} className="ui circular inverted grey icon button small"> <i className="sign out alternate icon"></i></div>
+                <div style={{marginRight: '3px'}} className="ui circular inverted grey icon button small">  <i className="user icon"></i></div>
             </div>
             {/* <Segment className='nav-segment'>
                 <Menu.Item>
