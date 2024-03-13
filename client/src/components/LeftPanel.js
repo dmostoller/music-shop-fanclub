@@ -6,7 +6,7 @@ const LeftPanel = () => {
     return (
         <>
             <Menu vertical size='massive'>
-            <Image src={leftImage} />
+            {/* <Image src={leftImage} /> */}
                 <Menu.Item>
                     <Menu.Header>Clothings</Menu.Header>
 
