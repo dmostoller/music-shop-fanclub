@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {Link} from "react-router-dom";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin";
 
 function PostDetail({}){
     const [post, setPost] = useState({})
     const {id} = useParams();
     const navigate = useNavigate();
+    const { user } = useUser()
+    const {isAdmin} = useAdmin()
 
     useEffect(() => {
         fetch(`/posts/${id}`)
@@ -43,8 +47,8 @@ function PostDetail({}){
                     </div>
                     <div style={{padding: "10px"}}> 
                         <Link to="/" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>
-                        {/* { user && isAdmin ? ( */}
-                                        {/* <> */}
+                        { user && isAdmin ? ( 
+                                        <>
                                             <Link to={`/posts/${id}/edit`} className="circular ui icon inverted grey button">
                                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                                             </Link>
@@ -52,10 +56,10 @@ function PostDetail({}){
                                                 <i class="trash icon" style={{visibility: "visible"}}></i>
                                             </button>
 
-                                        {/* </>
+                                       </>
                                         )
                                         : <></>    
-                                    } */}
+                                    } 
                     </div>
                 </div>
             </div>

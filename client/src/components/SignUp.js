@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../context/user";
 
 
@@ -33,7 +35,7 @@ const formik = useFormik({
   },
 validationSchema: formSchema,
 onSubmit: (values) => {
-  fetch("/user", {
+  fetch("/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,6 +45,7 @@ onSubmit: (values) => {
     if (r.ok) {
       r.json().then(user => {
         setUser(user)
+        toast.dark(`${user.username} has joined the Superluminal community!`);
         navigate('/')
     })
     } else {
@@ -53,10 +56,16 @@ onSubmit: (values) => {
 })
 
   return (
-    <div className="ui text container" style={{marginTop: "40px"}}>
-        <form style={{padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+    <div className="ui middle aligned center aligned grid" style={{marginTop: "40px"}}>
+            <div className="column" style={{width:"450px"}}>
+            <h2 className="ui inverted image header">
+          <div className="content">Create a new account</div>
+        </h2>
+        <form className="ui inverted form" onSubmit={formik.handleSubmit}>
             <div className="field">
-                <label>Create New Account</label>
+                {/* <label>Create New Account</label> */}
+                <div className="ui left icon input">
+                <i className="user icon"></i>
                 <input type="text" 
                   id="username" 
                   name="username" 
@@ -64,10 +73,13 @@ onSubmit: (values) => {
                   placeholder="Username..." 
                   onChange={formik.handleChange}
                   >    
-                </input>                    
+                </input>   
+                </div>                 
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
             </div>
             <div className="field">
+            <div className="ui left icon input">
+                <i className="lock icon"></i>
                 <input type="password" 
                   id="password" 
                   name="password" 
@@ -76,9 +88,12 @@ onSubmit: (values) => {
                   onChange={formik.handleChange}
                   >
                 </input>
+              </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}
              </div>   
               <div className="field">
+              <div className="ui left icon input">
+                <i className="lock icon"></i>
                 <input type="password" 
                   id="password" 
                   name="password_confirmation" 
@@ -87,9 +102,12 @@ onSubmit: (values) => {
                   onChange={formik.handleChange}
                   >
                 </input>
+              </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
             </div>
             <div className="field">
+            <div className="ui left icon input">
+                <i className="mail icon"></i>
                 <input type="text" 
                   id="email" 
                   name="email" 
@@ -97,14 +115,14 @@ onSubmit: (values) => {
                   placeholder="Email Address..." 
                   onChange={formik.handleChange}
                   >
-                </input>                
+                </input>  
+                </div>              
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
             </div>    
-            <div className="field">
-                <Link to="/" className="ui button inverted grey small">Back</Link>
-                <button style={{float: "right"}} className="ui button inverted grey small" type="submit">
-                    Submit
-                </button>
+                <button className="ui fluid button inverted grey large" type="submit">Submit</button>
+                <div className="ui inverted message tiny">
+             Already have an account? 
+              <Link to="/login">    Login</Link>
             </div>
             {/* <div>
             {errors.map((err) => (
@@ -112,6 +130,7 @@ onSubmit: (values) => {
             ))}
             </div> */}
         </form> 
+        </div>
     </div>
 )
 }

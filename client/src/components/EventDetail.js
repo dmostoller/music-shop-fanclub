@@ -1,11 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {Link} from "react-router-dom";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin";
 
-function EventDetail({user, isAdmin}){
+function EventDetail(){
     const [event, setEvent] = useState({})
     const {id} = useParams();
     const navigate = useNavigate();
+    const { user } = useUser()
+    const {isAdmin} = useAdmin()
+    
 
     useEffect(() => {
         fetch(`/events/${id}`)
@@ -48,21 +53,22 @@ function EventDetail({user, isAdmin}){
                 </div>
                 <div style={{padding: "10px"}}> 
                     <Link to="/events" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>
-                    {/* { user && isAdmin ? (
-                        <> */}
+                    { user && isAdmin ? (
+                        <>
                             <Link to={`/events/${id}/edit`} className="circular ui icon inverted grey button">
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                             </Link>
                             <button className="circular ui icon inverted grey button" onClick={handleDeleteEvent}>
                                 <i className="trash icon" style={{visibility: "visible"}}></i>
                             </button>
-                            <a href={event.event_link} style={{float: "right"}} className="ui button inverted button grey small" target="_blank" rel="noopener noreferrer">Buy Tickets</a>
 
 
-                        {/* </>
+                         </>
                         )
                         : <></>    
-                    } */}
+                    } 
+                        <a href={event.event_link} style={{float: "right"}} className="ui button inverted button grey small" target="_blank" rel="noopener noreferrer">Buy Tickets</a>
+
                 </div>
             </div>
     </div>

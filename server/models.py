@@ -69,4 +69,41 @@ class Event(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<Event {self.id}>'
     
+
+class Release(db.Model, SerializerMixin):
+    __tablename__ = 'releases'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    artist = db.Column(db.String)
+    description = db.Column(db.String)
+    record_label = db.Column(db.String)
+    date_released = db.Column(db.String)
+    image = db.Column(db.String)
+
+    tracks = db.relationship('Track', back_populates='release', cascade='all, delete')
+
+    serialize_rules = ('-tracks.release', )
+    
+    def __repr__(self):
+        return f'<Release {self.id}>'
+    
+class Track(db.Model, SerializerMixin):
+    __tablename__ = 'tracks'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    bpm = db.Column(db.Integer)
+    audio = db.Column(db.String)
+    artist_names = db.Column(db.String)
+
+    release_id = db.Column(db.Integer, db.ForeignKey('releases.id'))
+    release = db.relationship('Release', back_populates='tracks')
+
+    # serialize_rules = ('-releases.tracks', )
+
+
+
+    def __repr__(self):
+        return f'<Track {self.id}>'
     

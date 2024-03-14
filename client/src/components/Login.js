@@ -30,6 +30,7 @@ function LoginForm({ onLogin }) {
         r.json().then(user => {
           onLogin(user)
           navigate('/')
+          
       })
       } else {
           r.json().then(errors => setErrors(errors.message))
@@ -39,10 +40,16 @@ function LoginForm({ onLogin }) {
   })
 
   return (
-    <div className="ui text container" style={{marginTop: "40px"}}>
-        <form style={{ padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+    <div className="ui middle aligned center aligned grid" style={{marginTop: "40px"}}>
+      <div className="column" style={{width:"450px"}}>
+        <h2 className="ui inverted image header">
+          <div className="content">Log-in to your account</div>
+        </h2>
+        <form className="ui inverted form initial" onSubmit={formik.handleSubmit}>
             <div className="field">
-                <label>Login</label>
+                {/* <label>Log-in to your account</label> */}
+                <div className="ui left icon input">
+                  <i className="user icon"></i>
                 <input type="text" 
                   id="username" 
                   name="username" 
@@ -51,9 +58,12 @@ function LoginForm({ onLogin }) {
                   onChange={formik.handleChange}
                   >    
                 </input>
+                </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}    
             </div>
             <div className="field">
+            <div className="ui left icon input">
+                  <i className="lock icon"></i>
                 <input type="password" 
                   id="password" 
                   name="password" 
@@ -62,18 +72,22 @@ function LoginForm({ onLogin }) {
                   onChange={formik.handleChange}
                   >
                 </input>
+                </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}               
             </div>    
-            <div className="field">
-                <Link to="/" className="ui button inverted grey small">Back</Link>
-                <button style={{float: "right"}} className="ui button inverted grey small" type="submit">Login</button>
-            </div>
+                {/* <Link to="/" className="ui button inverted grey small">Back</Link> */}
+                <button className="ui fluid button inverted grey large" type="submit">Login</button>
             <div>
             {errors.map((err) => (
                 <Error key={err}>{err}</Error>
             ))}
             </div>
+            <div className="ui inverted message tiny">
+             New to us? 
+              <Link to="/signup">    Sign Up</Link>
+            </div>
         </form> 
+        </div>  
     </div>
 )
 }

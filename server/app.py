@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Post, Event 
+from models import User, Post, Event, Release, Track
 
 # Views go here!
 
@@ -189,6 +189,51 @@ class EventsById(Resource):
 
 api.add_resource(Events, '/events')
 api.add_resource(EventsById, '/events/<int:id>')
+
+
+class Releases(Resource):
+    def get(self):
+        releases = [release.to_dict() for release in Release.query.all()]
+        reponse = make_response(releases, 200)
+        return reponse
+
+class ReleasesById(Resource):
+    def get(self, id):
+        release = Release.query.filter_by(id=id).first()
+        if release:
+            response = make_response(release.to_dict(), 200)
+        else:
+            response = make_response({"error": "Release not found"}, 404)
+        return response
+    
+api.add_resource(Releases, '/releases')
+api.add_resource(ReleasesById, '/releases/<int:id>')
+
+class Tracks(Resource):
+    def get(self):
+        tracks = [track.to_dict() for track in Track.query.all()]
+        reponse = make_response(tracks, 200)
+        return reponse
+
+class TracksById(Resource):
+    def get(self, id):
+        track = Track.query.filter_by(id=id).first()
+        if track:
+            response = make_response(track.to_dict(), 200)
+        else:
+            response = make_response({"error": "Track not found"}, 404)
+        return response
+
+api.add_resource(Tracks, '/tracks')
+api.add_resource(TracksById, '/tracks/<int:id>')
+
+class TracksByReleaseId(Resource):
+    def get(self, id):
+        tracks = [track.to_dict() for track in Track.query.all() if track.release_id == id]
+        response = make_response(tracks, 200)
+        return response 
+    
+api.add_resource(TracksByReleaseId, '/tracks_by_release_id/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -15,7 +15,7 @@ function Nav({onLogout}) {
     return (
         <Menu className='ui top fixed inverted menu' style={{marginBottom: "25px"}}>
             <div className="item">
-                <Link to='/' data-tooltip="Home" data-position="bottom center" ><i className="galactic republic icon"></i>SuperLuminal</Link>
+                <Link to='/'><i className="galactic republic icon"></i>SuperLuminal</Link>
             </div>   
             <NavLink className="item" to='/releases'>Music</NavLink>
             <NavLink className="item"  to='/video'>Video</NavLink>
@@ -45,7 +45,7 @@ function Nav({onLogout}) {
                     <Link to='/login' style={{marginRight: '3px'}} data-tooltip="Login" data-position="bottom center" className="ui circular inverted grey icon button small">
                         <i className="sign in alternate icon"></i>
                     </Link>
-                    <Link to='/signup' style={{marginRight: '3px'}} data-tooltip="Create New Account" data-position="bottom right" className="ui circular inverted grey icon button small">
+                    <Link to='/signup' style={{marginRight: '3px'}} data-tooltip="Sign Up" data-position="bottom right" className="ui circular inverted grey icon button small">
                         <i className="plus icon"></i>
                     </Link>
                     </>

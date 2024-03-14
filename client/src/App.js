@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import './semantic/dist/semantic.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Nav from './components/Nav'
 import Footer from './components/Footer'
@@ -20,12 +22,17 @@ import EditEvent from "./components/EditEvent.js";
 import AboutPage from "./components/AboutPage.js";
 import ContactPage from "./components/ContactPage.js"
 import SignUp from "./components/SignUp.js";
+import ReleasesPage from "./components/ReleasesPage.js";
 
 
 function App() {
-  const { user, setUser } = useUser()
-  const { isAdmin, setIsAdmin } = useAdmin()
+  const { setUser } = useUser()
+  const { setIsAdmin } = useAdmin()
   const navigate = useNavigate();
+
+  function checkAdminStatus(user) {
+    user.is_admin ? setIsAdmin(true) : setIsAdmin(false)
+  }
 
   useEffect(() => {
     fetch("/check_session").then((r) => {
@@ -36,29 +43,26 @@ function App() {
         }
     )}
     });
-  }, []);
-
-
-
-  function checkAdminStatus(user) {
-    user.is_admin ? setIsAdmin(true) : setIsAdmin(false)
-  }
+  }, [setUser]);
 
   function handleLogin(user) {
     setUser(user);
     user.is_admin ? setIsAdmin(true) : setIsAdmin(false)
+    toast.dark(`Welcome back, ${user.username}!`);
   }
 
   function handleLogout() {
     setUser(null);
     setIsAdmin(false)
     navigate('/')
+    toast.dark(`Goodbye, thanks for visiting!`);
   }
   return (
 //   <div className="ui inverted segment">
 
   <div style={{backgroundColor: "#303030"}} className="App">
     <Nav onLogout={handleLogout}/>
+    <ToastContainer/>
       <Routes>
           <Route path="/" element={<HomePage/>}/>        
           <Route path="/video" element={<Videos/>}/>
@@ -74,6 +78,7 @@ function App() {
           <Route path="/events/new" element={<AddEvent/>} />
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/contact" element={<ContactPage/>}/>
+          <Route path="/releases" element={<ReleasesPage/>}/>
       </Routes>
     <Footer />
   </div>

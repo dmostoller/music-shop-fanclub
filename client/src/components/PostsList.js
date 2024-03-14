@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from "react";
 import Post from "./Post";
 import { Link } from "react-router-dom"
+import { useAdmin } from "../context/admin";
+import { useUser } from "../context/user";
 
 function PostsList ({}) {
     const [posts, setPosts] = useState([])
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
 
     useEffect(() => {
       fetch(`/posts`)
@@ -31,12 +35,14 @@ function PostsList ({}) {
 
             {/* : <div></div>
         } */}
-            <div className="ui grid container centered">{blog}
-
-            </div>
+            <div className="ui grid container centered">{blog}</div>
+            {(user && isAdmin) ? 
             <div className="ui grid container centered">
                 <Link to={`/posts/new`} style={{margin: "10px"}} className="ui icon secondary button"><i className="plus icon"></i>  New Post</Link>
             </div>
+            : <div></div>
+            }
+
         </>
     )
 }

@@ -14,7 +14,7 @@ const ProductContainer = () => {
             setProducts(res.data)
           })
           .catch(err => console.log(err))
-    },[])
+    },[commerce.products])
 
     return (
         <>
