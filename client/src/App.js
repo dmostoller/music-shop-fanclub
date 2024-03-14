@@ -57,9 +57,9 @@ function App() {
     navigate('/')
     toast.dark(`Goodbye, thanks for visiting!`);
   }
-  return (
-//   <div className="ui inverted segment">
 
+
+  return (
   <div style={{backgroundColor: "#303030"}} className="App">
     <Nav onLogout={handleLogout}/>
     <ToastContainer/>

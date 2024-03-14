@@ -15,7 +15,7 @@ function TrackList({ tracks }) {
     })
 
     return (
-            <div className="ui one column inverted stackable grid" style={{margin: "25px"}}>
+            <div className="ui one column inverted stackable grid" style={{margin: "5px"}}>
                 <div className="ui inverted items">
                     {tracks_on_release}
                 </div>
