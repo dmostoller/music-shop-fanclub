@@ -5,16 +5,20 @@
   "proxy": "http://localhost:5555",
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
+    "@emailjs/browser": "^4.3.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "fomantic-ui": "^2.9.3",
+    "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "semantic-ui-react": "^2.1.5",
-    "web-vitals": "^2.1.4"
+    "styled-components": "^6.1.8",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"

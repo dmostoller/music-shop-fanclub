@@ -16,8 +16,6 @@ const ProductContainer = () => {
           .catch(err => console.log(err))
     },[])
 
-
-
     return (
         <>
             <Divider horizontal>Shop All Products</Divider>

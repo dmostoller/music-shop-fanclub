@@ -3,8 +3,6 @@ import { Grid } from 'semantic-ui-react';
 import LeftPanel from './LeftPanel'
 import ProductContainer from './ProductContainer'
 
-
-
 export default function Shop() {
     return (
         <>
