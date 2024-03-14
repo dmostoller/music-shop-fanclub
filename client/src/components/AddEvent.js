@@ -82,7 +82,7 @@ function AddEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.details}</p>}
                 </div>
                 <div className="field">
-                <Link to="/" className="ui button inverted small" >Back</Link>
+                <Link to="/events" className="ui button inverted small" >Back</Link>
                 <button style={{float: "right"}} className="ui button inverted small" type="submit">Submit</button>
                 </div>
             </form> 

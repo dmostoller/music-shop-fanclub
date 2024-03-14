@@ -39,8 +39,8 @@ function LoginForm({ onLogin }) {
   })
 
   return (
-    <div className="ui container">
-        <form style={{width:"50%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+    <div className="ui text container" style={{marginTop: "40px"}}>
+        <form style={{ padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
             <div className="field">
                 <label>Login</label>
                 <input type="text" 
@@ -65,8 +65,8 @@ function LoginForm({ onLogin }) {
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}               
             </div>    
             <div className="field">
-                <Link to="/" className="ui button small teal">Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">Login</button>
+                <Link to="/" className="ui button inverted grey small">Back</Link>
+                <button style={{float: "right"}} className="ui button inverted grey small" type="submit">Login</button>
             </div>
             <div>
             {errors.map((err) => (

@@ -6,11 +6,11 @@ export default function ContactPage () {
 
 return (
     <div>
-    <div className="ui container" style={{width: "70%", margin: "auto", textAlign: "center"}}>
-        <h1 className="header">Get In Touch</h1>
-        <h3>Purchase a painting or commission a custom work.</h3>    
+    <div className="ui container" style={{width: "60%", margin: "auto", marginTop:"40px", textAlign: "center"}}>
+        <h1 className="header"><br></br>Get In Touch</h1>
+        <h3>Please use this form to send us an email.</h3>    
             <p>
-                If you are interested in purchasing any of the paintings shown here, or if you would like to commission a custom work, I would be happy to discuss this with you. Please fill out the form below with as much information as possible, and I will get back to you as soon as I can. Thank you very much.
+                If you are interested in booking us for your event or for any other inquiries please fill out and submit the form below with as much detail as possible and we will get back to you as soon as we can. Thanks!
             </p>
     </div>
     <div className="ui container" style={{width: "60%", margin: "auto"}} >        

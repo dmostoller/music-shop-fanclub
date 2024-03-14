@@ -61,7 +61,7 @@ function AddPost() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
-                <Link to="/events" className="ui button inverted small" >Back</Link>
+                <Link to="/" className="ui button inverted small" >Back</Link>
                 <button style={{float: "right"}} className="ui button inverted small" type="submit">Submit</button>
                 </div>
             </form> 

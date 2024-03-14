@@ -5,7 +5,7 @@ export default function AboutPage () {
 
 return (
     <div className="ui container">
-    <div style={{width: "90%", margin: "auto"}} className="ui inverted card">
+    <div style={{width: "90%", margin: "auto", marginTop: "40px"}} className="ui inverted card">
         <div className="image">
             <img className="ui huge image" src="https://scontent-lga3-2.xx.fbcdn.net/v/t39.30808-6/375051169_626115519634883_3407204276586185218_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=bcZ3sMiPK5EAX81cwt8&_nc_ht=scontent-lga3-2.xx&oh=00_AfDk6vEnDnHIw4SrNYMYBxajeLFP3mTGBCQjD21pq8JY4A&oe=65F6A12A" alt="Superluminal - Sangoma Records"/>
         </div>
@@ -22,21 +22,24 @@ return (
             </div>
             <div className="ui fluid container">
                 <div className="ui centered grid">
-                    <button className="ui circular facebook icon button" style={{marginTop: "25px", marginRight: "5px"}}>
+                    <Link to="https://www.facebook.com/superluminalpsy" target="blank"  className="ui circular facebook icon button" style={{marginTop: "25px", marginRight: "5px"}}>
                         <i className="facebook icon"></i>
-                    </button>
-                    <button className="ui circular youtube icon button" style={{marginTop: "25px", marginRight: "5px"}}>
+                    </Link>
+                    <Link to="https://www.youtube.com/channel/UCGePscP8I_b2ta5Vuj1j-bQ" target="blank"  className="ui circular youtube icon button" style={{marginTop: "25px", marginRight: "5px"}}>
                         <i className="youtube icon"></i>
-                    </button>
-                    <button className="ui circular icon purple button" style={{marginTop: "25px", marginRight: "5px"}}>
+                    </Link>
+                    <Link to="https://www.instagram.com/superluminal_psy" target="blank"  className="ui circular icon purple button" style={{marginTop: "25px", marginRight: "5px"}}>
                         <i className="instagram icon"></i>
-                    </button>
-                    <button className="ui circular icon grey button" style={{marginTop: "25px", marginRight: "5px"}}>
+                    </Link>
+                    <Link to="https://www.patreon.com/superluminal_kabayun_yasmin" target="blank"  className="ui circular icon grey button" style={{marginTop: "25px", marginRight: "5px"}}>
                         <i className="patreon icon"></i>
-                    </button>
-                    <button className="ui circular icon button orange" style={{marginTop: "25px", marginRight: "5px"}}>
+                    </Link>
+                    <Link to="https://soundcloud.com/superluminal-sangoma" target="blank"  className="ui circular icon button orange" style={{marginTop: "25px", marginRight: "5px"}}>
                         <i className="soundcloud icon"></i>
-                    </button>
+                    </Link>
+                    <Link to="https://open.spotify.com/artist/7IHjVGAMreozL1Jk2BBj6h" target="blank" className="ui circular icon button green" style={{marginTop: "25px", marginRight: "5px"}}>
+                        <i className="spotify icon"></i>
+                    </Link>
 
                 </div>
                 <div className="ui centered grid" style={{padding: "10px"}}> 

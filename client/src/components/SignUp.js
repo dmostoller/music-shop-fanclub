@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useUser } from "../context/user";
 
 
-function SignUp({ setUser }) {
+function SignUp() {
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
@@ -51,10 +53,10 @@ onSubmit: (values) => {
 })
 
   return (
-    <div className="ui container">
-        <form style={{width:"50%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+    <div className="ui text container" style={{marginTop: "40px"}}>
+        <form style={{padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
             <div className="field">
-                <label>Login</label>
+                <label>Create New Account</label>
                 <input type="text" 
                   id="username" 
                   name="username" 
@@ -99,8 +101,8 @@ onSubmit: (values) => {
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
             </div>    
             <div className="field">
-                <Link to="/" className="ui button small teal">Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">
+                <Link to="/" className="ui button inverted grey small">Back</Link>
+                <button style={{float: "right"}} className="ui button inverted grey small" type="submit">
                     Submit
                 </button>
             </div>
