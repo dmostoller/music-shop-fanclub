@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UploadPhoto from "./UploadPhoto.js"
 
 function AddEvent() {
     const navigate = useNavigate();
@@ -68,7 +69,11 @@ function AddEvent() {
                 <div className="field">
                     <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
-                </div>    
+                </div> 
+                <div className="field">
+                <UploadPhoto/>
+                
+                </div>   
                 <div className="field">
                     <input type="text"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_date}</p>}

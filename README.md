@@ -155,7 +155,7 @@ npm install --prefix client
 You can run your React app on [`localhost:3000`](http://localhost:3000) by
 running:
 
-```sh
+```
 npm start --prefix client
 ```
 

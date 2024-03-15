@@ -197,6 +197,25 @@ class Releases(Resource):
         reponse = make_response(releases, 200)
         return reponse
 
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_release = Release(
+                title=form_json['title'],
+                artist=form_json['artist'],
+                description=form_json['description'],
+                record_label=form_json['record_label'],
+                date_released=form_json['date_released'],
+                image=form_json['image']
+            )
+            db.session.add(new_release)
+            db.session.commit()
+            response = make_response(new_release.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+
 class ReleasesById(Resource):
     def get(self, id):
         release = Release.query.filter_by(id=id).first()
@@ -204,6 +223,15 @@ class ReleasesById(Resource):
             response = make_response(release.to_dict(), 200)
         else:
             response = make_response({"error": "Release not found"}, 404)
+        return response
+    
+    def delete(self, id):
+        release = Release.query.filter_by(id=id).first()
+        if not release:
+            abort(404, "The release you were looking for was not found")
+        db.session.delete(release)
+        db.session.commit()
+        response = make_response("", 204)
         return response
     
 api.add_resource(Releases, '/releases')
@@ -214,7 +242,25 @@ class Tracks(Resource):
         tracks = [track.to_dict() for track in Track.query.all()]
         reponse = make_response(tracks, 200)
         return reponse
-
+    
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_track = Track(
+                title=form_json['title'],
+                artist_names=form_json['artist_names'],
+                bpm=form_json['bpm'],
+                audio=form_json['audio'],
+                release_id=form_json['release_id'],
+            )
+            db.session.add(new_track)
+            db.session.commit()
+            response = make_response(new_track.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+    
 class TracksById(Resource):
     def get(self, id):
         track = Track.query.filter_by(id=id).first()
@@ -222,6 +268,15 @@ class TracksById(Resource):
             response = make_response(track.to_dict(), 200)
         else:
             response = make_response({"error": "Track not found"}, 404)
+        return response
+    
+    def delete(self, id):
+        track = Track.query.filter_by(id=id).first()
+        if not track:
+            abort(404, "The track you were looking for was not found")
+        db.session.delete(track)
+        db.session.commit()
+        response = make_response("", 204)
         return response
 
 api.add_resource(Tracks, '/tracks')

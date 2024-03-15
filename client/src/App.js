@@ -4,13 +4,14 @@ import './semantic/dist/semantic.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useUser } from "./context/user";
+import { useAdmin } from "./context/admin.js"
+
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Shop from "./components/Shop";
 import HomePage from "./components/HomePage";
 import Learn from "./components/Learn.js";
-import { useUser } from "./context/user";
-import { useAdmin } from "./context/admin.js"
 import LoginForm from "./components/Login";
 import PostDetail from './components/PostDetail.js';
 import AddPost from "./components/AddPost.js";
@@ -23,6 +24,7 @@ import AboutPage from "./components/AboutPage.js";
 import ContactPage from "./components/ContactPage.js"
 import SignUp from "./components/SignUp.js";
 import ReleasesPage from "./components/ReleasesPage.js";
+import AddRelease from "./components/AddRelease.js";
 
 
 function App() {
@@ -59,6 +61,7 @@ function App() {
   }
 
 
+
   return (
   <div style={{backgroundColor: "#303030"}} className="App">
     <Nav onLogout={handleLogout}/>
@@ -79,6 +82,7 @@ function App() {
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/contact" element={<ContactPage/>}/>
           <Route path="/releases" element={<ReleasesPage/>}/>
+          <Route path="/releases/new" element={<AddRelease/>}/>
       </Routes>
     <Footer />
   </div>

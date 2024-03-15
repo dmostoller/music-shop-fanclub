@@ -1,7 +1,18 @@
 import React from "react"
 // import song from "../audio/Superluminal - Multi Dimensional Perception 152 A TRK M 16 Bit.wav"
 
-export default function Track({title, artist_names, bpm, audio}) {
+export default function Track({title, artist_names, bpm, audio, onDeleteTrack, id}) {
+    const handleDeleteTrack = (e) => {
+        fetch(`/tracks/${id}`,{
+          method:"DELETE"
+        })
+        .then(() => {
+          onDeleteTrack(id)
+        })
+    }
+
+
+
     return (
         <div className="item" style={{padding: "10px"}}>
             <div className="content">
@@ -13,6 +24,9 @@ export default function Track({title, artist_names, bpm, audio}) {
                 <div className="description">
                     <div>AUDIO FILE GOES HERE{audio}</div>
                 </div>
+                <div className="actions tiny">
+                <a onClick={handleDeleteTrack} className="delete">Delete Track</a>
+            </div>
             </div>
 
 

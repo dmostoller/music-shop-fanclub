@@ -5,21 +5,19 @@ import { useAdmin } from "../context/admin";
 import TrackList from "./TrackList";
 
 
-export default function Release({id, title, artist, record_label, description, date_released, image}) {
+export default function Release({id, title, artist, record_label, description, date_released, image, onDeleteRelease}) {
     const { user } = useUser()
     const { isAdmin } = useAdmin()
-    const [tracks, setTracks] = useState([]);
     
-    // console.log(id)
+    const handleDeleteRelease = (e) => {
+        fetch(`/releases/${id}`,{
+          method:"DELETE"
+        })
+        .then(() => {
+          onDeleteRelease(id)
+        })
+    }
 
-    useEffect(() => {
-        fetch(`/tracks_by_release_id/${id}`)
-        .then((res) => res.json())
-        .then((tracks) => {setTracks(tracks)})
-      }, [id]);
-
-    //   console.log(tracks)
-    
     return (
         <div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
         <div style={{margin: "10px"}} className="ui inverted horizontal card fluid">
@@ -52,7 +50,7 @@ export default function Release({id, title, artist, record_label, description, d
                                 className="circular ui icon inverted grey button">
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                             </Link>
-                            <button className="circular ui icon inverted grey button">
+                            <button onClick={handleDeleteRelease} className="circular ui icon inverted grey button">
                                 <i className="trash icon" style={{visibility: "visible"}}></i>
                             </button>
                         </>
@@ -66,7 +64,7 @@ export default function Release({id, title, artist, record_label, description, d
                 
                 <div classname="ui inverted segment">
                 <h4 class="ui horizontal inverted divider">Tracklist</h4>
-                    <TrackList tracks={tracks}/>
+                    <TrackList releaseId={id}/>
                 </div>
 
                 <h4 class="ui horizontal inverted divider">Release Info</h4>

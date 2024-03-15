@@ -2,7 +2,7 @@ import React from "react";
 import Release from "./Release";
 
 
-function ReleasesList ({ releases }) {
+function ReleasesList ({ releases, onDeleteRelease }) {
     const discography = releases.map((release) => {
         return <Release
         key={release.id}
@@ -13,6 +13,7 @@ function ReleasesList ({ releases }) {
         record_label={release.record_label}
         date_released={release.date_released}
         image={release.image}
+        onDeleteRelease={onDeleteRelease}
         />
     })
     return (

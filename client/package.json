@@ -5,6 +5,8 @@
   "proxy": "http://127.0.0.1:5555",
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.19.0",
     "@emailjs/browser": "^4.3.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
