@@ -1,9 +1,15 @@
 import React, {useState, useEffect} from "react"
+import useSound from 'use-sound';
+
 import EditTrackForm from "./EditTrackForm";
 
-// import song from "../audio/Superluminal - Multi Dimensional Perception 152 A TRK M 16 Bit.wav"
+import song from "../audio/Superluminal - Multi Dimensional Perception 152 A TRK M 16 Bit.wav"
+
+// const audio = require.context(`../audio/`, true);
 
 export default function Track({id, onDeleteTrack}) {
+
+
     const [isFormVis, setIsFormVis] = useState(false);
     const [track, setTrack] = useState({});
 
@@ -12,6 +18,8 @@ export default function Track({id, onDeleteTrack}) {
         .then((res) => res.json())
         .then((track) => setTrack(track))
     }, [id]);
+
+
 
     const handleDeleteTrack = (e) => {
         if(window.confirm("Are you sure you want to delete this track?")){ 
@@ -30,6 +38,10 @@ export default function Track({id, onDeleteTrack}) {
         showEditForm()
         setTrack(editedTrack)
     }
+      
+    const [play, { stop }] = useSound(song);
+      
+          
 
     return (
         <div className="item" style={{padding: "10px"}}>
@@ -46,6 +58,14 @@ export default function Track({id, onDeleteTrack}) {
                 </div>
                 <div className="description">
                     <div>{track.audio}</div>
+                    <div>
+                        <button onClick={play} className="circular ui inverted icon button mini">
+                            <i class="play icon"></i>
+                        </button>
+                        <button onClick={stop} className="circular ui inverted icon button mini">
+                        <i class="stop icon"></i>
+                        </button>
+                    </div>
                 </div>
                 <div className="actions tiny">
                     <a onClick={showEditForm} className="delete">Edit  </a>
