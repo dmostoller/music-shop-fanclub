@@ -87,7 +87,7 @@ class Release(db.Model, SerializerMixin):
     tracks = db.relationship('Track', back_populates='release', cascade='all, delete')
     saved_items = db.relationship('SavedItem', back_populates='release', cascade='all, delete')
 
-    serialize_rules = ('-tracks.release', 'saved_items.release')
+    serialize_rules = ('-tracks.release', '-saved_items.release', '-release.tracks')
     
     def __repr__(self):
         return f'<Release {self.id}>'
@@ -104,7 +104,7 @@ class Track(db.Model, SerializerMixin):
     release_id = db.Column(db.Integer, db.ForeignKey('releases.id'))
     release = db.relationship('Release', back_populates='tracks')
 
-    # serialize_rules = ('-releases.tracks', )
+    serialize_rules = ('-release.tracks', )
 
     def __repr__(self):
         return f'<Track {self.id}>'
@@ -113,11 +113,10 @@ class SavedItem(db.Model, SerializerMixin):
     __tablename__ = 'saved_items'
 
     id = db.Column(db.Integer, primary_key=True)
-    
-    release_id = db.Column(db.Integer, db.ForeignKey('releases.id'))
-    release = db.relationship('Release', back_populates='saved_items')
+    release_id = db.Column(db.Integer, db.ForeignKey('releases.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    release = db.relationship('Release', back_populates='saved_items')
     user = db.relationship('User', back_populates='saved_items')
 
     serialize_rules = ('-release.saved_items', '-user.saved_items')

@@ -1,9 +1,16 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function AddTrackForm({onAddTrack, releaseId, onChangeIsFormVis}){
+function EditTrackForm({onEditTrack, id, onChangeIsFormVis}){
     const [error, setError] = useState(null);
+    const [track, setTrack] = useState({});
+
+    useEffect(() => {
+      fetch(`/tracks/${id}`)
+      .then((res) => res.json())
+      .then((track) => setTrack(track))
+  }, [id]);
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a track title"),
@@ -11,27 +18,23 @@ function AddTrackForm({onAddTrack, releaseId, onChangeIsFormVis}){
         bpm: yup.string().required("Must enter a bpm"),
         audio: yup.string().required("Must enter an audio link"),
       })
-
+    const initValues = track
     const formik = useFormik({
-        initialValues: {
-          title:'',
-          artist_names:'',
-          bpm: '',
-          audio:'',
-          release_id: parseInt(releaseId),
-        },
+        enableReinitialize: true,
+        initialValues: initValues,
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch("/tracks", {
-            method: "POST",
+          fetch(`/tracks/${id}`, {
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(values),
           }).then((res) => {
             if(res.ok) {
-              res.json().then(newTrack => {
-                onAddTrack(newTrack)
+              res.json().then(editedTrack => {
+                setTrack(editedTrack)
+                onEditTrack(editedTrack)
                 formik.resetForm()
               })
             } else {
@@ -45,7 +48,7 @@ function AddTrackForm({onAddTrack, releaseId, onChangeIsFormVis}){
         <div className="item">
         <form className="ui inverted form tiny" style={{width: "350px"}} onSubmit={formik.handleSubmit}>  
             <div className="field">
-            <label>Add New Track  <a onClick={onChangeIsFormVis}>  Hide</a></label>
+            <label>Edit Track  <a onClick={onChangeIsFormVis}>  Hide</a></label>
                 <input type="text" id="title" name="title" value={formik.values.title} placeholder="Track title..." onChange={formik.handleChange}></input>               
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
             </div>
@@ -61,11 +64,11 @@ function AddTrackForm({onAddTrack, releaseId, onChangeIsFormVis}){
                 <input type="text" id="audio" name="audio" value={formik.values.audio} placeholder="Audio Link..." onChange={formik.handleChange}></input>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.audio}</p>}
             </div>
-            <button className="ui button fluid inverted grey tiny" type="submit">Submit</button>
+            <button style={{float: "right"}} className="ui button fluid inverted grey tiny" type="submit">Submit</button>
         </form>
          
          </div>
     )
 }
 
-export default AddTrackForm
+export default EditTrackForm

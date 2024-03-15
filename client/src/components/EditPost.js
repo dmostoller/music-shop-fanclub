@@ -50,8 +50,8 @@ function EditPost() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container" style={{marginTop: "40px"}}>
-            <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="ui text container" style={{marginTop: "40px"}}>
+            <form style={{padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
                 <div className="field">
                     <label className="inverted">Title</label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Post title..." onChange={formik.handleChange}></input>

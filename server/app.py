@@ -230,9 +230,10 @@ class ReleasesById(Resource):
         if release:
             try:
                 for attr in request.get_json():
-                    setattr(release, attr, request.get_json()[attr])
-                    db.session.commit()
-                    response = make_response(release.to_dict(), 200)
+                    if not request.get_json()['tracks']:
+                        setattr(release, attr, request.get_json()[attr])
+                db.session.commit()
+                response = make_response(release.to_dict(), 200)
             except ValueError:
                 response = make_response({"errors": ["validation errors"]}, 400)
         else:
@@ -282,6 +283,25 @@ class TracksById(Resource):
             response = make_response(track.to_dict(), 200)
         else:
             response = make_response({"error": "Track not found"}, 404)
+        return response
+    
+    def patch(self, id):
+        track = Track.query.filter_by(id=id).first()
+        if track:
+            # print(request.get_json())
+            try:
+                # for attr in request.get_json():
+                #     if not request.get_json()['release']:
+                setattr(track, 'title', request.get_json()['title'])
+                setattr(track, 'bpm', request.get_json()['bpm'])
+                setattr(track, 'audio', request.get_json()['audio'])
+                setattr(track, 'artist_names', request.get_json()['artist_names'])
+                db.session.commit()
+                response = make_response(track.to_dict(), 200)
+            except ValueError:
+                response = make_response({"errors": ["validation errors"]}, 400)
+        else:
+            response = make_response({"error": "Release not found"}, 404) 
         return response
     
     def delete(self, id):

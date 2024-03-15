@@ -44,7 +44,7 @@ function EditRelease() {
           }).then((res) => {
             if(res.ok) {
               res.json().then(release => {
-                navigate(`/releases/${id}`)
+                navigate(`/releases/`)
               })
             } else {
                 res.json().then(error => setError(error.message))
@@ -56,30 +56,35 @@ function EditRelease() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container">
-            <form style={{width:"60%", margin:"auto", marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="ui text container">
+            <form style={{marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
                 <div className="field">
-                    <label>Edit Release</label>
+                    <label>Name</label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Release title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
                 <div className="field">
+                    <label>Artist</label>
                     <input type="text" name="artist" value={formik.values.artist} placeholder="Artist name..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.artist}</p>}
                 </div>    
                 <div className="field">
+                    <label>Description</label>
                     <textarea type="text" rows="6" name="description" value={formik.values.description} placeholder="Release description..." onChange={formik.handleChange}></textarea>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.description}</p>}
                 </div>
                 <div className="field">
+                    <label>Record label</label>
                     <input type="text" name="record_label" value={formik.values.record_label} placeholder="Record label name..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.record_label}</p>}
                 </div>
                 <div className="field">
+                    <label>Release Date</label>
                     <input type="text" name="date_released" value={formik.values.date_released} placeholder="Release date..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.date_released}</p>}
                 </div>
                 <div className="field">
+                    <label>Image Link</label>
                     <input type="text" name="image" value={formik.values.image} placeholder="Image link..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image}</p>}
                 </div>

@@ -29,7 +29,9 @@ function Nav({onLogout}) {
 
             <div className='right menu'>
                 <div className='item'>
-                        <iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1525430860&color=%23626262&inverse=true&auto_play=true&show_user=true"></iframe>            
+                        <iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" 
+                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1525430860&color=%23626262&inverse=true&auto_play=false&show_user=true">
+                        </iframe>            
                 </div>
                 <div style={{justifyContent: 'flex-end'}} className="ui category search item">
                     <div className="ui transparent inverted icon input">
