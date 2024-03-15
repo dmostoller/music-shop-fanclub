@@ -8,7 +8,7 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Shop from "./components/Shop";
 import HomePage from "./components/HomePage";
-import Videos from "./components/Videos";
+import Learn from "./components/Learn.js";
 import { useUser } from "./context/user";
 import { useAdmin } from "./context/admin.js"
 import LoginForm from "./components/Login";
@@ -65,7 +65,7 @@ function App() {
     <ToastContainer/>
       <Routes>
           <Route path="/" element={<HomePage/>}/>        
-          <Route path="/video" element={<Videos/>}/>
+          <Route path="/video" element={<Learn/>}/>
           <Route path="/shop" element={<Shop/>}/>
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>}/>
           <Route path="/signup" element={<SignUp/>} /> 
