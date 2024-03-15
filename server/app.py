@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Post, Event, Release, Track
+from models import User, Post, Event, Release, Track, SavedItem
 
 # Views go here!
 
@@ -225,6 +225,20 @@ class ReleasesById(Resource):
             response = make_response({"error": "Release not found"}, 404)
         return response
     
+    def patch(self, id):
+        release = Release.query.filter_by(id=id).first()
+        if release:
+            try:
+                for attr in request.get_json():
+                    setattr(release, attr, request.get_json()[attr])
+                    db.session.commit()
+                    response = make_response(release.to_dict(), 200)
+            except ValueError:
+                response = make_response({"errors": ["validation errors"]}, 400)
+        else:
+            response = make_response({"error": "Release not found"}, 404) 
+        return response
+    
     def delete(self, id):
         release = Release.query.filter_by(id=id).first()
         if not release:
@@ -293,3 +307,27 @@ api.add_resource(TracksByReleaseId, '/tracks_by_release_id/<int:id>')
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
 
+class SavedItems(Resource):
+    def get(self):
+        saved_items = [saved_item.to_dict() for saved_item in SavedItem.query.all()]
+        response = make_response(saved_items, 200)
+        return response
+    
+api.add_resource(SavedItems, '/saved_items')
+class SaveRelease(Resource):
+  def post(self, id):
+        try:
+            user_id = session.get('user_id')
+            new_saved_release = SavedItem(
+                user_id=user_id,
+                release_id=id,
+            )
+            db.session.add(new_saved_release)
+            db.session.commit()
+            response = make_response(new_saved_release.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+
+api.add_resource(SaveRelease, '/save_release/<int:id>', endpoint='save_release')

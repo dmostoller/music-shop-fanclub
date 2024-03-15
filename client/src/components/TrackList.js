@@ -20,7 +20,7 @@ function TrackList({ releaseId }) {
 
       const deleteTrack = (deleted_track_id) => {
         setTracks(tracks => tracks.filter((track) => track.id !== deleted_track_id))
-        console.log(deleted_track_id)
+        // console.log(deleted_track_id)
     }
 
     const tracks_on_release = tracks.map((track) => {
@@ -37,6 +37,7 @@ function TrackList({ releaseId }) {
 
     const addTrack = (newTrack) =>{
         setTracks([...tracks, newTrack])
+        changeIsFormVis()
     }
 
     return (

@@ -25,6 +25,7 @@ import ContactPage from "./components/ContactPage.js"
 import SignUp from "./components/SignUp.js";
 import ReleasesPage from "./components/ReleasesPage.js";
 import AddRelease from "./components/AddRelease.js";
+import EditRelease from "./components/EditRelease.js";
 
 
 function App() {
@@ -83,6 +84,8 @@ function App() {
           <Route path="/contact" element={<ContactPage/>}/>
           <Route path="/releases" element={<ReleasesPage/>}/>
           <Route path="/releases/new" element={<AddRelease/>}/>
+          <Route path="/releases/:id/edit" element={<EditRelease/>}/>
+
       </Routes>
     <Footer />
   </div>

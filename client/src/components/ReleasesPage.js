@@ -4,8 +4,6 @@ import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import ReleasesList from "./ReleasesList";
 
-
-
 function ReleasesPage() {
     const { user } = useUser()
     const {isAdmin} = useAdmin()

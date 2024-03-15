@@ -15,7 +15,7 @@ function Nav({onLogout}) {
     return (
         <Menu className='ui top fixed inverted menu' style={{marginBottom: "25px"}}>
             <div className="item">
-                <Link to='/'><i className="galactic republic icon"></i>SuperLuminal</Link>
+                <Link to='/'><i className="galactic republic icon"></i>Superluminal</Link>
             </div>   
             <NavLink className="item" to='/releases'>Music</NavLink>
             <NavLink className="item"  to='/learn'>Learn</NavLink>

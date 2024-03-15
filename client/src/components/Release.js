@@ -1,22 +1,46 @@
-import React, { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
+import React, { useState } from "react";
+import {Link, useNavigate} from "react-router-dom";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import TrackList from "./TrackList";
 
 
+
 export default function Release({id, title, artist, record_label, description, date_released, image, onDeleteRelease}) {
-    const { user } = useUser()
-    const { isAdmin } = useAdmin()
+    const { user } = useUser();
+    const { isAdmin } = useAdmin();
+    const [error, setError] = useState(null);
+    const [isSaved, setIsSaved] = useState(false);
+    const navigate = useNavigate();
+
+    function changeIsSaved() {
+        setIsSaved(!isSaved)
+    }
     
     const handleDeleteRelease = (e) => {
+        if(window.confirm("Are you sure you want to delete this release?")){ 
         fetch(`/releases/${id}`,{
           method:"DELETE"
         })
         .then(() => {
           onDeleteRelease(id)
         })
-    }
+    }}
+
+    function saveRelease() {
+        fetch(`/save_release/${id}`,{
+            method:"POST",
+        }).then((r) => {
+            if (r.ok) {
+              r.json().then(saved_release => {
+                changeIsSaved(saved_release)
+                navigate('/releases')
+            })
+            } else {
+                r.json().then(error => setError(error.message))
+            }
+        })
+      }
 
     return (
         <div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
@@ -44,18 +68,22 @@ export default function Release({id, title, artist, record_label, description, d
                     <div className="center aligned grid" style={{paddingBottom:"10px"}}> 
                     { user && isAdmin ? (
                         <>
-                            <Link 
-                                // to={`/releases/${id}/edit`} 
-                                to=''
-                                className="circular ui icon inverted grey button">
+                            <Link to={`/releases/${id}/edit`} className="circular ui icon inverted grey button">
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                             </Link>
                             <button onClick={handleDeleteRelease} className="circular ui icon inverted grey button">
                                 <i className="trash icon" style={{visibility: "visible"}}></i>
                             </button>
+                            <button onClick={saveRelease} className="circular ui icon inverted grey button">
+                                <i className="heart icon" style={{visibility: "visible"}}></i>
+                            </button>   
                         </>
                         )
-                        : <></>    
+                        : <>
+                        <button onClick={saveRelease(id)} className="circular ui icon inverted grey button">
+                            <i className="red heart icon" style={{visibility: "visible"}}></i>
+                        </button>                        
+                        </>    
                     } 
 
                 </div>
