@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import EditUser from "./EditUser";
 
 export default function User ({user, setUser}) {
     const [showEdit, setShowEdit] = useState(false);

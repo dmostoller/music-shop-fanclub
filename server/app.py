@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Post, Event, Release, Track, SavedItem
+from models import User, Post, Event, Release, Track, Saved, Comment
 
 # Views go here!
 
@@ -288,10 +288,7 @@ class TracksById(Resource):
     def patch(self, id):
         track = Track.query.filter_by(id=id).first()
         if track:
-            # print(request.get_json())
             try:
-                # for attr in request.get_json():
-                #     if not request.get_json()['release']:
                 setattr(track, 'title', request.get_json()['title'])
                 setattr(track, 'bpm', request.get_json()['bpm'])
                 setattr(track, 'audio', request.get_json()['audio'])
@@ -324,30 +321,87 @@ class TracksByReleaseId(Resource):
     
 api.add_resource(TracksByReleaseId, '/tracks_by_release_id/<int:id>')
 
-if __name__ == '__main__':
-    app.run(port=5555, debug=True)
 
 class SavedItems(Resource):
     def get(self):
-        saved_items = [saved_item.to_dict() for saved_item in SavedItem.query.all()]
+        saved_items = [saved_item.to_dict() for saved_item in Saved.query.all()]
         response = make_response(saved_items, 200)
         return response
     
-api.add_resource(SavedItems, '/saved_items')
-class SaveRelease(Resource):
-  def post(self, id):
+    def post(self):
         try:
-            user_id = session.get('user_id')
-            new_saved_release = SavedItem(
-                user_id=user_id,
-                release_id=id,
+            new_saved_item = Saved(
+                user_id=request.get_json()['user_id'],
+                release_id=request.get_json()['release_id'],
             )
-            db.session.add(new_saved_release)
+            db.session.add(new_saved_item)
             db.session.commit()
-            response = make_response(new_saved_release.to_dict(), 201)
+            response = make_response(new_saved_item.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+    
+api.add_resource(SavedItems, '/saved')
+
+class SavedItemsById(Resource):
+    def delete(self,id):
+        pass
+#   def post(self, id):
+#         try:
+#             user_id = session.get('user_id')
+#             new_saved_release = SavedItem(
+#                 user_id=user_id,
+#                 release_id=id,
+#             )
+#             db.session.add(new_saved_release)
+#             db.session.commit()
+#             response = make_response(new_saved_release.to_dict(), 201)
+#         except ValueError:
+#             response = make_response({"errors" : ["validation errors"]}, 422)
+        
+#         return response
+
+api.add_resource(SavedItemsById, '/saved_items/<int:id>')
+
+class Comments(Resource):
+    def get(self):
+        comments = [comment.to_dict() for comment in Comment.query.all()]
+        reponse = make_response(comments, 200)
+        return reponse
+    
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_comment = Comment(
+                comment=form_json['comment'],
+                date_added=form_json['date_added'],
+                release_id=form_json['release_id'],
+                user_id=form_json['user_id'],
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            response = make_response(new_comment.to_dict(), 201)
         except ValueError:
             response = make_response({"errors" : ["validation errors"]}, 422)
         
         return response
 
-api.add_resource(SaveRelease, '/save_release/<int:id>', endpoint='save_release')
+class CommentsById(Resource):
+    def delete(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            abort(404, "The comment was not found")
+        db.session.delete(comment)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
+    
+api.add_resource(Comments, '/comments')
+api.add_resource(CommentsById, '/comments/<int:id>')
+
+
+
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)

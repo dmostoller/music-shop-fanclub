@@ -3,6 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import TrackList from "./TrackList";
+import CommentsList from "./CommentsList";
 
 
 
@@ -26,15 +27,23 @@ export default function Release({id, title, artist, record_label, description, d
           onDeleteRelease(id)
         })
     }}
+    const userId = user.id
 
-    function saveRelease() {
-        fetch(`/save_release/${id}`,{
-            method:"POST",
+    const saveRelease = (e) => {
+        fetch("saved", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                user_id: parseInt(userId),
+                release_id: parseInt(id),
+            }),
         }).then((r) => {
             if (r.ok) {
               r.json().then(saved_release => {
-                changeIsSaved(saved_release)
-                navigate('/releases')
+                changeIsSaved()
+                // navigate('/releases')
             })
             } else {
                 r.json().then(error => setError(error.message))
@@ -42,9 +51,9 @@ export default function Release({id, title, artist, record_label, description, d
         })
       }
 
-    return (
-        <div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
-        <div style={{margin: "10px"}} className="ui inverted horizontal card fluid">
+return (
+<div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
+        <div style={{margin: "10px"}} className="ui inverted attached horizontal card fluid">
             <div className="item">
                 <img className="ui large image" src={image} alt={title}></img>
                 <div className="header">
@@ -89,7 +98,6 @@ export default function Release({id, title, artist, record_label, description, d
                 </div>
             </div>
             <div className="content">
-                
                 <div classname="ui inverted segment">
                 <h4 class="ui horizontal inverted divider">Tracklist</h4>
                     <TrackList releaseId={id}/>
@@ -100,8 +108,13 @@ export default function Release({id, title, artist, record_label, description, d
                     <p>{description}</p>
                 </div>
             </div>
-    </div>
+            <div className="ui bottom attached inverted segment">
+            <h4 class="ui horizontal inverted divider">Comments</h4>
+            <div><CommentsList releaseId={id}/></div> 
+
+            </div>
+        </div>
     </div>
 
-    );
+);
 }

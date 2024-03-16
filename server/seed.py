@@ -8,7 +8,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, Event, Post, Release, Track
+from models import db, User, Event, Post, Release, Track, Comment
 
 if __name__ == '__main__':
     fake = Faker()
@@ -113,6 +113,28 @@ if __name__ == '__main__':
         ]
 
         db.session.add_all(tracks)
+        
+        print("Seeding comments")
+        comments = [
+            Comment(comment="Amazing!",
+                  date_added=datetime.datetime.now(),
+                  release_id=1,
+                  user_id=1
+                  ),
+            Comment(comment="Love it!",
+                  date_added=datetime.datetime.now(),
+                  release_id=1,
+                  user_id=1
+                  ),
+            Comment(comment="my favorite!",
+                  date_added=datetime.datetime.now(),
+                  release_id=1,
+                  user_id=2
+                  ),
+        ]
+
+        db.session.add_all(comments)
+
         db.session.commit()
 
         print("Done seeding.")

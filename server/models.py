@@ -16,11 +16,10 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String)
     is_admin = db.Column(db.Boolean)
 
-    # comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
-    saved_items = db.relationship('SavedItem', back_populates='user', cascade='all, delete')
+    comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
+    # saved_items = db.relationship('Saved', back_populates='user', cascade='all, delete')
 
-    # serialize_rules = ('-comments.user', )
-    serialize_rules = ('-saved_items.user', )
+    serialize_rules = ( '-comments.user',)
 
     
     @hybrid_property
@@ -85,9 +84,10 @@ class Release(db.Model, SerializerMixin):
     image = db.Column(db.String)
 
     tracks = db.relationship('Track', back_populates='release', cascade='all, delete')
-    saved_items = db.relationship('SavedItem', back_populates='release', cascade='all, delete')
+    comments = db.relationship('Comment', back_populates='release', cascade='all, delete')
+    # saved_items = db.relationship('Saved', back_populates='release', cascade='all, delete')
 
-    serialize_rules = ('-tracks.release', '-saved_items.release', '-release.tracks')
+    serialize_rules = ('-tracks.release', '-comments.release')
     
     def __repr__(self):
         return f'<Release {self.id}>'
@@ -109,17 +109,35 @@ class Track(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<Track {self.id}>'
     
-class SavedItem(db.Model, SerializerMixin):
+class Saved(db.Model, SerializerMixin):
     __tablename__ = 'saved_items'
 
     id = db.Column(db.Integer, primary_key=True)
-    release_id = db.Column(db.Integer, db.ForeignKey('releases.id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    release_id = db.Column(db.Integer, db.ForeignKey('releases.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    release = db.relationship('Release', back_populates='saved_items')
-    user = db.relationship('User', back_populates='saved_items')
+    # release = db.relationship('Release', back_populates='saved_items')
+    # user = db.relationship('User', back_populates='saved_items')
 
-    serialize_rules = ('-release.saved_items', '-user.saved_items')
+    # serialize_rules = ('-release.saved_items', '-user.saved_items')
 
     def __repr__(self):
         return f'<SavedItem {self.id}>'
+
+class Comment(db.Model, SerializerMixin):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer, primary_key=True)    
+    comment = db.Column(db.String)
+    date_added = db.Column(db.String)
+
+    release_id = db.Column(db.Integer, db.ForeignKey('releases.id'))
+    release = db.relationship('Release', back_populates='comments')
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='comments')
+
+    serialize_rules = ('-release.comments', '-user.comments')
+
+    def __repr__(self):
+        return f'<Comment {self.id}>'

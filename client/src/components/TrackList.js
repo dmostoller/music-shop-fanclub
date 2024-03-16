@@ -22,24 +22,16 @@ function TrackList({ releaseId }) {
         setTracks(tracks => tracks.filter((track) => track.id !== deleted_track_id))
         // console.log(deleted_track_id)
     }
-    function updateTracks() {
-        setTracks(tracks)
-    }
     // function reloadTrack (tracks) {
     //     setTracks(tracks)
     // }
-
 
     const tracks_on_release = tracks.map((track) => {
             return <Track
             key={track.id}
             id={track.id}
-            title={track.title}
-            bpm={track.bpm}
-            audio={track.audio}
-            artist_names={track.artist_names}
             onDeleteTrack={deleteTrack}
-            updateTracks={updateTracks}            />
+            />
     })
 
     const addTrack = (newTrack) => {

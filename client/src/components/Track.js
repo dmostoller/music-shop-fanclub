@@ -1,15 +1,7 @@
 import React, {useState, useEffect} from "react"
-import useSound from 'use-sound';
-
 import EditTrackForm from "./EditTrackForm";
 
-import song from "../audio/Superluminal - Multi Dimensional Perception 152 A TRK M 16 Bit.wav"
-
-// const audio = require.context(`../audio/`, true);
-
 export default function Track({id, onDeleteTrack}) {
-
-
     const [isFormVis, setIsFormVis] = useState(false);
     const [track, setTrack] = useState({});
 
@@ -18,8 +10,6 @@ export default function Track({id, onDeleteTrack}) {
         .then((res) => res.json())
         .then((track) => setTrack(track))
     }, [id]);
-
-
 
     const handleDeleteTrack = (e) => {
         if(window.confirm("Are you sure you want to delete this track?")){ 
@@ -38,10 +28,6 @@ export default function Track({id, onDeleteTrack}) {
         showEditForm()
         setTrack(editedTrack)
     }
-      
-    const [play, { stop }] = useSound(song);
-      
-          
 
     return (
         <div className="item" style={{padding: "10px"}}>
@@ -59,13 +45,48 @@ export default function Track({id, onDeleteTrack}) {
                 <div className="description">
                     <div>{track.audio}</div>
                     <div>
-                        <button onClick={play} className="circular ui inverted icon button mini">
+                        <button className="circular ui inverted icon button mini">
                             <i class="play icon"></i>
                         </button>
-                        <button onClick={stop} className="circular ui inverted icon button mini">
+                        <button className="circular ui inverted icon button mini">
                         <i class="stop icon"></i>
                         </button>
                     </div>
+                    {/* <Reaplay tracks={songList} >
+                        {(player) => {    
+                            return (
+                                <>
+                                <input
+                                    type='range'
+                                    value={player.trackProgress}
+                                    step='1'
+                                    min='0'
+                                    max={player.duration ? player.duration : `${player.duration}`}
+                                    onChange={(e) => player.onScrub(e.target.value)}
+                                    onMouseUp={(e) => player.onScrubEnd(e)}
+                                    onKeyUp={(e) => player.onScrubEnd(e)}
+                                    />
+
+                                    <button onClick={() => player.toPrevTrack()}>prev</button>
+                                    <button onClick={() => player.play()}>Play</button>
+                                    <button onClick={() => player.pause()}>Pause</button>
+                                    <button onClick={() => player.toNextTrack()}>next</button>
+
+                                    <input
+                                    type='range'
+                                    value={player.volume}
+                                    step='1'
+                                    min='0'
+                                    max='100'
+                                    onChange={(e) => player.setVolume(+e.target.value)}
+                                    />
+                                    <button onClick={() => player.mute()}>mute</button>
+                                    <button onClick={() => player.unmute()}>unmute</button>
+                                </>
+                            )
+                            }
+                        }
+                    </Reaplay> */}
                 </div>
                 <div className="actions tiny">
                     <a onClick={showEditForm} className="delete">Edit  </a>
