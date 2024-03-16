@@ -32,74 +32,40 @@ export default function Track({id, onDeleteTrack}) {
     }
 
     return (
-        <div className="item" style={{padding: "10px"}}>
+        <div className="item">
             {isFormVis ? 
             <EditTrackForm id={id} onChangeIsFormVis={showEditForm} onEditTrack={updateTrack}/>
                 :
-            <div className="content">
-                <div>
-                    <h5>{track.title}</h5>
-                </div>
-                <div className="meta">
-                    <span>{track.artist_names}</span>
-                    <span>{track.bpm} bpm</span>
-                </div>
-                <div className="description">
-                    <div>
-                        {/* <iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" 
-                        src={track.audio}>
-                        </iframe>   */}
+            <table className="ui selectable inverted table" > 
+            <tbody>
+                <tr>
+                    <th>
                         <iframe style={{border: "0", width: "42px", height: "42px"}}
-                            src="https://bandcamp.com/EmbeddedPlayer/album=3331109125/size=small/bgcol=333333/linkcol=ffffff/tracklist=false/artwork=none/track=3177692716/transparent=true/" seamless>
-                        </iframe>     
-                    </div>
-                    {/* <Reaplay tracks={songList} >
-                        {(player) => {    
-                            return (
-                                <>
-                                <input
-                                    type='range'
-                                    value={player.trackProgress}
-                                    step='1'
-                                    min='0'
-                                    max={player.duration ? player.duration : `${player.duration}`}
-                                    onChange={(e) => player.onScrub(e.target.value)}
-                                    onMouseUp={(e) => player.onScrubEnd(e)}
-                                    onKeyUp={(e) => player.onScrubEnd(e)}
-                                    />
+                            src={track.audio} seamless>
+                        </iframe>    
+                    </th>
+                    <th style={{padding: "5px", width: "300px"}}>
+                        <div className="content">
+                            <h5>{track.title}</h5>
+                        </div>
+                        <div className="meta">
+                            <span className="ui small text">{track.artist_names}</span>
+                            <span className="ui small text">{track.bpm} bpm</span>
+                        </div>
 
-                                    <button onClick={() => player.toPrevTrack()}>prev</button>
-                                    <button onClick={() => player.play()}>Play</button>
-                                    <button onClick={() => player.pause()}>Pause</button>
-                                    <button onClick={() => player.toNextTrack()}>next</button>
-
-                                    <input
-                                    type='range'
-                                    value={player.volume}
-                                    step='1'
-                                    min='0'
-                                    max='100'
-                                    onChange={(e) => player.setVolume(+e.target.value)}
-                                    />
-                                    <button onClick={() => player.mute()}>mute</button>
-                                    <button onClick={() => player.unmute()}>unmute</button>
-                                </>
-                            )
-                            }
+                        { isAdmin ? 
+                        <div>
+                            <a onClick={showEditForm}><span className="ui small text">Edit  </span></a>
+                            <a onClick={handleDeleteTrack}> <span className="ui small text">   Delete</span></a>
+                        </div>
+                        :
+                        <></> 
                         }
-                    </Reaplay> */}
-                </div>
-                { isAdmin ? 
-                <div className="actions tiny">
-                    <a onClick={showEditForm} className="delete">Edit  </a>
-                    <a onClick={handleDeleteTrack} className="delete">  Delete</a>
-                </div>
-                :
-                <></>    
-            }
-            </div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>   
             }
         </div>
     )
-
 }

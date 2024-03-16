@@ -3,8 +3,6 @@ import Track from "./Track"
 import AddTrackForm from "./AddTrackForm";
 import { useAdmin } from "../context/admin";
 
-
-
 function TrackList({ releaseId }) {
     const [tracks, setTracks] = useState([]);
     const {isAdmin} = useAdmin();

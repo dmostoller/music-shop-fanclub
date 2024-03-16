@@ -79,12 +79,15 @@ return (
                 <div className="center aligned meta">
                     {record_label}
                 </div>
-                <div className="center aligned grid" style={{padding: "10px"}}> 
+                <div className="center aligned meta">
+                <p> {date_released}</p>
+                </div>
+                {/* <div className="center aligned grid" style={{padding: "10px"}}> 
                 <iframe style={{border: "0", width: "100%", height: "275px"}}
                 src="https://bandcamp.com/EmbeddedPlayer/album=4128960796/size=large/bgcol=333333/linkcol=ffffff/artwork=none/track=2355594853/transparent=true/" seamless>
                     <a href="https://kabayun.bandcamp.com/album/superluminal-first-contact">Superluminal - First Contact by Kabayun / Superluminal</a>
                 </iframe>
-                </div>
+                </div> */}
                
             </div>
             <div className="content">
@@ -96,7 +99,7 @@ return (
                 <h4 class="ui horizontal inverted divider">Release Info</h4>
                 <div className="description">
                     <p>{description}</p>
-                    <p>Released: {date_released}</p>
+
                 </div>
                 <div className="center aligned grid" style={{padding: "10px"}}> 
                     {/* <Link to="/" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>

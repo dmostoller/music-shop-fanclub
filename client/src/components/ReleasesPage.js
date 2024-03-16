@@ -19,12 +19,12 @@ function ReleasesPage() {
         setReleases(releases => releases.filter((release) => release.id !== deleted_release_id))
         // console.log(deleted_track_id)
     }
-    // const sortedReleases = releases.sort((a, b) => (a.date_released) > (b.date_released) ? -1 :1)
+    const sortedReleases = releases.sort((a, b) => (a.date_released) > (b.date_released) ? -1 : 1)
 
     return (
         <div className="ui container" style={{backgroundColor: "#303030", marginTop:"40px"}} >
             <div className="ui container" style={{paddingTop:"5px", marginTop: "40px"}}>
-                <ReleasesList releases={releases} onDeleteRelease={deleteRelease}/>
+                <ReleasesList releases={sortedReleases} onDeleteRelease={deleteRelease}/>
             </div>
             { user && isAdmin ?
             <div className="ui grid container centered">
