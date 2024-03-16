@@ -13,6 +13,7 @@ export default function Release({id, title, artist, record_label, description, d
     const [error, setError] = useState(null);
     const [isSaved, setIsSaved] = useState(false);
     const navigate = useNavigate();
+    const [savedId, setSavedId] = useState("");
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
@@ -27,29 +28,45 @@ export default function Release({id, title, artist, record_label, description, d
           onDeleteRelease(id)
         })
     }}
-    const userId = user.id
 
-    const saveRelease = (e) => {
-        fetch("saved", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user_id: parseInt(userId),
-                release_id: parseInt(id),
-            }),
-        }).then((r) => {
-            if (r.ok) {
-              r.json().then(saved_release => {
-                changeIsSaved()
-                // navigate('/releases')
+    function saveRelease() {
+        if (user) {
+            const userId = user.id
+            fetch("saved", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    user_id: parseInt(userId),
+                    release_id: parseInt(id),
+                }),
+            }).then((r) => {
+                if (r.ok) {
+                r.json().then(saved_release => {
+                    changeIsSaved()
+                    setSavedId(parseInt(saved_release.id))
+                    // console.log(saved_release.id)
+                })
+                } else {
+                    r.json().then(error => setError(error.message))
+                }
             })
-            } else {
-                r.json().then(error => setError(error.message))
-            }
-        })
-      }
+        }}
+
+        const unSaveRelease = (e) => {
+            if (user) {
+            const savedItemId = parseInt(savedId)
+            fetch(`/saved/${savedItemId}`,{
+                method:"DELETE"
+            })
+            .then(() => {
+                changeIsSaved()
+                setSavedId("")
+
+            })
+        }
+        }
 
 return (
 <div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
@@ -83,15 +100,20 @@ return (
                             <button onClick={handleDeleteRelease} className="circular ui icon inverted grey button">
                                 <i className="trash icon" style={{visibility: "visible"}}></i>
                             </button>
-                            <button onClick={saveRelease} className="circular ui icon inverted grey button">
-                                <i className="heart icon" style={{visibility: "visible"}}></i>
-                            </button>   
+
                         </>
                         )
                         : <>
-                        <button onClick={saveRelease(id)} className="circular ui icon inverted grey button">
-                            <i className="red heart icon" style={{visibility: "visible"}}></i>
-                        </button>                        
+                        { user ? isSaved ? 
+                        <button onClick={unSaveRelease} className="circular ui icon inverted red button">
+                            <i className="heart icon" style={{visibility: "visible"}}></i>
+                        </button>   
+                        :
+                        <button onClick={saveRelease} className="circular ui icon inverted grey button">
+                            <i className="heart icon" style={{visibility: "visible"}}></i>
+                        </button>  
+                        :<></>
+                        }                      
                         </>    
                     } 
 

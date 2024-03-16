@@ -39,7 +39,15 @@ class Users(Resource):
             response = make_response({'errors': ['validation errors']}, 422)
         
         return response
-
+class UsersById(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            response = make_response(user.to_dict(), 200)
+        else:
+            response = make_response({"error": "User not found"}, 404)
+        return response 
+    
 class CheckSession(Resource):
     def get(self):
         user_id = session.get('user_id')
@@ -66,6 +74,7 @@ class Logout(Resource):
         return {}, 204
 
 api.add_resource(Users, '/users', endpoint='signup')
+api.add_resource(UsersById, '/users/<int:id>')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
@@ -345,24 +354,16 @@ class SavedItems(Resource):
 api.add_resource(SavedItems, '/saved')
 
 class SavedItemsById(Resource):
-    def delete(self,id):
-        pass
-#   def post(self, id):
-#         try:
-#             user_id = session.get('user_id')
-#             new_saved_release = SavedItem(
-#                 user_id=user_id,
-#                 release_id=id,
-#             )
-#             db.session.add(new_saved_release)
-#             db.session.commit()
-#             response = make_response(new_saved_release.to_dict(), 201)
-#         except ValueError:
-#             response = make_response({"errors" : ["validation errors"]}, 422)
-        
-#         return response
+    def delete(self, id):
+        saved_item = Saved.query.filter_by(id=id).first()
+        if not saved_item:
+            abort(404, "The comment was not found")
+        db.session.delete(saved_item)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
 
-api.add_resource(SavedItemsById, '/saved_items/<int:id>')
+api.add_resource(SavedItemsById, '/saved/<int:id>')
 
 class Comments(Resource):
     def get(self):
