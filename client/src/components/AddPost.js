@@ -45,10 +45,12 @@ function AddPost() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container">
-            <form style={{width:"60%", margin:"auto", marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+        <div className="ui text container" style={{marginTop: "50px"}}>
+            <form style={{marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+            <h4  style={{marginTop: "50px"}} class="ui horizontal inverted divider">Add New Post</h4>
                 <div className="field">
-                    <label>New Post</label>
+                    <label>Add New Post  <Link to="/">  Back</Link></label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Post title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
@@ -61,10 +63,10 @@ function AddPost() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
-                <Link to="/" className="ui button inverted small" >Back</Link>
-                <button style={{float: "right"}} className="ui button inverted small" type="submit">Submit</button>
+                <button className="ui button fluid inverted grey" type="submit">Submit</button>
                 </div>
             </form> 
+        </div>
         </div>
         </>
     )

@@ -19,8 +19,9 @@ function EventsPage () {
     const deleteEvent = (deleted_event) => setEvents(events => events.filter((event) => event.id !== deleted_event.id))
 
     return (
-        <div className="ui container" style={{backgroundColor: "#303030", marginTop:"40px"}} >
-            <div className="ui container" style={{paddingTop:"5px", marginTop: "40px"}}>
+        <div className="ui container" style={{backgroundColor: "#303030"}} >
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+        <h4  style={{marginTop: "100px"}} class="ui horizontal inverted divider">Events</h4>
                 <EventsList events={sortedEvents} isAdmin={isAdmin} deleteEvent={deleteEvent}/>
             </div>
             { user && isAdmin ?

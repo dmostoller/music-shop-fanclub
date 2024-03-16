@@ -1,13 +1,15 @@
 import React, { useState, useEffect} from "react";
 import Track from "./Track"
 import AddTrackForm from "./AddTrackForm";
+import { useAdmin } from "../context/admin";
 
 
 
 function TrackList({ releaseId }) {
     const [tracks, setTracks] = useState([]);
-
+    const {isAdmin} = useAdmin();
     const [isFormVis, setIsFormVis] = useState(false)
+    
     function changeIsFormVis() {
         setIsFormVis(!isFormVis)
     }
@@ -43,10 +45,13 @@ function TrackList({ releaseId }) {
             <div className="ui one column inverted stackable grid" style={{margin: "5px"}}>
                 <div className="ui inverted items">
                     {tracks_on_release}
+                {isAdmin ?     
                 <div className="item" style={{padding: "5px"}}>
                     {isFormVis ? <AddTrackForm onAddTrack={addTrack} releaseId={releaseId} onChangeIsFormVis={changeIsFormVis} /> : <button onClick={changeIsFormVis} className="ui inverted grey button tiny">Add New Track</button>}
                 </div>
-
+                :
+                    <></>
+                }
                 </div>
             </div>
     )

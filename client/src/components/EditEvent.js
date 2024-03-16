@@ -54,10 +54,12 @@ function EditEvent() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui text container" style={{marginTop: "40px"}}>
-            <form style={{padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+        <div className="ui text container" style={{marginTop: "80px"}}>
+        <h4  className="ui horizontal inverted divider">Edit Event</h4>
+            <form style={{marginBottom: "25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
                 <div className="field">
-                    <label>Name</label>
+                    <label>Name  <Link to="/events">  Back</Link></label>
                     <input type="text"  name="name" value={formik.values.name} placeholder="Event Name..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.name}</p>}
                 </div>
@@ -92,10 +94,11 @@ function EditEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.details}</p>}
                 </div>
                 <div className="field">
-                <Link to="/events" className="ui button inverted small" >Back</Link>
-                <button style={{float: "right"}} className="ui button inverted small" type="submit">Submit</button>
+                
+                <button className="ui button inverted fluid grey" type="submit">Submit</button>
                 </div>
             </form> 
+        </div>
         </div>
         </>
     )

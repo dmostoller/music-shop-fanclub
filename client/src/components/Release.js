@@ -6,7 +6,6 @@ import TrackList from "./TrackList";
 import CommentsList from "./CommentsList";
 
 
-
 export default function Release({id, title, artist, record_label, description, date_released, image, onDeleteRelease}) {
     const { user } = useUser();
     const { isAdmin } = useAdmin();
@@ -63,7 +62,6 @@ export default function Release({id, title, artist, record_label, description, d
             .then(() => {
                 changeIsSaved()
                 setSavedId("")
-
             })
         }
         }
@@ -81,17 +79,33 @@ return (
                 <div className="center aligned meta">
                     {record_label}
                 </div>
-                <div className="center aligned meta">
-                    <p>{date_released}</p>
+                <div className="center aligned grid" style={{padding: "10px"}}> 
+                <iframe style={{border: "0", width: "100%", height: "275px"}}
+                src="https://bandcamp.com/EmbeddedPlayer/album=4128960796/size=large/bgcol=333333/linkcol=ffffff/artwork=none/track=2355594853/transparent=true/" seamless>
+                    <a href="https://kabayun.bandcamp.com/album/superluminal-first-contact">Superluminal - First Contact by Kabayun / Superluminal</a>
+                </iframe>
+                </div>
+               
+            </div>
+            <div className="content">
+                <div classname="ui inverted segment" >
+                <h4 class="ui horizontal inverted divider">Tracklist</h4>
+                    <TrackList releaseId={id}/>
+                </div>
+
+                <h4 class="ui horizontal inverted divider">Release Info</h4>
+                <div className="description">
+                    <p>{description}</p>
+                    <p>Released: {date_released}</p>
                 </div>
                 <div className="center aligned grid" style={{padding: "10px"}}> 
                     {/* <Link to="/" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>
                     <Link to="/releases" className="circular ui icon inverted grey button">
                         <i className="cart icon" style={{visibility: "visible"}}></i>
                     </Link> */}
-                    <Link to="/shop" className="ui icon inverted grey button"><i className="cart icon"></i>  Buy</Link>
-                    </div>
-                    <div className="center aligned grid" style={{paddingBottom:"10px"}}> 
+                    <Link to="/shop" style={{marginRight: "15px"}} className="ui icon inverted grey button"><i className="cart icon"></i>  Buy</Link>
+                    {/* </div>
+                    <div className="center aligned grid" style={{paddingBottom:"10px"}}>  */}
                     { user && isAdmin ? (
                         <>
                             <Link to={`/releases/${id}/edit`} className="circular ui icon inverted grey button">
@@ -117,17 +131,6 @@ return (
                         </>    
                     } 
 
-                </div>
-            </div>
-            <div className="content">
-                <div classname="ui inverted segment">
-                <h4 class="ui horizontal inverted divider">Tracklist</h4>
-                    <TrackList releaseId={id}/>
-                </div>
-
-                <h4 class="ui horizontal inverted divider">Release Info</h4>
-                <div className="description">
-                    <p>{description}</p>
                 </div>
             </div>
             <div className="ui bottom attached inverted segment">

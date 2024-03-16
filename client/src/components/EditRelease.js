@@ -56,10 +56,13 @@ function EditRelease() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
         <div className="ui text container">
             <form style={{marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+            <h4  style={{marginTop: "100px"}} class="ui horizontal inverted divider">Edit Release</h4>
+
                 <div className="field">
-                    <label>Name</label>
+                    <label>Name  <Link to="/releases">  Back</Link></label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Release title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
@@ -70,7 +73,7 @@ function EditRelease() {
                 </div>    
                 <div className="field">
                     <label>Description</label>
-                    <textarea type="text" rows="6" name="description" value={formik.values.description} placeholder="Release description..." onChange={formik.handleChange}></textarea>               
+                    <textarea type="text" rows="10" name="description" value={formik.values.description} placeholder="Release description..." onChange={formik.handleChange}></textarea>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.description}</p>}
                 </div>
                 <div className="field">
@@ -89,10 +92,11 @@ function EditRelease() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image}</p>}
                 </div>
                 <div className="field">
-                <Link to="/releases" className="ui button inverted small" >Back</Link>
-                <button style={{float: "right"}} className="ui button inverted small" type="submit">Submit</button>
+                
+                <button className="ui button inverted fluid grey" type="submit">Submit</button>
                 </div>
             </form> 
+        </div>
         </div>
         </>
     )

@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react"
 import EditTrackForm from "./EditTrackForm";
+import { useAdmin } from "../context/admin";
 
 export default function Track({id, onDeleteTrack}) {
     const [isFormVis, setIsFormVis] = useState(false);
     const [track, setTrack] = useState({});
+    const {isAdmin} = useAdmin();
 
     useEffect(() => {
         fetch(`/tracks/${id}`)
@@ -43,14 +45,13 @@ export default function Track({id, onDeleteTrack}) {
                     <span>{track.bpm} bpm</span>
                 </div>
                 <div className="description">
-                    <div>{track.audio}</div>
                     <div>
-                        <button className="circular ui inverted icon button mini">
-                            <i class="play icon"></i>
-                        </button>
-                        <button className="circular ui inverted icon button mini">
-                        <i class="stop icon"></i>
-                        </button>
+                        {/* <iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" 
+                        src={track.audio}>
+                        </iframe>   */}
+                        <iframe style={{border: "0", width: "42px", height: "42px"}}
+                            src="https://bandcamp.com/EmbeddedPlayer/album=3331109125/size=small/bgcol=333333/linkcol=ffffff/tracklist=false/artwork=none/track=3177692716/transparent=true/" seamless>
+                        </iframe>     
                     </div>
                     {/* <Reaplay tracks={songList} >
                         {(player) => {    
@@ -88,10 +89,14 @@ export default function Track({id, onDeleteTrack}) {
                         }
                     </Reaplay> */}
                 </div>
+                { isAdmin ? 
                 <div className="actions tiny">
                     <a onClick={showEditForm} className="delete">Edit  </a>
                     <a onClick={handleDeleteTrack} className="delete">  Delete</a>
                 </div>
+                :
+                <></>    
+            }
             </div>
             }
         </div>

@@ -50,10 +50,13 @@ function AddRelease() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container">
-            <form style={{width:"60%", margin:"auto", marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+        <div className="ui text container" style={{marginTop: "40px"}}>
+            <form style={{marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+            <h4 class="ui horizontal inverted divider">Add Release</h4>
+
                 <div className="field">
-                    <label>New Release</label>
+                    <label>Add New Release  <Link to="/releases">  Back</Link></label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Release title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
@@ -78,10 +81,11 @@ function AddRelease() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image}</p>}
                 </div>
                 <div className="field">
-                <Link to="/releases" className="ui button inverted small" >Back</Link>
-                <button style={{float: "right"}} className="ui button inverted small" type="submit">Submit</button>
+                
+                <button className="ui button fluid inverted grey small" type="submit">Submit</button>
                 </div>
             </form> 
+        </div>
         </div>
         </>
     )

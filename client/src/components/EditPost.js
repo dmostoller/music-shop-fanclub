@@ -50,10 +50,13 @@ function EditPost() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui text container" style={{marginTop: "40px"}}>
-            <form style={{padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+
+        <div className="ui text container" style={{marginTop: "80px"}}>
+        <h4  style={{marginTop: "100px"}} class="ui horizontal inverted divider">Edit Post</h4>
+            <form className="ui inverted form" onSubmit={formik.handleSubmit}>
                 <div className="field">
-                    <label className="inverted">Title</label>
+                    <label className="inverted">Title  <Link to={`/posts/${id}`}>  Back</Link></label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Post title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
@@ -68,10 +71,10 @@ function EditPost() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
-                <Link to={`/posts/${id}`} className="ui button inverted grey small" >Back</Link>
-                  <button style={{float: "right"}} className="ui button inverted small " type="submit">Submit</button>
+                  <button className="ui button inverted fluid grey " type="submit">Submit</button>
                 </div>
             </form> 
+        </div>
         </div>
         </>
     )

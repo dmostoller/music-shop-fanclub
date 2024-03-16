@@ -51,10 +51,13 @@ function AddEvent() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container">
-            <form style={{width:"60%", margin:"auto", marginTop: "40px",padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+        <div className="ui text container" style={{marginTop: "40px"}}>
+            <form style={{marginTop: "20px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
+            <h4 class="ui horizontal inverted divider">Add Event</h4>
+
                 <div className="field">
-                    <label>Add Event</label>
+                    <label>Add Event  <Link to="/events">  Back</Link></label>
                     <input type="text"  name="name" value={formik.values.name} placeholder="Event Name..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.name}</p>}
                 </div>
@@ -86,11 +89,11 @@ function AddEvent() {
                     <textarea type="text" rows="6" name="details" value={formik.values.details} placeholder="Event Details..." onChange={formik.handleChange}></textarea>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.details}</p>}
                 </div>
-                <div className="field">
-                <Link to="/events" className="ui button inverted small" >Back</Link>
-                <button style={{float: "right"}} className="ui button inverted small" type="submit">Submit</button>
+                <div className="field">  
+                <button className="ui button inverted fluid grey" type="submit">Submit</button>
                 </div>
             </form> 
+        </div>
         </div>
         </>
     )

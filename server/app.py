@@ -353,6 +353,14 @@ class SavedItems(Resource):
     
 api.add_resource(SavedItems, '/saved')
 
+class SavedItemsByUserId(Resource):
+    def get(self, id):
+        saved_items = [saved_item.to_dict() for saved_item in Saved.query.all() if saved_item.user_id == id]
+        response = make_response(saved_items, 200)
+        return response 
+    
+api.add_resource(SavedItemsByUserId, '/saved_by_user/<int:id>')
+
 class SavedItemsById(Resource):
     def delete(self, id):
         saved_item = Saved.query.filter_by(id=id).first()

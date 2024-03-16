@@ -56,7 +56,7 @@ onSubmit: (values) => {
 })
 
   return (
-    <div className="ui middle aligned center aligned grid" style={{marginTop: "40px"}}>
+    <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
             <div className="column" style={{width:"450px"}}>
             <h2 className="ui inverted image header">
           <div className="content">Create a new account</div>
