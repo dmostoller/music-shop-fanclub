@@ -14,6 +14,7 @@ function ReleasesList ({ releases, onDeleteRelease }) {
         date_released={release.date_released}
         image={release.image}
         onDeleteRelease={onDeleteRelease}
+        savedItems={release.saved_items}
         />
     })
     return (

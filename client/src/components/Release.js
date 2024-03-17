@@ -6,31 +6,20 @@ import TrackList from "./TrackList";
 import CommentsList from "./CommentsList";
 
 
-export default function Release({id, title, artist, record_label, description, date_released, image, onDeleteRelease}) {
+export default function Release({id, title, artist, record_label, description, date_released, image, onDeleteRelease, savedItems}) {
     const { user } = useUser();
     const { isAdmin } = useAdmin();
     const [error, setError] = useState(null);
     const [isSaved, setIsSaved] = useState(false);
     const navigate = useNavigate();
     const [savedId, setSavedId] = useState("");
-    const [savedItem, setSavedItem] = useState({}) 
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
     }
-    const checkIsSaved = () => {
-        if (savedItem.release_id == id) {
-            setIsSaved(true)
-            setSavedId(savedItem.id)
-        }}
-            
-    useEffect(() => {
-        fetch(`/saved_by_release/${id}`)
-        .then((res) => res.json())
-        .then((savedItem) => checkIsSaved(savedItem))
-        // console.log(savedItem)
-    }, [id]);
+function checkIfSaved(){
 
+}
     const handleDeleteRelease = (e) => {
         if(window.confirm("Are you sure you want to delete this release?")){ 
         fetch(`/releases/${id}`,{

@@ -23,7 +23,6 @@ export default function SavedItem({ releaseId, id, onDeleteSaved }) {
         })
     
     }
-
     return (
         <>
 

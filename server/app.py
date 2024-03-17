@@ -47,6 +47,21 @@ class UsersById(Resource):
         else:
             response = make_response({"error": "User not found"}, 404)
         return response 
+class UpdateUser(Resource):
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            try:
+                setattr(user, 'username', request.get_json()['username'])
+                setattr(user, 'password_hash', request.get_json()['password'])
+                setattr(user, 'email', request.get_json()['email'])
+                db.session.commit()
+                response = make_response(user.to_dict(), 200)
+            except ValueError:
+                response = make_response({"errors": ["validation errors"]}, 400)
+        else:
+            response = make_response({"error": "User not found"}, 404)
+        return response 
     
 class CheckSession(Resource):
     def get(self):
@@ -75,6 +90,7 @@ class Logout(Resource):
 
 api.add_resource(Users, '/users', endpoint='signup')
 api.add_resource(UsersById, '/users/<int:id>')
+api.add_resource(UpdateUser, '/update_user/<int:id>', endpoint='update_user')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
