@@ -35,7 +35,7 @@ function PostsList ({}) {
 
             {/* : <div></div>
         } */}
-            <div className="ui centered grid">
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
             <div class="ui inverted link cards">
                 {blog}
             </div>    

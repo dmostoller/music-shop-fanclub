@@ -18,8 +18,9 @@ class User(db.Model, SerializerMixin):
 
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
     saved_items = db.relationship('Saved', back_populates='user', cascade='all, delete')
+    post_comments = db.relationship('PostComment', back_populates='user', cascade='all, delete')
 
-    serialize_rules = ( '-comments.user',)
+    serialize_rules = ( '-comments.user', '-post_comments.user')
 
     
     @hybrid_property
@@ -53,6 +54,8 @@ class Post(db.Model, SerializerMixin):
     image_url = db.Column(db.String)
     date_added = db.Column(db.String)
 
+    post_comments = db.relationship('PostComment', back_populates='post', cascade='all, delete')
+    
     def __repr__(self):
         return f'<Post {self.id}>'
     
@@ -140,6 +143,25 @@ class Comment(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='comments')
 
     serialize_rules = ('-release.comments', '-user.comments', '-release.saved_items', '-user.saved_items')
+
+    def __repr__(self):
+        return f'<Comment {self.id}>'
+    
+
+class PostComment(db.Model, SerializerMixin):
+    __tablename__ = 'post_comments'
+
+    id = db.Column(db.Integer, primary_key=True)    
+    comment = db.Column(db.String)
+    date_added = db.Column(db.String)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    post = db.relationship('Post', back_populates='post_comments')
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='post_comments')
+
+    serialize_rules = ('-post.post_comments', '-user.post_comments', '-user.comments', '-user.saved_items')
 
     def __repr__(self):
         return f'<Comment {self.id}>'

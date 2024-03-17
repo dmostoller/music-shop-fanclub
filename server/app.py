@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Post, Event, Release, Track, Saved, Comment
+from models import User, Post, Event, Release, Track, Saved, Comment, PostComment
 
 # Views go here!
 
@@ -131,10 +131,11 @@ class PostsById(Resource):
         post = Post.query.filter_by(id=id).first()
         if post:
             try:
-                for attr in request.get_json():
-                    setattr(post, attr, request.get_json()[attr])
-                    db.session.commit()
-                    response = make_response(post.to_dict(), 200)
+                setattr(post, 'title', request.get_json()['title'])
+                setattr(post, 'content', request.get_json()['content'])
+                setattr(post, 'image_url', request.get_json()['image_url'])
+                db.session.commit()
+                response = make_response(post.to_dict(), 200)
             except ValueError:
                 response = make_response({"errors": ["validation errors"]}, 400)
         else:
@@ -436,6 +437,42 @@ class CommentsById(Resource):
 api.add_resource(Comments, '/comments')
 api.add_resource(CommentsById, '/comments/<int:id>')
 
+
+class PostComments(Resource):
+    def get(self):
+        post_comments = [post_comment.to_dict() for post_comment in PostComment.query.all()]
+        reponse = make_response(post_comments, 200)
+        return reponse
+    
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_post_comment = PostComment(
+                comment=form_json['comment'],
+                date_added=form_json['date_added'],
+                post_id=form_json['post_id'],
+                user_id=form_json['user_id'],
+            )
+            db.session.add(new_post_comment)
+            db.session.commit()
+            response = make_response(new_post_comment.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+
+class PostCommentsById(Resource):
+    def delete(self, id):
+        post_comment = PostComment.query.filter_by(id=id).first()
+        if not post_comment:
+            abort(404, "The comment was not found")
+        db.session.delete(post_comment)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
+    
+api.add_resource(PostComments, '/post_comments')
+api.add_resource(PostCommentsById, '/post_comments/<int:id>')
 
 
 
