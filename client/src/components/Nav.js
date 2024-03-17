@@ -18,7 +18,7 @@ function Nav({onLogout}) {
                 <Link to='/'><i className="galactic republic icon"></i>Superluminal</Link>
             </div>   
             <NavLink className="item" to='/releases'>Music</NavLink>
-            <NavLink className="item"  to='/learn'>Learn</NavLink>
+            <NavLink className="item"  to='/learn'>Video</NavLink>
             <NavLink className="item" to='/events'>Events</NavLink>
             <NavLink className="item" to='/about'>Bio</NavLink>
             <NavLink className="item"  to='/shop'>Shop</NavLink>

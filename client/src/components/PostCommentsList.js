@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import Comment from "./Comment";
-import CommentForm from "./CommentForm";
+import PostCommentForm from "./PostCommentForm";
 import { useUser } from "../context/user";
+import PostComment from "./PostComment";
 
-function CommentsList({ releaseId }){
+
+function PostCommentsList({ postId }){
     const { user } = useUser()
     const [comments, setComments] = useState([])
     const [isComFormVis, setIsComFormVis] = useState(false)
@@ -12,31 +13,31 @@ function CommentsList({ releaseId }){
     }
 
     useEffect(() => {
-        fetch(`/comments`)
+        fetch(`/post_comments`)
        .then((res) => res.json())
        .then((comments) => setComments(comments))
     }, []);
 
-    const deleteComment = (deleted_comment_id) => {
+    const deletePostComment = (deleted_comment_id) => {
         setComments(comments => comments.filter((comment) => comment.id !== deleted_comment_id))
         // console.log(deleted_comment_id)
     }
     // console.log(releaseId)
     const commentsSection = comments
-    .filter(comment => comment.release_id === releaseId)
+    .filter(comment => comment.post_id == postId)
     .map(comment => (
-        <Comment 
+        <PostComment 
             key={comment.id} 
             id={comment.id} 
             username={comment.user.username} 
             comment={comment.comment}
             date_added={comment.date_added} 
             comment_user_id={comment.user_id}
-            onDeleteComment={deleteComment}
+            onDeleteComment={deletePostComment}
         />
         ))
 
-    const addComment = (newComment) =>{
+    const addPostComment = (newComment) =>{
         setComments([...comments, newComment])
         changeIsComFormVis()
     }
@@ -49,11 +50,10 @@ function CommentsList({ releaseId }){
             <div>
             {user ? 
             <div style={{paddingBottom: "25px", paddingTop: "10px"}}>
-                {isComFormVis ? <CommentForm 
-                onAddComment={addComment} 
-                releaseId={releaseId} 
-                onChangeIsComFormVis={changeIsComFormVis} /
-                > 
+                {isComFormVis ? <PostCommentForm 
+                onAddComment={addPostComment} 
+                postId={postId} 
+                onChangeIsComFormVis={changeIsComFormVis} /> 
                 : 
                 <button 
                 onClick={changeIsComFormVis} 
@@ -68,4 +68,4 @@ function CommentsList({ releaseId }){
     );
 }
 
-export default CommentsList
+export default PostCommentsList

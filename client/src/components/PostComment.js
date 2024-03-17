@@ -2,12 +2,12 @@ import React from "react";
 import { useUser } from "../context/user";
 
 
-function Comment({username, comment, id, date_added, comment_user_id, onDeleteComment}){
+function PostComment({username, comment, id, date_added, comment_user_id, onDeleteComment}){
 
     const {user} = useUser()
 
     const handleDeleteComment = (e) => {
-        fetch(`/comments/${id}`,{
+        fetch(`/post_comments/${id}`,{
           method:"DELETE"
         })
         .then(() => {
@@ -35,4 +35,4 @@ function Comment({username, comment, id, date_added, comment_user_id, onDeleteCo
     )
 }
 
-export default Comment
+export default PostComment

@@ -63,15 +63,13 @@ function App() {
     toast.dark(`Goodbye, thanks for visiting!`);
   }
 
-
-
   return (
   <div style={{backgroundColor: "#303030"}} className="App">
     <Nav onLogout={handleLogout}/>
     <ToastContainer/>
       <Routes>
           <Route path="/" element={<HomePage/>}/>        
-          <Route path="/video" element={<Learn/>}/>
+          <Route path="/learn" element={<Learn/>}/>
           <Route path="/shop" element={<Shop/>}/>
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>}/>
           <Route path="/signup" element={<SignUp/>} /> 
@@ -89,8 +87,6 @@ function App() {
           <Route path="/releases/:id/edit" element={<EditRelease/>}/>
           <Route path="/user" element={<User/>}/>
           <Route path="/forum" element={<Forum/>}/>
-          
-
       </Routes>
     <Footer />
   </div>
