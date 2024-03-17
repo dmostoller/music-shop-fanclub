@@ -41,10 +41,6 @@ function LoginForm({ onLogin }) {
     })
   },
   })
-  // if(errors) return <><h4>{errors}</h4></>
-//   {errors.map((err) => (
-//     <Error key={err}>{err}</Error>
-// ))}
    if(error) return (
    <>
     <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>

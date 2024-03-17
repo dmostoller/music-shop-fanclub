@@ -5,13 +5,14 @@
 from flask import request, abort, make_response, jsonify, request, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
+from wtforms.validators import ValidationError
 
 
 # Local imports
 from config import app, db, api
 # Add your model imports
 from models import User, Post, Event, Release, Track, Saved, Comment, PostComment
-from werkzeug.exceptions import NotFound, Unauthorized
+from werkzeug.exceptions import NotFound, Unauthorized, UnprocessableEntity
 
 # Views go here!
 
@@ -37,7 +38,7 @@ class Users(Resource):
             else:
                 raise AttributeError("Passwords must match")
         except IntegrityError:
-            response = make_response({'errors': ['validation errors']}, 422)
+            raise UnprocessableEntity("Username is already in use")
         
         return response
     
@@ -47,7 +48,7 @@ class UsersById(Resource):
         if user:
             response = make_response(user.to_dict(), 200)
         else:
-            raise Unauthorized
+            raise ValidationError
         return response 
 
 class UpdateUser(Resource):
@@ -92,7 +93,17 @@ class Logout(Resource):
             return {'error': 'No user found'}, 401
         session['user_id'] = None
         return {}, 204
+    
+class CheckUsername(Resource):
+    def get(self):
+        username = request.get_json()['username']
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            raise UnprocessableEntity
+        response = make_response(user.to_dict(), 200)
+        return response
 
+api.add_resource(CheckUsername, '/check_username', endpoint='check_username')
 api.add_resource(Users, '/users', endpoint='signup')
 api.add_resource(UsersById, '/users/<int:id>')
 api.add_resource(UpdateUser, '/update_user/<int:id>', endpoint='update_user')
@@ -488,12 +499,21 @@ def handle_not_found(e):
     return response
 
 @app.errorhandler(Unauthorized)
-def handle_not_found(e):
+def handle_unauthorized(e):
     response = make_response(
         {"message": "Unauthorized: you must be logged in to make that request."},
         401,
     )
     return response
+
+@app.errorhandler(UnprocessableEntity)
+def handle_unprocessable_entity(e):
+    response = make_response(
+        {"message": "Unprocessable Entity: Username is already in use."},
+        422,
+    )
+    return response
+
 
 
 if __name__ == '__main__':

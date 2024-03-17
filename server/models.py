@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
+from wtforms.validators import ValidationError
 
 from config import db, bcrypt
 # Models go here!
@@ -38,7 +39,9 @@ class User(db.Model, SerializerMixin):
     @validates
     def validate_username(self, key, username):
         if not username:
-            raise ('You must enter a username')
+            raise ValueError('You must enter a username')
+        if User.query.filter_by(username=username).first():
+            raise ValidationError("Username already in use")
         return username
 
     def __repr__(self):
