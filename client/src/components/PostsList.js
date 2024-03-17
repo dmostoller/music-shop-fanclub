@@ -35,7 +35,11 @@ function PostsList ({}) {
 
             {/* : <div></div>
         } */}
-            <div className="ui grid container centered">{blog}</div>
+            <div className="ui centered grid">
+            <div class="ui inverted link cards">
+                {blog}
+            </div>    
+            </div>
             {(user && isAdmin) ? 
             <div className="ui grid container centered">
                 <Link to={`/posts/new`} style={{margin: "10px"}} className="ui icon secondary button"><i className="plus icon"></i>  New Post</Link>

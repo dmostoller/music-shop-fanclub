@@ -2,7 +2,7 @@ import React from "react";
 import { useUser } from "../context/user";
 
 
-function Comment({username, comment,key, id, date_added, comment_user_id, onDeleteComment}){
+function Comment({username, comment, id, date_added, comment_user_id, onDeleteComment}){
 
     const {user} = useUser()
 
@@ -16,7 +16,7 @@ function Comment({username, comment,key, id, date_added, comment_user_id, onDele
     }
 
     return (
-        <div key={id} style={{margin: "25px"}}className="ui inverted comments">
+        <div id={id} style={{margin: "25px"}}className="ui inverted comments">
             <div className="comment CARD">
                 <div className="content">
                 <div className="author">{username}<div className="metadata"><span className="date">{date_added}</span></div></div>

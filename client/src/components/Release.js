@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
@@ -13,11 +13,24 @@ export default function Release({id, title, artist, record_label, description, d
     const [isSaved, setIsSaved] = useState(false);
     const navigate = useNavigate();
     const [savedId, setSavedId] = useState("");
+    const [savedItem, setSavedItem] = useState({}) 
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
     }
-    
+    const checkIsSaved = () => {
+        if (savedItem.release_id == id) {
+            setIsSaved(true)
+            setSavedId(savedItem.id)
+        }}
+            
+    useEffect(() => {
+        fetch(`/saved_by_release/${id}`)
+        .then((res) => res.json())
+        .then((savedItem) => checkIsSaved(savedItem))
+        // console.log(savedItem)
+    }, [id]);
+
     const handleDeleteRelease = (e) => {
         if(window.confirm("Are you sure you want to delete this release?")){ 
         fetch(`/releases/${id}`,{
@@ -117,7 +130,6 @@ return (
                             <button onClick={handleDeleteRelease} className="circular ui icon inverted grey button">
                                 <i className="trash icon" style={{visibility: "visible"}}></i>
                             </button>
-
                         </>
                         )
                         : <>
@@ -137,7 +149,7 @@ return (
                 </div>
             </div>
             <div className="ui bottom attached inverted segment">
-            <h4 class="ui horizontal inverted divider">Comments</h4>
+            <h4 className="ui horizontal inverted divider">Comments</h4>
             <div><CommentsList releaseId={id}/></div> 
 
             </div>

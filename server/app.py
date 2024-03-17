@@ -361,6 +361,17 @@ class SavedItemsByUserId(Resource):
     
 api.add_resource(SavedItemsByUserId, '/saved_by_user/<int:id>')
 
+class SevedItemsByReleaseId(Resource):
+    def get(self, id):
+        user_id = session.get('user_id')
+        saved_items = [saved_item.to_dict() for saved_item in Saved.query.all() if saved_item.release_id == id and saved_item.user_id == user_id]
+        if not saved_items:
+            response =  make_response("No saved items found", 404)
+        response = make_response(saved_items, 200)
+        return response 
+
+api.add_resource(SevedItemsByReleaseId, '/saved_by_release/<int:id>')
+
 class SavedItemsById(Resource):
     def delete(self, id):
         saved_item = Saved.query.filter_by(id=id).first()
