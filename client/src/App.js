@@ -28,6 +28,7 @@ import AddRelease from "./components/AddRelease.js";
 import EditRelease from "./components/EditRelease.js";
 import User from "./components/User.js";
 import Forum from "./components/Forum.js";
+import NotFound from "./components/NotFound.js";
 
 
 function App() {

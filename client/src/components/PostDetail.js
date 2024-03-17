@@ -34,7 +34,7 @@ function PostDetail({}){
         <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
             <div className="ui relaxed inverted divided items">
                 <div className="item" >
-                    <div className="ui big image" style={{marginTop:"25px"}}>
+                    <div className="ui huge image" style={{marginTop:"25px"}}>
                         <img src={post.image_url} alt={post.title}></img>
                     </div>
                     <div className="content" style={{marginTop:"75px"}}>
@@ -68,7 +68,9 @@ function PostDetail({}){
             </div>
             <div className="ui bottom attached inverted segment">
             <h4 className="ui horizontal inverted divider">Comments</h4>
-            <div><PostCommentsList postId={id}/></div> 
+            <div>
+                <PostCommentsList postId={id}/>
+            </div> 
 
             </div>
         </div>

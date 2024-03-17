@@ -11,6 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 # Add your model imports
 from models import User, Post, Event, Release, Track, Saved, Comment, PostComment
+from werkzeug.exceptions import NotFound, Unauthorized
 
 # Views go here!
 
@@ -39,14 +40,16 @@ class Users(Resource):
             response = make_response({'errors': ['validation errors']}, 422)
         
         return response
+    
 class UsersById(Resource):
     def get(self, id):
         user = User.query.filter_by(id=id).first()
         if user:
             response = make_response(user.to_dict(), 200)
         else:
-            response = make_response({"error": "User not found"}, 404)
+            raise Unauthorized
         return response 
+
 class UpdateUser(Resource):
     def patch(self, id):
         user = User.query.filter_by(id=id).first()
@@ -56,11 +59,11 @@ class UpdateUser(Resource):
                 setattr(user, 'password_hash', request.get_json()['password'])
                 setattr(user, 'email', request.get_json()['email'])
                 db.session.commit()
-                response = make_response(user.to_dict(), 200)
+                response = make_response(user.to_dict(rules = ('-_password_hash', )), 200)
             except ValueError:
                 response = make_response({"errors": ["validation errors"]}, 400)
         else:
-            response = make_response({"error": "User not found"}, 404)
+            raise Unauthorized
         return response 
     
 class CheckSession(Resource):
@@ -68,8 +71,9 @@ class CheckSession(Resource):
         user_id = session.get('user_id')
         if user_id:
             user = User.query.filter(User.id == user_id).first()
-            return user.to_dict(rules = ('-_password_hash', )), 200
-        return make_response({'errors': 'You must be logged in'}, 401)
+            return make_response(user.to_dict(rules = ('-_password_hash', )), 200)
+        else:
+            raise Unauthorized
 
 class Login(Resource):
     def post(self):
@@ -79,7 +83,8 @@ class Login(Resource):
         if user and user.authenticate(password):
             session['user_id'] = user.id
             return make_response(user.to_dict(rules = ('-_password_hash', )), 200)
-        return make_response({'errors': 'Invalid username or password'}, 401)
+        else:
+            raise Unauthorized
 
 class Logout(Resource):
     def delete(self):
@@ -94,6 +99,7 @@ api.add_resource(UpdateUser, '/update_user/<int:id>', endpoint='update_user')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
+
 
 class Posts(Resource):
     def get(self):
@@ -121,31 +127,30 @@ class Posts(Resource):
 class PostsById(Resource):
     def get(self, id):
         post = Post.query.filter_by(id=id).first()
-        if post:
-            response = make_response(post.to_dict(), 200)
-        else:
-            response = make_response({"error": "Post not found"}, 404)
+        if not post:
+            raise NotFound
+        response = make_response(post.to_dict(), 200)
         return response
     
     def patch(self, id):
         post = Post.query.filter_by(id=id).first()
-        if post:
-            try:
-                setattr(post, 'title', request.get_json()['title'])
-                setattr(post, 'content', request.get_json()['content'])
-                setattr(post, 'image_url', request.get_json()['image_url'])
-                db.session.commit()
-                response = make_response(post.to_dict(), 200)
-            except ValueError:
-                response = make_response({"errors": ["validation errors"]}, 400)
-        else:
-            response = make_response({"error": "Post not found"}, 404) 
+        if not post:
+            raise NotFound
+        try:
+            setattr(post, 'title', request.get_json()['title'])
+            setattr(post, 'content', request.get_json()['content'])
+            setattr(post, 'image_url', request.get_json()['image_url'])
+            db.session.commit()
+            response = make_response(post.to_dict(), 200)
+        except ValueError:
+            response = make_response({"errors": ["validation errors"]}, 400)
+
         return response
     
     def delete(self, id):
         post = Post.query.filter_by(id=id).first()
         if not post:
-            abort(404, "The post you were looking for was not found")
+            raise NotFound
         db.session.delete(post)
         db.session.commit()
         response = make_response("", 204)
@@ -183,30 +188,29 @@ class Events(Resource):
 class EventsById(Resource):
     def get(self, id):
         event = Event.query.filter_by(id=id).first()
-        if event:
-            response = make_response(event.to_dict(), 200)
-        else:
-            response = make_response({"error": "Post not found"}, 404)
+        if not event:
+            raise NotFound
+        response = make_response(event.to_dict(), 200)
         return response
     
     def patch(self, id):
         event = Event.query.filter_by(id=id).first()
-        if event:
-            try:
-                for attr in request.get_json():
-                    setattr(event, attr, request.get_json()[attr])
-                    db.session.commit()
-                    response = make_response(event.to_dict(), 200)
-            except ValueError:
-                response = make_response({"errors": ["validation errors"]}, 400)
-        else:
-            response = make_response({"error": "Event not found"}, 404) 
+        if not event:
+            raise NotFound
+        try:
+            for attr in request.get_json():
+                setattr(event, attr, request.get_json()[attr])
+                db.session.commit()
+                response = make_response(event.to_dict(), 200)
+        except ValueError:
+            response = make_response({"errors": ["validation errors"]}, 400)
+
         return response
 
     def delete(self, id):
         event = Event.query.filter_by(id=id).first()
         if not event:
-            abort(404, "The event you were looking for was not found")
+            raise NotFound
         db.session.delete(event)
         db.session.commit()
         response = make_response("", 204)
@@ -245,31 +249,31 @@ class Releases(Resource):
 class ReleasesById(Resource):
     def get(self, id):
         release = Release.query.filter_by(id=id).first()
-        if release:
-            response = make_response(release.to_dict(), 200)
-        else:
-            response = make_response({"error": "Release not found"}, 404)
+        if not release:
+            raise NotFound
+        response = make_response(release.to_dict(), 200)
+
         return response
     
     def patch(self, id):
         release = Release.query.filter_by(id=id).first()
-        if release:
-            try:
-                for attr in request.get_json():
-                    if not request.get_json()['tracks']:
-                        setattr(release, attr, request.get_json()[attr])
-                db.session.commit()
-                response = make_response(release.to_dict(), 200)
-            except ValueError:
-                response = make_response({"errors": ["validation errors"]}, 400)
-        else:
-            response = make_response({"error": "Release not found"}, 404) 
+        if not release:
+            raise NotFound
+        try:
+            for attr in request.get_json():
+                if not request.get_json()['tracks']:
+                    setattr(release, attr, request.get_json()[attr])
+            db.session.commit()
+            response = make_response(release.to_dict(), 200)
+        except ValueError:
+            response = make_response({"errors": ["validation errors"]}, 400)
+
         return response
     
     def delete(self, id):
         release = Release.query.filter_by(id=id).first()
         if not release:
-            abort(404, "The release you were looking for was not found")
+            raise NotFound
         db.session.delete(release)
         db.session.commit()
         response = make_response("", 204)
@@ -305,32 +309,32 @@ class Tracks(Resource):
 class TracksById(Resource):
     def get(self, id):
         track = Track.query.filter_by(id=id).first()
-        if track:
-            response = make_response(track.to_dict(), 200)
-        else:
-            response = make_response({"error": "Track not found"}, 404)
+        if not track:
+            raise NotFound
+        response = make_response(track.to_dict(), 200)
+
         return response
     
     def patch(self, id):
         track = Track.query.filter_by(id=id).first()
-        if track:
-            try:
-                setattr(track, 'title', request.get_json()['title'])
-                setattr(track, 'bpm', request.get_json()['bpm'])
-                setattr(track, 'audio', request.get_json()['audio'])
-                setattr(track, 'artist_names', request.get_json()['artist_names'])
-                db.session.commit()
-                response = make_response(track.to_dict(), 200)
-            except ValueError:
-                response = make_response({"errors": ["validation errors"]}, 400)
-        else:
-            response = make_response({"error": "Release not found"}, 404) 
+        if not track:
+            raise NotFound
+        try:
+            setattr(track, 'title', request.get_json()['title'])
+            setattr(track, 'bpm', request.get_json()['bpm'])
+            setattr(track, 'audio', request.get_json()['audio'])
+            setattr(track, 'artist_names', request.get_json()['artist_names'])
+            db.session.commit()
+            response = make_response(track.to_dict(), 200)
+        except ValueError:
+            response = make_response({"errors": ["validation errors"]}, 400)
+
         return response
     
     def delete(self, id):
         track = Track.query.filter_by(id=id).first()
         if not track:
-            abort(404, "The track you were looking for was not found")
+            raise NotFound
         db.session.delete(track)
         db.session.commit()
         response = make_response("", 204)
@@ -383,7 +387,7 @@ class SevedItemsByReleaseId(Resource):
         user_id = session.get('user_id')
         saved_items = [saved_item.to_dict() for saved_item in Saved.query.all() if saved_item.release_id == id and saved_item.user_id == user_id]
         if not saved_items:
-            response =  make_response("No saved items found", 404)
+            raise NotFound
         response = make_response(saved_items, 200)
         return response 
 
@@ -393,7 +397,7 @@ class SavedItemsById(Resource):
     def delete(self, id):
         saved_item = Saved.query.filter_by(id=id).first()
         if not saved_item:
-            abort(404, "The comment was not found")
+            raise NotFound
         db.session.delete(saved_item)
         db.session.commit()
         response = make_response("", 204)
@@ -428,7 +432,7 @@ class CommentsById(Resource):
     def delete(self, id):
         comment = Comment.query.filter_by(id=id).first()
         if not comment:
-            abort(404, "The comment was not found")
+            raise NotFound
         db.session.delete(comment)
         db.session.commit()
         response = make_response("", 204)
@@ -465,7 +469,7 @@ class PostCommentsById(Resource):
     def delete(self, id):
         post_comment = PostComment.query.filter_by(id=id).first()
         if not post_comment:
-            abort(404, "The comment was not found")
+            raise NotFound
         db.session.delete(post_comment)
         db.session.commit()
         response = make_response("", 204)
@@ -474,6 +478,22 @@ class PostCommentsById(Resource):
 api.add_resource(PostComments, '/post_comments')
 api.add_resource(PostCommentsById, '/post_comments/<int:id>')
 
+
+@app.errorhandler(NotFound)
+def handle_not_found(e):
+    response = make_response(
+        {"message": "Not Found: Sorry the resource you are looking for does not exist"},
+        404,
+    )
+    return response
+
+@app.errorhandler(Unauthorized)
+def handle_not_found(e):
+    response = make_response(
+        {"message": "Unauthorized: you must be logged in to make that request."},
+        401,
+    )
+    return response
 
 
 if __name__ == '__main__':
