@@ -6,7 +6,7 @@ export default function Tutorials() {
 return (<>
     <div className="column">
         <YouTubePlaylist
-        apiKey="AIzaSyCKD1qNrpomBtNzBvp00dRWpwK616ibQ7U"
+        apiKey={process.env.REACT_APP_YOUTUBE_API_KEY}
         playlistId="PLkiLSmC1caWur5fzZycc6Sh65tYb3OKhS"
         uniqueName="Tutorials"
         />
