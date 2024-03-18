@@ -14,7 +14,6 @@ function UploadWidget({onSetImageUrl}) {
             // clientAllowedFormats: ["images"], //restrict uploading to image files only
             multiple: false,  //restrict upload to a single file
             sources: [ "local", "url"], // restrict the upload sources to URL and local files
-            // theme: "purple", //change to a purple theme
         }, function(error, result) { 
             if (!error && result && result.event === "success") {
                 console.log(result.info);
@@ -48,7 +47,7 @@ function UploadWidget({onSetImageUrl}) {
 
 return (
     <>
-    <button onClick={() => widgetRef.current.open()}>
+    <button className="ui inverted button fluid black small" onClick={() => widgetRef.current.open()}>
         Upload
     </button>
     </>

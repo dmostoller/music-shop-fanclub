@@ -58,9 +58,20 @@ function AddEvent() {
         <div className="ui text container" style={{marginTop: "40px"}}>
             <form style={{marginTop: "20px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
             <h4 class="ui horizontal inverted divider">Add Event</h4>
-
                 <div className="field">
-                    <label>Add Event  <Link to="/events">  Back</Link></label>
+                    <label>Upload image, then enter event info...<Link style={{float:"right"}} to="/events">  Back to Events Page</Link></label>
+                    {(imageUrl == "")?
+                    <UploadWidget onSetImageUrl={setImageUrl}/>
+                    : (
+                    <>
+                    <img className="ui circular centered image small" src={imageUrl} alt=""></img>
+                    <input style={{visibility: "hidden"}} type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>                
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
+                    </>
+                    )}
+                </div> 
+                <div className="field">
+
                     <input type="text"  name="name" value={formik.values.name} placeholder="Event Name..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.name}</p>}
                 </div>
@@ -72,16 +83,6 @@ function AddEvent() {
                     <input type="text" name="location" value={formik.values.location} placeholder="Location address..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.location}</p>}
                 </div>    
-                <div className="field">
-                    {/* <h1 style={{color: "white"}}>{imageUrl}</h1> */}
-                    {/* <input type="text"  name="image_url" value={imageUrl} placeholder={imageUrl}></input>  */}
-                    <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>                
-                    {/* {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>} */}
-                </div> 
-                <div className="field">
-                <UploadWidget onSetImageUrl={setImageUrl}/>
-                {/* <h2>{imageUrl}</h2> */}
-                </div>   
                 <div className="field">
                     <input type="text"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_date}</p>}
