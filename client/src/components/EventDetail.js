@@ -28,12 +28,13 @@ function EventDetail(){
             })
         }
     }    
+    const imageUrl = `https://res.cloudinary.com/ddp2xfpyb/image/upload/v1710733429/superluminal/${event.image_url}`
 
     return (
         <div className="ui container" style={{paddingTop:"5px", marginTop: "40px"}}>
         <div style={{marginTop: "10px"}} className="ui inverted horizontal card fluid">
             <div className="item">
-                <img className="ui huge image" src={event.image_url} alt={event.name}></img>
+                <img className="ui big image" src={imageUrl} alt={event.name}></img>
             </div>
             <div className="content">
                 <div className="header">

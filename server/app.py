@@ -85,7 +85,7 @@ class Login(Resource):
             session['user_id'] = user.id
             return make_response(user.to_dict(rules = ('-_password_hash', )), 200)
         else:
-            raise Unauthorized
+            raise Unauthorized("The username and/or password you have entered is incorrect. Please try again.")
 
 class Logout(Resource):
     def delete(self):

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import UploadPhoto from "./UploadPhoto.js"
+import UploadWidget from "./UploadWidget.js"
 
 function AddEvent() {
     const navigate = useNavigate();
@@ -18,12 +18,13 @@ function AddEvent() {
         event_link: yup.string().required("Must enter an event link"),
     })
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
           name:'',
           venue:'',
           location:'',
           details:'',
-          image_url:'',
+          image_url: '',
           event_date:'',
           event_link:'',
         },
@@ -69,12 +70,13 @@ function AddEvent() {
                     <input type="text" name="location" value={formik.values.location} placeholder="Location address..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.location}</p>}
                 </div>    
-                <div className="field">
+                {/* <div className="field">
+                    <h1 style={{color: "white"}}>{imageUrl}</h1>
                     <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
-                </div> 
+                </div>  */}
                 <div className="field">
-                <UploadPhoto/>
+                <UploadWidget/>
                 
                 </div>   
                 <div className="field">
