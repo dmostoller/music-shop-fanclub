@@ -2,19 +2,21 @@ import React, {useState, useEffect} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UploadWidget from "./UploadWidget";
 
 function EditRelease() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
-
-    const [release, setRelease] = useState({})
+    const [release, setRelease] = useState({});
     const {id} = useParams();
+    const [image, setImage] = useState("");
 
 
   useEffect(() => {
       fetch(`/releases/${id}`)
       .then((res) => res.json())
       .then((release) => setRelease(release))
+      setImage(release.image)
   }, [id]);
 
     const formSchema = yup.object().shape({
@@ -29,10 +31,16 @@ function EditRelease() {
       })
     
     const initValues = release 
-    
     const formik = useFormik({
         enableReinitialize: true,
-        initialValues: initValues,
+        initialValues: {
+          title:`${release.title}`,
+          artist:`${release.artist}`,
+          description:`${release.description}`,
+          record_label:`${release.record_label}`,
+          date_released:`${release.date_released}`,
+          image:`${image}`,
+        },
         validationSchema: formSchema,
         onSubmit: (values) => {
           fetch(`/releases/${id}`, {
@@ -60,9 +68,15 @@ function EditRelease() {
         <div className="ui text container">
             <form style={{marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
             <h4  style={{marginTop: "100px"}} class="ui horizontal inverted divider">Edit Release</h4>
-
                 <div className="field">
-                    <label>Name  <Link to="/releases">  Back</Link></label>
+                    <label>Image <Link style={{float:"right"}} to={`/releases/${id}`}>  Back to Release Page</Link></label>
+                    <UploadWidget onSetImageUrl={setImage}/>
+                    <input type="text" style={{visibility: "hidden"}} name="image" value={formik.values.image} placeholder="Image link..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image}</p>}
+                    <img className="ui circular centered image small" src={image} alt=""></img>
+                </div>
+                <div className="field">
+                  <label>Title</label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Release title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
@@ -86,11 +100,7 @@ function EditRelease() {
                     <input type="text" name="date_released" value={formik.values.date_released} placeholder="Release date..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.date_released}</p>}
                 </div>
-                <div className="field">
-                    <label>Image Link</label>
-                    <input type="text" name="image" value={formik.values.image} placeholder="Image link..." onChange={formik.handleChange}></input>               
-                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image}</p>}
-                </div>
+
                 <div className="field">
                 
                 <button className="ui button inverted fluid grey" type="submit">Submit</button>

@@ -11,13 +11,13 @@ function AddEvent() {
 
 
     const formSchema = yup.object().shape({
-        name: yup.string().required("Must enter a title"),
-        venue: yup.string().required("Must enter a venue"),
-        location: yup.string().required("Must enter a location"),
-        details: yup.string().required("Must enter event details"),
-        image_url: yup.string().required("Must enter an image link"),
-        event_date: yup.date().required("Must enter a date"),
-        event_link: yup.string().required("Must enter an event link"),
+        name: yup.string().required("Title is required"),
+        venue: yup.string().required("Venue is required"),
+        location: yup.string().required("Location is required"),
+        details: yup.string().required("Event details are required"),
+        image_url: yup.string().required("Image is required"),
+        event_date: yup.date().required("Event date is required"),
+        event_link: yup.string().required("Event link is required"),
     })
     const formik = useFormik({
         enableReinitialize: true,
@@ -41,7 +41,6 @@ function AddEvent() {
           }).then((res) => {
             if(res.ok) {
               res.json().then(event => {
-                // onAddEvent(event)
                 navigate(`/events`)
               })
             } else {
@@ -55,12 +54,12 @@ function AddEvent() {
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
         <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
-        <div className="ui text container" style={{marginTop: "40px"}}>
-            <form style={{marginTop: "20px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
-            <h4 class="ui horizontal inverted divider">Add Event</h4>
+        <div className="ui text container" style={{marginTop: "40px"}} >
+            <form style={{marginTop: "20px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit} id="new_event_form">
+            <h4 className="ui horizontal inverted divider">Add New Event</h4>
                 <div className="field">
                     <label>Upload image, then enter event info...<Link style={{float:"right"}} to="/events">  Back to Events Page</Link></label>
-                    {(imageUrl == "")?
+                    {(imageUrl === "")?
                     <UploadWidget onSetImageUrl={setImageUrl}/>
                     : (
                     <>
@@ -71,7 +70,6 @@ function AddEvent() {
                     )}
                 </div> 
                 <div className="field">
-
                     <input type="text"  name="name" value={formik.values.name} placeholder="Event Name..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.name}</p>}
                 </div>
@@ -96,7 +94,7 @@ function AddEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.details}</p>}
                 </div>
                 <div className="field">  
-                <button className="ui button inverted fluid grey" type="submit">Submit</button>
+                  <button className="ui button inverted fluid grey" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

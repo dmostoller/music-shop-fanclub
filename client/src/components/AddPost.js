@@ -2,10 +2,12 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UploadWidget from "./UploadWidget";
 
 function AddPost() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [imageLink, setImageLink] = useState("");
 
     const formSchema = yup.object().shape({
         title: yup.string()
@@ -16,11 +18,13 @@ function AddPost() {
       })
 
     const formik = useFormik({
+      enableReinitialize: true, 
         initialValues: {
           title:'',
-          content:'',
-          image_url:'',
           date_added: `${new Date().toLocaleDateString('en-US')} ${new Date().toLocaleTimeString('en-US')}`,
+          content:'',
+          image_url:`${imageLink}`,
+
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -47,17 +51,23 @@ function AddPost() {
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
         <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
         <div className="ui text container" style={{marginTop: "50px"}}>
-            <form style={{marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
-            <h4  style={{marginTop: "50px"}} class="ui horizontal inverted divider">Add New Post</h4>
+            <form style={{marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit} id="new_post_form">
+            <h4 style={{marginTop: "50px"}} className="ui horizontal inverted divider">Add New Post</h4>
                 <div className="field">
-                    <label>Add New Post  <Link to="/">  Back</Link></label>
-                    <input type="text" name="title" value={formik.values.title} placeholder="Post title..." onChange={formik.handleChange}></input>
-                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
-                </div>
-                <div className="field">
+                    <label>Upload image then enter post info...<Link style={{float: "right"}} to="/">  Back to homepage</Link></label>
+                    {(imageLink === "")?
+                    <UploadWidget onSetImageUrl={setImageLink}/>
+                    : (
+                    <>
                     <input type="text" name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
+                    </>
+                    )}
                 </div>    
+                <div className="field">
+                    <input type="text"  name="title" value={formik.values.title} placeholder="Post title..." onChange={formik.handleChange}></input>
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
+                </div>
                 <div className="field">
                     <textarea type="text" rows="6" name="content" value={formik.values.content} placeholder="Post content..." onChange={formik.handleChange}></textarea>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
@@ -73,4 +83,3 @@ function AddPost() {
 }
 
 export default AddPost
-

@@ -271,9 +271,12 @@ class ReleasesById(Resource):
         if not release:
             raise NotFound
         try:
-            for attr in request.get_json():
-                if not request.get_json()['tracks']:
-                    setattr(release, attr, request.get_json()[attr])
+            setattr(release, 'title', request.get_json()['title'])
+            setattr(release, 'artist', request.get_json()['artist'])
+            setattr(release, 'description', request.get_json()['description'])
+            setattr(release, 'record_label', request.get_json()['record_label'])
+            setattr(release, 'date_released', request.get_json()['date_released'])
+            setattr(release, 'image', request.get_json()['image'])
             db.session.commit()
             response = make_response(release.to_dict(), 200)
         except ValueError:

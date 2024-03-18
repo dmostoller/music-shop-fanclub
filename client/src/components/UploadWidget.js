@@ -16,13 +16,10 @@ function UploadWidget({onSetImageUrl}) {
             sources: [ "local", "url"], // restrict the upload sources to URL and local files
         }, function(error, result) { 
             if (!error && result && result.event === "success") {
-                console.log(result.info);
+                // console.log(result.info);
                 onSetImageUrl(result.info.secure_url);
-                // document
-                // .getElementById("uploadedimage")
-                // .setAttribute("src", result.info.secure_url);
     }});
-    }, [])
+    }, [onSetImageUrl])
   // cropping: true, //add a cropping step
     // showAdvancedOptions: true,  //add advanced options (public_id and tag)
     // sources: [ "local", "url"], // restrict the upload sources to URL and local files
@@ -47,7 +44,7 @@ function UploadWidget({onSetImageUrl}) {
 
 return (
     <>
-    <button className="ui inverted button fluid black small" onClick={() => widgetRef.current.open()}>
+    <button type="button" className="ui inverted button fluid blue small" onClick={() => widgetRef.current.open()}>
         Upload
     </button>
     </>
