@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../context/user";
-import { Button, Error, Input, FormField, Label, Textarea } from "../styles";
 
 
 

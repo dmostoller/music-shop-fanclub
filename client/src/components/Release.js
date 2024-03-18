@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import TrackList from "./TrackList";
@@ -11,15 +11,28 @@ export default function Release({id, title, artist, record_label, description, d
     const { isAdmin } = useAdmin();
     const [error, setError] = useState(null);
     const [isSaved, setIsSaved] = useState(false);
-    const navigate = useNavigate();
     const [savedId, setSavedId] = useState("");
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
     }
-function checkIfSaved(){
 
-}
+useEffect(() => {
+    fetch(`/saved_by_release/${id}`)
+    .then((r) => {
+        if (r.ok) {
+        r.json().then(saved_release => {
+            changeIsSaved(true)
+            setSavedId(parseInt(saved_release.id))
+            // console.log(saved_release.id)
+        })
+        } else {
+            r.json().then(error => setError(error.message))
+        }
+    })
+}, [id]);
+
+
     const handleDeleteRelease = (e) => {
         if(window.confirm("Are you sure you want to delete this release?")){ 
         fetch(`/releases/${id}`,{
@@ -84,13 +97,6 @@ return (
                 <div className="center aligned meta">
                 <p> {date_released}</p>
                 </div>
-                {/* <div className="center aligned grid" style={{padding: "10px"}}> 
-                <iframe style={{border: "0", width: "100%", height: "275px"}}
-                src="https://bandcamp.com/EmbeddedPlayer/album=4128960796/size=large/bgcol=333333/linkcol=ffffff/artwork=none/track=2355594853/transparent=true/" seamless>
-                    <a href="https://kabayun.bandcamp.com/album/superluminal-first-contact">Superluminal - First Contact by Kabayun / Superluminal</a>
-                </iframe>
-                </div> */}
-               
             </div>
             <div className="content">
                 <div classname="ui inverted segment" >
@@ -104,13 +110,7 @@ return (
 
                 </div>
                 <div className="center aligned grid" style={{padding: "10px"}}> 
-                    {/* <Link to="/" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>
-                    <Link to="/releases" className="circular ui icon inverted grey button">
-                        <i className="cart icon" style={{visibility: "visible"}}></i>
-                    </Link> */}
                     <Link to="/shop" style={{marginRight: "15px"}} className="ui icon inverted grey button"><i className="cart icon"></i>  Buy</Link>
-                    {/* </div>
-                    <div className="center aligned grid" style={{paddingBottom:"10px"}}>  */}
                     { user && isAdmin ? (
                         <>
                             <Link to={`/releases/${id}/edit`} className="circular ui icon inverted grey button">
