@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 
 export default function Event ({id, name, venue, location, details, image_url, event_date}) {
 
-    const imageUrl = `https://res.cloudinary.com/ddp2xfpyb/image/upload/v1710733429/superluminal/${image_url}`
     return (
         <div className="ui container fluid" style={{marginTop: "25px"}}>
             <div className="ui horizontal inverted card fluid" style={{marginBottom: "15px"}}>
-                <div className="image" style={{minWidth: "300px"}}>
-                    <img src={imageUrl} alt={name} style={{minWidth: "300px"}}></img>
+                <div >
+                    <img className="ui large image" src={image_url} alt={name} ></img>
                 </div>
                 <div className="content" style={{padding: "25px"}}>
                     <div className="header">{name}</div>

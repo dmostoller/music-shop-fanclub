@@ -7,6 +7,8 @@ import UploadWidget from "./UploadWidget.js"
 function AddEvent() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [imageUrl, setImageUrl] = useState("");
+
 
     const formSchema = yup.object().shape({
         name: yup.string().required("Must enter a title"),
@@ -24,7 +26,7 @@ function AddEvent() {
           venue:'',
           location:'',
           details:'',
-          image_url: '',
+          image_url: `${imageUrl}`,
           event_date:'',
           event_link:'',
         },
@@ -70,14 +72,15 @@ function AddEvent() {
                     <input type="text" name="location" value={formik.values.location} placeholder="Location address..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.location}</p>}
                 </div>    
-                {/* <div className="field">
-                    <h1 style={{color: "white"}}>{imageUrl}</h1>
-                    <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
-                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
-                </div>  */}
                 <div className="field">
-                <UploadWidget/>
-                
+                    {/* <h1 style={{color: "white"}}>{imageUrl}</h1> */}
+                    {/* <input type="text"  name="image_url" value={imageUrl} placeholder={imageUrl}></input>  */}
+                    <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>                
+                    {/* {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>} */}
+                </div> 
+                <div className="field">
+                <UploadWidget onSetImageUrl={setImageUrl}/>
+                {/* <h2>{imageUrl}</h2> */}
                 </div>   
                 <div className="field">
                     <input type="text"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
