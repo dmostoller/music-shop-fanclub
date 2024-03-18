@@ -5,7 +5,7 @@ import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import PostCommentsList from "./PostCommentsList";
 
-function PostDetail({}){
+function PostDetail(){
     const [post, setPost] = useState({})
     const {id} = useParams();
     const navigate = useNavigate();
@@ -55,7 +55,7 @@ function PostDetail({}){
                                                     <i className="edit icon" style={{visibility: "visible"}}></i>
                                                 </Link>
                                                 <button className="circular ui icon inverted grey button" onClick={handleDeletePost}>
-                                                    <i class="trash icon" style={{visibility: "visible"}}></i>
+                                                    <i className="trash icon" style={{visibility: "visible"}}></i>
                                                 </button>
 
                                         </>

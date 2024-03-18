@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useAdmin } from "../context/admin";
 import { useUser } from "../context/user";
 
-function PostsList ({}) {
+function PostsList () {
     const [posts, setPosts] = useState([])
     const { user } = useUser()
     const { isAdmin } = useAdmin()
@@ -35,7 +35,7 @@ function PostsList ({}) {
 
             {/* : <div></div>
         } */}
-        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+        <div className="ui middle aligned center aligned grid" >
             <div class="ui inverted link cards">
                 {blog}
             </div>    

@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Grid, Card, Segment } from "semantic-ui-react";
+import { Image, Segment } from "semantic-ui-react";
 import PostsList from "./PostsList";
 
 export default function HomePage() {
@@ -11,7 +11,7 @@ export default function HomePage() {
                 </Image>
             </div>    
             {/* <h1 style={{color: "white", textAlign:"center"}}>News & Updates</h1> */}
-            <h4 style={{marginTop: "25px", marginBottom:"40px"}} class="ui horizontal inverted divider">News & Updates</h4>
+            <h4 style={{marginTop: "25px", marginBottom:"40px"}} className="ui horizontal inverted divider">News & Updates</h4>
 
             <PostsList/>
         </Segment>
