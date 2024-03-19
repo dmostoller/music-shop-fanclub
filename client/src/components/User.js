@@ -3,7 +3,7 @@ import { useUser } from "../context/user";
 import SavedList from "./SavedList";
 import EditUser from "./EditUser";
 
-export default function User ({}) {
+export default function User () {
     const [showEdit, setShowEdit] = useState(false);
     const {user} = useUser();
     const [savedItems, setSavedItems] = useState([]);

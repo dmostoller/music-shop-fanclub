@@ -12,8 +12,9 @@ export default function HomePage() {
             </div>    
             {/* <h1 style={{color: "white", textAlign:"center"}}>News & Updates</h1> */}
             <h4 style={{marginTop: "25px", marginBottom:"40px"}} className="ui horizontal inverted divider">News & Updates</h4>
-
+            <div className="ui container centered">
             <PostsList/>
+            </div>
         </Segment>
     )
 
