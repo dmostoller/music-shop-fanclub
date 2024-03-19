@@ -33,7 +33,7 @@ function EventDetail(){
         <div className="ui container" style={{paddingTop:"5px", marginTop: "40px"}}>
         <div style={{marginTop: "10px"}} className="ui inverted horizontal card fluid">
             <div className="item">
-                <img className="ui huge image" src={event.image_url} alt={event.name}></img>
+                <img className="ui big image" src={event.image_url} alt={event.name}></img>
             </div>
             <div className="content">
                 <div className="header">

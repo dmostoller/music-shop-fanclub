@@ -4,13 +4,14 @@ import './semantic/dist/semantic.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useUser } from "./context/user";
+import { useAdmin } from "./context/admin.js"
+
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Shop from "./components/Shop";
 import HomePage from "./components/HomePage";
-import Videos from "./components/Videos";
-import { useUser } from "./context/user";
-import { useAdmin } from "./context/admin.js"
+import Learn from "./components/Learn.js";
 import LoginForm from "./components/Login";
 import PostDetail from './components/PostDetail.js';
 import AddPost from "./components/AddPost.js";
@@ -23,6 +24,11 @@ import AboutPage from "./components/AboutPage.js";
 import ContactPage from "./components/ContactPage.js"
 import SignUp from "./components/SignUp.js";
 import ReleasesPage from "./components/ReleasesPage.js";
+import AddRelease from "./components/AddRelease.js";
+import EditRelease from "./components/EditRelease.js";
+import User from "./components/User.js";
+import Forum from "./components/Forum.js";
+import NotFound from "./components/NotFound.js";
 
 
 function App() {
@@ -57,15 +63,15 @@ function App() {
     navigate('/')
     toast.dark(`Goodbye, thanks for visiting!`);
   }
-
-
+  const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY
+  console.log(API_KEY)
   return (
   <div style={{backgroundColor: "#303030"}} className="App">
     <Nav onLogout={handleLogout}/>
     <ToastContainer/>
       <Routes>
           <Route path="/" element={<HomePage/>}/>        
-          <Route path="/video" element={<Videos/>}/>
+          <Route path="/learn" element={<Learn/>}/>
           <Route path="/shop" element={<Shop/>}/>
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>}/>
           <Route path="/signup" element={<SignUp/>} /> 
@@ -79,6 +85,10 @@ function App() {
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/contact" element={<ContactPage/>}/>
           <Route path="/releases" element={<ReleasesPage/>}/>
+          <Route path="/releases/new" element={<AddRelease/>}/>
+          <Route path="/releases/:id/edit" element={<EditRelease/>}/>
+          <Route path="/user" element={<User/>}/>
+          <Route path="/forum" element={<Forum/>}/>
       </Routes>
     <Footer />
   </div>

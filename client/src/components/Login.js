@@ -5,8 +5,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 function LoginForm({ onLogin }) {
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  function tryAgain() {
+    setError(null)
+  }
 
   const formSchema = yup.object().shape({
     username: yup.string().required("Must enter a username"),
@@ -30,17 +34,28 @@ function LoginForm({ onLogin }) {
         r.json().then(user => {
           onLogin(user)
           navigate('/')
-          
       })
       } else {
-          r.json().then(errors => setErrors(errors.message))
+          r.json().then(error => setError(error.message))
       }
     })
   },
   })
+   if(error) return (
+   <>
+    <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+      <div className="column" style={{width:"450px"}}>
+      <h4 className="ui inverted image header">
+          <div className="content"><span className="ui inverted red text">{error}</span></div>
+      </h4>
+      <button onClick={tryAgain} className="ui fluid button inverted large grey" type="submit">Try Again</button>
+    </div>
+  </div>      
+        
+  </>)
 
   return (
-    <div className="ui middle aligned center aligned grid" style={{marginTop: "40px"}}>
+    <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
       <div className="column" style={{width:"450px"}}>
         <h2 className="ui inverted image header">
           <div className="content">Log-in to your account</div>
@@ -78,9 +93,6 @@ function LoginForm({ onLogin }) {
                 {/* <Link to="/" className="ui button inverted grey small">Back</Link> */}
                 <button className="ui fluid button inverted grey large" type="submit">Login</button>
             <div>
-            {errors.map((err) => (
-                <Error key={err}>{err}</Error>
-            ))}
             </div>
             <div className="ui inverted message tiny">
              New to us? 

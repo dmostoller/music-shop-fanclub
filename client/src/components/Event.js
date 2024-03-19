@@ -2,11 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Event ({id, name, venue, location, details, image_url, event_date}) {
+
     return (
         <div className="ui container fluid" style={{marginTop: "25px"}}>
             <div className="ui horizontal inverted card fluid" style={{marginBottom: "15px"}}>
-                <div className="image" style={{minWidth: "300px"}}>
-                    <img src={image_url} alt={name} style={{minWidth: "300px"}}></img>
+                <div >
+                    <img className="ui large image" src={image_url} alt={name} ></img>
                 </div>
                 <div className="content" style={{padding: "25px"}}>
                     <div className="header">{name}</div>

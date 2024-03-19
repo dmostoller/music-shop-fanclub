@@ -7,10 +7,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../context/user";
 
 
+
 function SignUp() {
   const { setUser } = useUser();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+
+  function tryAgain() {
+    setError(null)
+  }
+
 
   const formSchema = yup.object().shape({
     username: yup.string()
@@ -35,6 +41,8 @@ const formik = useFormik({
   },
 validationSchema: formSchema,
 onSubmit: (values) => {
+  setError(null);
+
   fetch("/users", {
     method: "POST",
     headers: {
@@ -55,8 +63,25 @@ onSubmit: (values) => {
 },
 })
 
+
+
+// {errors.map((err) => (
+//   <Error key={err}>{err}</Error>
+// ))}
+if(error) return (
+  <>
+   <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
+     <div className="column" style={{width:"450px"}}>
+     <h4 className="ui inverted image header">
+         <div className="content"><span className="ui inverted red text">{error}</span></div>
+     </h4>
+     <button onClick={tryAgain} className="ui fluid button inverted large grey" type="submit">Try Again</button>
+   </div>
+ </div>      
+       
+ </>)
   return (
-    <div className="ui middle aligned center aligned grid" style={{marginTop: "40px"}}>
+    <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
             <div className="column" style={{width:"450px"}}>
             <h2 className="ui inverted image header">
           <div className="content">Create a new account</div>
@@ -124,11 +149,12 @@ onSubmit: (values) => {
              Already have an account? 
               <Link to="/login">    Login</Link>
             </div>
-            {/* <div>
+      
+            {/* <div className="field">
             {errors.map((err) => (
                 <Error key={err}>{err}</Error>
             ))}
-            </div> */}
+            </div>  */}
         </form> 
         </div>
     </div>

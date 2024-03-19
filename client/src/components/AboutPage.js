@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 export default function AboutPage () {
 
 return (
-    <div className="ui container">
-    <div style={{width: "90%", margin: "auto", marginTop: "40px"}} className="ui inverted card">
+    <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh", marginTop: "40px"}}>
+    <div style={{width: "90%", margin: "auto", marginTop:"20px", marginBottom:"20px"}} className="ui inverted card">
         <div className="image">
-            <img className="ui huge image" src="https://scontent-lga3-2.xx.fbcdn.net/v/t39.30808-6/375051169_626115519634883_3407204276586185218_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=bcZ3sMiPK5EAX81cwt8&_nc_ht=scontent-lga3-2.xx&oh=00_AfDk6vEnDnHIw4SrNYMYBxajeLFP3mTGBCQjD21pq8JY4A&oe=65F6A12A" alt="Superluminal - Sangoma Records"/>
+            <img className="ui large image" 
+            src="https://res.cloudinary.com/ddp2xfpyb/image/upload/v1710797990/superluminal/sjmzwwua5f9gg8pw8ck9.jpg" 
+            alt="Superluminal - Sangoma Records"/>
         </div>
         <div className="content">
             <div className="header">
