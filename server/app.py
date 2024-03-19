@@ -6,6 +6,7 @@ from flask import request, abort, make_response, jsonify, request, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from wtforms.validators import ValidationError
+from datetime import datetime, date
 
 
 # Local imports
@@ -119,13 +120,15 @@ class Posts(Resource):
         return reponse
     
     def post(self):
+        now = datetime.now()
+        date = now.date()
         try:
             form_json = request.get_json()
             new_post = Post(
                 title=form_json['title'],
                 content=form_json['content'],
                 image_url=form_json['image_url'],
-                date_added=form_json['date_added'],
+                date_added=date,
             )
             db.session.add(new_post)
             db.session.commit()
