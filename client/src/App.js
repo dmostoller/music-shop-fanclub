@@ -28,7 +28,8 @@ import AddRelease from "./components/AddRelease.js";
 import EditRelease from "./components/EditRelease.js";
 import User from "./components/User.js";
 import Forum from "./components/Forum.js";
-import NotFound from "./components/NotFound.js";
+import SearchResults from "./components/SearchResults.js";
+import ReleaseDetail from "./components/ReleaseDetail.js";
 
 
 function App() {
@@ -87,8 +88,10 @@ function App() {
           <Route path="/releases" element={<ReleasesPage/>}/>
           <Route path="/releases/new" element={<AddRelease/>}/>
           <Route path="/releases/:id/edit" element={<EditRelease/>}/>
+          <Route path="/releases/:id" element={<ReleaseDetail/>}/>
           <Route path="/user" element={<User/>}/>
           <Route path="/forum" element={<Forum/>}/>
+          <Route path="/search_results/:searchParams" element={<SearchResults/>}/>
       </Routes>
     <Footer />
   </div>

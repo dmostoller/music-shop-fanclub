@@ -57,7 +57,7 @@ function CommentsList({ releaseId }){
                 : 
                 <button 
                 onClick={changeIsComFormVis} 
-                className="ui inverted fluid button grey small">
+                className="ui inverted fluid button black small">
                     Add Comment
                 </button>}
             </div>

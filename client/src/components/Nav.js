@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu } from 'semantic-ui-react'
 import { NavLink, Link } from "react-router-dom";
 import { useUser } from "../context/user.js"
+import Search from './Search.js';
 
 
 function Nav({onLogout}) {
@@ -29,13 +30,7 @@ function Nav({onLogout}) {
                         src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1525430860&color=%23626262&inverse=true&auto_play=false&show_user=true">
                         </iframe>            
                 </div> */}
-                <div style={{justifyContent: 'flex-end'}} className="ui category search item">
-                    <div className="ui transparent inverted icon input">
-                        <input className="prompt" type="text" placeholder="Search..."></input>
-                        <i className="search link icon"></i>
-                    </div>
-                    <div className="results"></div>
-                </div>
+                <Search/>
             </div>
             <div className="item">
                 { !user ? (
