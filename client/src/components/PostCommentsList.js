@@ -43,7 +43,7 @@ function PostCommentsList({ postId }){
     }
     
     return (
-        <div className="ui container">
+        <div className="ui text container">
             <div className="ui inverted comments">
             {commentsSection}
             </div>

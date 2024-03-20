@@ -45,7 +45,7 @@ return (
 
                 </div>
                 <div className="ui centered grid" style={{padding: "10px"}}> 
-                    <Link to="/contact" className="ui inverted grey button small">Contact Us</Link>
+                    <Link to="/contact" className="ui inverted fluid black button small">Contact Us</Link>
                 </div>
             </div>
 

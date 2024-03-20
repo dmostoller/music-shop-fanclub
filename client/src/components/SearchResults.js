@@ -64,27 +64,21 @@ function SearchResults() {
     })
 
 
-
-
-
     return (
         <>
         <div className="ui container" style={{marginTop: "40px", minHeight:"100vh"}}>
          { (searchResults.length === 0 && postResults.length === 0)  ?   
              <h4 style={{padding: "50px"}} className="ui horizontal inverted divider"><span className="ui red text">Search Returned No Results</span></h4>
-
             :
             <h4 style={{padding: "50px"}} className="ui horizontal inverted divider">Search Results</h4>
          }
             <div className="ui centered grid" style={{marginBottom: "25px"}}>
-                
                 <div className="ui inverted stackable link cards">
                     { (searchResults.length === 0) ?
                     <></>
                 :
                 resultsList
                 }
-                
             { (postResults.length === 0) ?
                     <></>
                 :

@@ -16,6 +16,7 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String, nullable=False)
     email = db.Column(db.String)
     is_admin = db.Column(db.Boolean)
+    avatar = db.Column(db.String)
 
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
     saved_items = db.relationship('Saved', back_populates='user', cascade='all, delete')
@@ -88,6 +89,7 @@ class Release(db.Model, SerializerMixin):
     record_label = db.Column(db.String)
     date_released = db.Column(db.String)
     image = db.Column(db.String)
+    buy_link = db.Column(db.String)
 
     tracks = db.relationship('Track', back_populates='release', cascade='all, delete')
     comments = db.relationship('Comment', back_populates='release', cascade='all, delete')

@@ -6,7 +6,7 @@ import TrackList from "./TrackList";
 import CommentsList from "./CommentsList";
 
 
-export default function Release({id, title, artist, record_label, description, date_released, image, onDeleteRelease, savedItems}) {
+export default function Release({id, title, artist, record_label, description, date_released, image, onDeleteRelease, savedItems, buyLink}) {
     const { user } = useUser();
     const { isAdmin } = useAdmin();
     const [error, setError] = useState(null);
@@ -94,7 +94,7 @@ return (
                 <div className="center aligned meta">
                     {record_label}
                 </div>
-                <div className="center aligned meta">
+                <div className="center aligned meta" style={{marginBottom:"25px"}}>
                 <p> {date_released}</p>
                 </div>
             </div>
@@ -107,10 +107,9 @@ return (
                 <h4 class="ui horizontal inverted divider">Release Info</h4>
                 <div className="description">
                     <p>{description}</p>
-
                 </div>
                 <div className="center aligned grid" style={{padding: "10px"}}> 
-                    <Link to="/shop" style={{marginRight: "15px"}} className="ui icon inverted grey button"><i className="cart icon"></i>  Buy</Link>
+                    <a href={`${buyLink}`} target="_blank" style={{marginRight: "15px"}} className="ui icon inverted grey button"><i className="cart icon"></i>  Buy</a>
                     { user && isAdmin ? (
                         <>
                             <Link to={`/releases/${id}/edit`} className="circular ui icon inverted grey button">

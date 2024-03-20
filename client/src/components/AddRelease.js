@@ -18,6 +18,7 @@ function AddRelease() {
         record_label: yup.string().required("Must enter an record label"),
         date_released: yup.string().required("Must enter a release date"),
         image: yup.string().required("Must enter an image link"),
+        buy_link: yup.string().required("Must enter a purchase link"),
       })
 
     const formik = useFormik({
@@ -29,6 +30,7 @@ function AddRelease() {
           record_label:'',
           date_released:'',
           image:`${image}`,
+          buy_link: '',
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -90,7 +92,10 @@ function AddRelease() {
                     <input type="text" name="date_released" value={formik.values.date_released} placeholder="Release date..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.date_released}</p>}
                 </div>
-
+                <div className="field">
+                    <input type="text" name="buy_link" value={formik.values.buy_link} placeholder="Purchase link..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.buy_link}</p>}
+                </div>
                 <div className="field">
                   <button className="ui button fluid inverted grey small" type="submit">Submit</button>
                 </div>

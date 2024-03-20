@@ -65,7 +65,7 @@ function App() {
     toast.dark(`Goodbye, thanks for visiting!`);
   }
   const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY
-  console.log(API_KEY)
+  // console.log(API_KEY)
   return (
   <div style={{backgroundColor: "#303030"}} className="App">
     <Nav onLogout={handleLogout}/>

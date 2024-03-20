@@ -42,7 +42,7 @@ function CommentsList({ releaseId }){
     }
     
     return (
-        <div className="ui container">
+        <div className="ui text container">
             <div className="ui inverted comments">
             {commentsSection}
             </div>

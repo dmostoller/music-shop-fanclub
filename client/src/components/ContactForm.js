@@ -20,7 +20,7 @@ const ContactForm = () => {
  };
 
  return (
-   <form className='ui form' ref={form} onSubmit={sendEmail}>
+   <form className='ui inverted form' ref={form} onSubmit={sendEmail}>
      <div className='field'>
         <label>Name</label>
         <input type="text" name="from_name" />
@@ -33,7 +33,7 @@ const ContactForm = () => {
         <label>Message</label>
         <textarea type="text" name="message" />
      </div>
-     <button className="ui button inverted grey" type="submit">Send Email</button>
+     <button className="ui button inverted fluid grey" type="submit">Send Email</button>
    </form>
  );
 };

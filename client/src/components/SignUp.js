@@ -5,18 +5,19 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../context/user";
-
-
+import UploadAvatarWidget from "./UploadAvatarWidget";
 
 function SignUp() {
+  
   const { setUser } = useUser();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [avatar, setAvatar] = useState("");
+
 
   function tryAgain() {
     setError(null)
   }
-
 
   const formSchema = yup.object().shape({
     username: yup.string()
@@ -31,13 +32,17 @@ function SignUp() {
     .required("Confirm password is required"),
     email: yup.string().email()
     .required("Must enter an email address"),
+    avatar: yup.string()
+    .required("Please upload an image for your avatar"),
 })
 const formik = useFormik({
+  enableReinitialize: true,
   initialValues: {
       username:'',
       password:'',
       password_confirmation:'',
       email:'',
+      avatar:`${avatar}`,
   },
 validationSchema: formSchema,
 onSubmit: (values) => {
@@ -87,6 +92,18 @@ if(error) return (
           <div className="content">Create a new account</div>
         </h2>
         <form className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="field">
+                    <label><span className="ui italic text"> Upload a profile image then select a username and password.</span></label>
+                    {(avatar === "")?
+                    <UploadAvatarWidget onSetImageUrl={setAvatar}/>
+                    : (
+                    <>
+                    <img className="ui circular centered image small" src={avatar} alt=""></img>
+                    <input style={{visibility: "hidden"}} type="text"  name="avatar" value={formik.values.avatar} placeholder="Image link..." onChange={formik.handleChange}></input>                
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.avatar}</p>}
+                    </>
+                    )}
+                </div> 
             <div className="field">
                 {/* <label>Create New Account</label> */}
                 <div className="ui left icon input">

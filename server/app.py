@@ -30,7 +30,8 @@ class Users(Resource):
                     username=form_json['username'],
                     password_hash=form_json['password'],
                     email=form_json['email'],
-                    is_admin=False
+                    is_admin=False,
+                    avatar=form_json['avatar']
                 )
                 db.session.add(new_user)
                 db.session.commit()
@@ -60,6 +61,7 @@ class UpdateUser(Resource):
                 setattr(user, 'username', request.get_json()['username'])
                 setattr(user, 'password_hash', request.get_json()['password'])
                 setattr(user, 'email', request.get_json()['email'])
+                setattr(user, 'avatar', request.get_json()['avatar'])
                 db.session.commit()
                 response = make_response(user.to_dict(rules = ('-_password_hash', )), 200)
             except ValueError:
@@ -250,7 +252,8 @@ class Releases(Resource):
                 description=form_json['description'],
                 record_label=form_json['record_label'],
                 date_released=form_json['date_released'],
-                image=form_json['image']
+                image=form_json['image'],
+                buy_link=form_json['buy_link']
             )
             db.session.add(new_release)
             db.session.commit()
@@ -280,6 +283,7 @@ class ReleasesById(Resource):
             setattr(release, 'record_label', request.get_json()['record_label'])
             setattr(release, 'date_released', request.get_json()['date_released'])
             setattr(release, 'image', request.get_json()['image'])
+            setattr(release, 'buy_link', request.get_json()['buy_link'])
             db.session.commit()
             response = make_response(release.to_dict(), 200)
         except ValueError:

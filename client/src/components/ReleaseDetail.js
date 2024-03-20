@@ -94,6 +94,8 @@ useEffect(() => {
 
 return (
 <div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
+<div className="ui middle aligned center aligned grid" style={{paddingTop:"5px", marginTop: "20px", minHeight:"100vh"}}>
+
         <div style={{margin: "10px"}} className="ui inverted attached horizontal card fluid">
             <div className="item">
                 <img className="ui large image" src={release.image} alt={release.title}></img>
@@ -105,7 +107,7 @@ return (
                 <div className="center aligned meta">
                     {release.record_label}
                 </div>
-                <div className="center aligned meta">
+                <div className="center aligned meta" style={{marginBottom:"25px"}}>
                 <p> {release.date_released}</p>
                 </div>
             </div>
@@ -121,7 +123,7 @@ return (
 
                 </div>
                 <div className="center aligned grid" style={{padding: "10px"}}> 
-                    <Link to="/shop" style={{marginRight: "15px"}} className="ui icon inverted grey button"><i className="cart icon"></i>  Buy</Link>
+                    <Link to={`${release.buy_link}`} target="_blank" style={{marginRight: "15px"}} className="ui icon inverted grey button"><i className="cart icon"></i>  Buy</Link>
                     { user && isAdmin ? (
                         <>
                             <Link to={`/releases/${id}/edit`} className="circular ui icon inverted grey button">
@@ -150,10 +152,11 @@ return (
             </div>
             <div className="ui bottom attached inverted segment">
             <h4 className="ui horizontal inverted divider">Comments</h4>
-            <div><CommentsList releaseId={id}/></div> 
+            <div><CommentsList releaseId={release.id}/></div> 
 
             </div>
         </div>
+    </div>
     </div>
 
 );

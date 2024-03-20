@@ -12,6 +12,7 @@ function ReleasesList ({ releases, onDeleteRelease }) {
         description={release.description}
         record_label={release.record_label}
         date_released={release.date_released}
+        buyLink={release.buy_link}
         image={release.image}
         onDeleteRelease={onDeleteRelease}
         savedItems={release.saved_items}
