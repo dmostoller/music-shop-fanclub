@@ -12,7 +12,7 @@ from datetime import datetime, date
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Post, Event, Release, Track, Saved, Comment, PostComment
+from models import User, Post, Event, Release, Track, Saved, Comment, PostComment, ForumMessage, ForumThread
 from werkzeug.exceptions import NotFound, Unauthorized, UnprocessableEntity
 
 # Views go here!
@@ -463,7 +463,6 @@ class CommentsById(Resource):
 api.add_resource(Comments, '/comments')
 api.add_resource(CommentsById, '/comments/<int:id>')
 
-
 class PostComments(Resource):
     def get(self):
         post_comments = [post_comment.to_dict() for post_comment in PostComment.query.all()]
@@ -499,6 +498,61 @@ class PostCommentsById(Resource):
     
 api.add_resource(PostComments, '/post_comments')
 api.add_resource(PostCommentsById, '/post_comments/<int:id>')
+
+
+class ForumThreads(Resource):
+    def get(self):
+        forum_threads = [forum_thread.to_dict() for forum_thread in ForumThread.query.all()]
+        reponse = make_response(forum_threads, 200)
+        return reponse
+
+class ForumMessages(Resource):
+    def get(self):
+        forum_messages = [forum_message.to_dict() for forum_message in ForumMessage.query.all()]
+        reponse = make_response(forum_messages, 200)
+        return reponse
+     
+    def post(self):
+        now = datetime.now()
+        user_id = session.get('user_id')
+        try:
+            form_json = request.get_json()
+            new_forum_message = ForumMessage(
+                message=form_json['message'],
+                date_added=now,
+                user_id=user_id,
+                forum_thread_id=form_json['forum_thread_id'],
+            )
+            db.session.add(new_forum_message)
+            db.session.commit()
+            response = make_response(new_forum_message.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+
+class ForumMessagesById(Resource):
+    def delete(self, id):
+        forum_message = ForumMessage.query.filter_by(id=id).first()
+        if not forum_message:
+            raise NotFound
+        db.session.delete(forum_message)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
+    
+api.add_resource(ForumThreads, '/forum_threads')
+api.add_resource(ForumMessages, '/forum_messages')
+api.add_resource(ForumMessagesById, '/forum_messages/<int:id>')
+
+class ForumMessagesByThreadId(Resource):
+    def get(self, id):
+        messages = [message.to_dict() for message in ForumMessage.query.all() if message.forum_thread_id == id]
+        response = make_response(messages, 200)
+        return response 
+    
+api.add_resource(ForumMessagesByThreadId, '/messages_by_thread_id/<int:id>')
+
 
 
 @app.errorhandler(NotFound)

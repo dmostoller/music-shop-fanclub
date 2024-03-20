@@ -21,10 +21,10 @@ class User(db.Model, SerializerMixin):
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
     saved_items = db.relationship('Saved', back_populates='user', cascade='all, delete')
     post_comments = db.relationship('PostComment', back_populates='user', cascade='all, delete')
+    forum_messages = db.relationship('ForumMessage', back_populates='user', cascade='all, delete')
 
-    serialize_rules = ( '-comments.user', '-post_comments.user')
+    serialize_rules = ( '-comments.user', '-post_comments.user', '-forum_messages.user')
 
-    
     @hybrid_property
     def password_hash(self):
         return self._password_hash
@@ -167,6 +167,35 @@ class PostComment(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='post_comments')
 
     serialize_rules = ('-post.post_comments', '-user.post_comments', '-user.comments', '-user.saved_items')
-
+    
     def __repr__(self):
         return f'<Comment {self.id}>'
+
+class ForumThread(db.Model, SerializerMixin):
+    __tablename__ = 'forum_threads'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+
+    forum_messages = db.relationship('ForumMessage', back_populates='forum_thread', cascade='all, delete')
+
+    def __repr__(self):
+        return f'<Thread {self.id}>'
+
+class ForumMessage(db.Model, SerializerMixin):
+    __tablename__ = 'forum_messages'
+
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.String)
+    date_added = db.Column(db.String)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='forum_messages')
+
+    forum_thread_id = db.Column(db.Integer, db.ForeignKey('forum_threads.id'))
+    forum_thread = db.relationship('ForumThread', back_populates='forum_messages')
+
+    serialize_rules = ('-forum_thread.forum_messages', '-user.forum_messages')
+    
+    def __repr__(self):
+        return f'<ForumMessage {self.id}>'

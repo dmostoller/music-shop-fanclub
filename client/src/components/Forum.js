@@ -1,85 +1,49 @@
+import React, { useState, useEffect } from 'react';
+import { useUser } from "../context/user";
+import Thread from './Thread';
+import ThreadMessageList from './ThreadMessageList';
 
-export default function Forum() {
+
+function Forum() {
+    const [threads, setThreads] = useState([]);  
+    const [selectedThread, setSelectedThread] = useState(1);
+
+    useEffect(() => {
+        fetch("/forum_threads")
+        .then((res) => res.json())
+        .then((threads) => {setThreads(threads)})
+    }, []);
+    
+    const activeThreads = threads.map((thread) => {
+        console.log(thread)
+        return <Thread
+        key={thread.id}
+        name={thread.name}
+        id={thread.id}
+        onSelectThread={setSelectedThread}
+        />
+})
 
 
     return (
         <div className="ui grid" style={{width:"90%", margin:"auto", minHeight:"100vh", marginTop:"40px"}}>
-            <div className="four wide column">
-                <table className="ui selectable inverted table">
-                    <thead>
-                        <tr>
-                        <th>Channels</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><i className="comments icon"></i> | general-chat</td>
-                        </tr>
-                        <tr>
-                            <td><i className="comments icon"></i> | music-production</td>
-                        </tr>
-                        <tr>
-                            <td><i class="comments icon"></i> | upcoming-events</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div className="ten wide column">
-                <div className="ui resizable scrolling inverted segment" >
-                    <div className="ui inverted comments">
-                        <div className="comment" style={{padding:"5px"}}>
-                            <div className="avatar">
-                                <img src="https://res.cloudinary.com/ddp2xfpyb/image/upload/v1710881589/avatars/IMG_4160_lszktg.png"></img>
-                            </div>
-                            <div className="content">
-                                <div className="author">author
-                                    <div className="metadata"> 
-                                        <span className="date"><span class="ui red text">date</span></span>
-                                    </div>
-                                </div>
-                                <div className="text"><span className="ui white text">dlksaphjdklsajhdklp;ajhdkl;pjhklja</span>
-                                </div>
-                                <div className="actions">
-                                    <a className="delete">Delete</a>
-                                </div>
-                            </div>
+            <div className="four wide left attached column">
+            
+                    <div class="ui inverted fluid large vertical pointing menu">
+                        <div className='item'>
+                            Channels
                         </div>
-                        <div className="comment">
-                            <div className="avatar">
-                                <img src="https://res.cloudinary.com/ddp2xfpyb/image/upload/v1710881589/avatars/IMG_4160_lszktg.png"></img>
-                            </div>
-                            <div className="content">
-                                <div className="author">author
-                                    <div className="metadata">
-                                        <span className="date">date</span>
-                                    </div>
-                                </div>
-                                <div className="text">dlksaphjdklsajhdklp;ajhdkl;pjhkljashKJLHJASJIKODHAsijdhgijoaHDJIOASHA
-                                </div>
-                                <div className="actions">
-                                    <a className="delete">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                        
+                        {activeThreads}
                     </div>
 
-                </div>
-                <div className="ui bottom attached inverted segment" >
-                            <div className="ui fluid text container" >
-                                <form className="ui form"  id="comment">  
-                                    <div className="field">
-                                        <div className="ui transparent inverted icon input" >
-                                            <button className="circular ui icon grey button">
-                                                <i className="icon plus"></i>
-                                            </button>
-                                            <input type="text" id="comment" className="prompt" placeholder="Message..."></input>
-                                        </div>             
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                   </div> 
             </div>
+            <div className="eleven wide right attached column" style={{height: "100"}}>
+                
+                <ThreadMessageList threadId={selectedThread}/>                                   
+                
+            </div>
+        </div> 
     )
 }
+
+export default Forum
