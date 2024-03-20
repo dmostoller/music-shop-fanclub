@@ -506,6 +506,30 @@ class ForumThreads(Resource):
         reponse = make_response(forum_threads, 200)
         return reponse
 
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_forum_thread = ForumThread(
+                name=form_json['name']
+            )
+            db.session.add(new_forum_thread)
+            db.session.commit()
+            response = make_response(new_forum_thread.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+    
+class ForumThreadsById(Resource):
+    def delete(self, id):
+        forum_thread = ForumThread.query.filter_by(id=id).first()
+        if not forum_thread:
+            raise NotFound
+        db.session.delete(forum_thread)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
+
 class ForumMessages(Resource):
     def get(self):
         forum_messages = [forum_message.to_dict() for forum_message in ForumMessage.query.all()]
@@ -513,13 +537,12 @@ class ForumMessages(Resource):
         return reponse
      
     def post(self):
-        now = datetime.now()
         user_id = session.get('user_id')
         try:
             form_json = request.get_json()
             new_forum_message = ForumMessage(
                 message=form_json['message'],
-                date_added=now,
+                date_added=form_json['date_added'],
                 user_id=user_id,
                 forum_thread_id=form_json['forum_thread_id'],
             )
@@ -542,6 +565,7 @@ class ForumMessagesById(Resource):
         return response
     
 api.add_resource(ForumThreads, '/forum_threads')
+api.add_resource(ForumThreadsById, '/forum_threads/<int:id>')
 api.add_resource(ForumMessages, '/forum_messages')
 api.add_resource(ForumMessagesById, '/forum_messages/<int:id>')
 
@@ -552,7 +576,6 @@ class ForumMessagesByThreadId(Resource):
         return response 
     
 api.add_resource(ForumMessagesByThreadId, '/messages_by_thread_id/<int:id>')
-
 
 
 @app.errorhandler(NotFound)

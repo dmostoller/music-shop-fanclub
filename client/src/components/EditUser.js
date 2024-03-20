@@ -75,9 +75,11 @@ function EditUser({setShowEdit}){
                               <img className="ui circular centered image small" src={avatar} alt=""></img>
                               {/* <span className="ui red text">{avatar}</span> */}
                             </div>
+                            <div className="ui mini input">
                             <input style={{visibility: "hidden"}} type="text"  name="avatar" value={formik.values.avatar} placeholder="Image link..." onChange={formik.handleChange}></input>                
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.avatar}</p>}
-                        </div> 
+                            </div>
+                       </div> 
                         <div className="field">
                             <input type="text" id="username" name="username" value={formik.values.username} onChange={formik.handleChange}></input>               
                                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}

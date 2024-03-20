@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ThreadMessage from "./ThreadMessage";
-import MessageForm from "./MessageForm";
+import ThreadMessageForm from "./ThreadMessageForm";
 
-export default function ThreadMessageList({threadId}) {
+export default function ThreadMessageList({threadId, searchVal}) {
     const [messages, setMessages] = useState([]);
-    
+    const divRef = useRef(null);
+
+    useEffect(() => {
+        divRef.current.scrollIntoView({ behavior: 'smooth' });
+    });
+
     useEffect(() => {
         fetch(`/messages_by_thread_id/${threadId}`)
         .then((res) => res.json())
         .then((messages) => {setMessages(messages)})
       }, [threadId]);
-
-
 
     const deleteMessage = (deleted_message_id) => {
         setMessages(messages => messages.filter((message) => message.id !== deleted_message_id))
@@ -20,26 +23,33 @@ export default function ThreadMessageList({threadId}) {
     const addMessage = (newMessage) => {
         setMessages(messages => ([...messages, newMessage]))
     }
-      
-    //   console.log(threadId)
-      const threadMessages = messages.map((message) => {
-        return <ThreadMessage
-        key={message.id}
-        messageObj={message}
-        onDeleteMessage={deleteMessage}
-        />
-   
+    // const filteredMessages = messages
+    // .filter(message => {
+    //     return (
+    //         message.message.toLowerCase().includes(searchVal.toLowerCase()) || message.user.username.toLowerCase().includes(searchVal.toLowerCase())        
+    //     )
+    // })
+
+    const threadMessages = messages.map((message) => {
+    return <ThreadMessage
+    key={message.id}
+    messageObj={message}
+    onDeleteMessage={deleteMessage}
+    />
 })
 
     return(
         <>
-        <div className="ui resizable scrolling inverted segment" style={{height: "600px"}}>
+        <div className="ui resizable scrolling inverted segment" id="scrollWindow" style={{height: "700px"}}>
             <div className="ui inverted comments">
                 {threadMessages}
+                <div ref={divRef} />
             </div>      
         </div>
         <div className="ui bottom attached inverted segment" >
-            <MessageForm onAddMessage={addMessage} threadId={threadId} />
+            {/* <MessageForm onAddMessage={addMessage} threadId={threadId} /> */}
+            <ThreadMessageForm onAddMessage={addMessage} threadId={threadId} divRef={divRef}/>
+
         </div>      
         </>
     )

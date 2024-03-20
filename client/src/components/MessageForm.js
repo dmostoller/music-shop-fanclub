@@ -30,7 +30,7 @@ function MessageForm({onAddMessage, threadId}){
             body: JSON.stringify({...formData})
         }).then((res) => res.json())
             .then((newMessage) => {
-                console.log(newMessage)
+                // console.log(newMessage)
                 onAddMessage(newMessage)
                 setInputStr("")
 
@@ -41,7 +41,7 @@ function MessageForm({onAddMessage, threadId}){
     return (
         
     <div className="ui fluid text container">
-        <form className="ui form" onSubmit={handleSubmit}>
+        <form className="ui form" onSubmit={(e) => handleSubmit(e)}>
             <div className="field">
                 <div className="ui fluid transparent inverted small input" >
                     <input type="fluid text" name="message" id="message" value={inputStr} onChange={(e) => setInputStr(e.target.value)} className="prompt" placeholder="Message..."></input>

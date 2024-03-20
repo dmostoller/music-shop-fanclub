@@ -94,15 +94,14 @@ if(error) return (
         <form className="ui inverted form" onSubmit={formik.handleSubmit}>
         <div className="field">
                     <label><span className="ui italic text"> Upload a profile image then select a username and password.</span></label>
-                    {(avatar === "")?
                     <UploadAvatarWidget onSetImageUrl={setAvatar}/>
-                    : (
-                    <>
-                    <img className="ui circular centered image small" src={avatar} alt=""></img>
-                    <input style={{visibility: "hidden"}} type="text"  name="avatar" value={formik.values.avatar} placeholder="Image link..." onChange={formik.handleChange}></input>                
+                    <div style={{padding:"10px"}}>
+                      <img className="ui circular centered image small" src={avatar} alt=""></img>
+                    </div>
+                    <div className="ui mini input">
+                      <input  type="text" style={{visibility: "hidden"}} name="avatar" value={formik.values.avatar} placeholder="Image link..." onChange={formik.handleChange}></input>                
+                    </div>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.avatar}</p>}
-                    </>
-                    )}
                 </div> 
             <div className="field">
                 {/* <label>Create New Account</label> */}

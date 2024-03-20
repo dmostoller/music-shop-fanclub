@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UploadWidget from "./UploadWidget";
 
 function AddTrackForm({onAddTrack, releaseId, onChangeIsFormVis}){
     const [error, setError] = useState(null);
-
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a track title"),
         artist_names: yup.string().required("Must enter artist names"),
@@ -17,7 +17,7 @@ function AddTrackForm({onAddTrack, releaseId, onChangeIsFormVis}){
           title:'',
           artist_names:'',
           bpm: '',
-          audio:'',
+          audio:``,
           release_id: parseInt(releaseId),
         },
         validationSchema: formSchema,

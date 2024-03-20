@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useUser } from "../context/user";
 
 
 export default function ThreadMessage({messageObj, onDeleteMessage}) {
+    const {user} = useUser();
 
     const handleDeleteMessage = (e) => {
         fetch(`/forum_messages/${messageObj.id}`,{
@@ -14,7 +16,7 @@ export default function ThreadMessage({messageObj, onDeleteMessage}) {
 
     return (
         <>
-        <div className="comment" style={{padding:"5px"}}>
+        <div className="comment" style={{padding:"10px"}}>
             <div className="avatar">
                 <img src={messageObj.user.avatar}></img>
             </div>
@@ -26,9 +28,13 @@ export default function ThreadMessage({messageObj, onDeleteMessage}) {
                 </div>
                 <div className="text">{messageObj.message}
                 </div>
+                { (user.id == messageObj.user_id) ? ( 
                 <div className="actions">
                     <a onClick={handleDeleteMessage} className="delete">Delete</a>
                 </div>
+                ):
+                <></>
+                }
             </div>
         </div>
         </>
