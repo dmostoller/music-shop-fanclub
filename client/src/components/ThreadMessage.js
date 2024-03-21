@@ -16,7 +16,7 @@ export default function ThreadMessage({messageObj, onDeleteMessage}) {
 
     return (
         <>
-        <div className="comment" style={{padding:"10px"}}>
+        <div className="comment" style={{margin:"10px"}}>
             <div className="avatar">
                 <img src={messageObj.user.avatar}></img>
             </div>
@@ -26,11 +26,10 @@ export default function ThreadMessage({messageObj, onDeleteMessage}) {
                         <span className="date">{messageObj.date_added}</span>
                     </div>
                 </div>
-                <div className="text">{messageObj.message}
-                </div>
+                <div className="text">{messageObj.message}</div>
                 { (user.id == messageObj.user_id) ? ( 
                 <div className="actions">
-                    <a onClick={handleDeleteMessage} className="delete">Delete</a>
+                    <button onClick={handleDeleteMessage} className="ui circular delete inverted icon violet button mini"><i className="trash icon"></i></button>
                 </div>
                 ):
                 <></>

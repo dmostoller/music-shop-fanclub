@@ -96,7 +96,7 @@ function Forum() {
                             </div>
                         </div>
                     </div>
-                <div className="eleven wide right attached column"  style={{marginTop: "100px"}}>
+                <div className="ten wide right attached column"  style={{marginTop: "100px"}}>
                     <ThreadMessageList threadId={selectedThread} searchVal={searchVal}/>                                   
                 </div>
         </div> 

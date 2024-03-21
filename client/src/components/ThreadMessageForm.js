@@ -82,7 +82,7 @@ function PostCommentForm({onAddMessage, threadId}){
           }
         <div className="picker-container">
             {showPicker && (
-            <Picker pickerStyle={{ width: "80%" }} onEmojiClick={onEmojiClick} />
+            <Picker theme='dark' pickerStyle={{ width: "80%" }} onEmojiClick={onEmojiClick} reactionsDefaultOpen={true}/>
             )}
         </div>
     </div>

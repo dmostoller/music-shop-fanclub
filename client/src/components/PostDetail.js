@@ -49,19 +49,25 @@ function PostDetail(){
                         </div>
                         <div style={{padding: "10px"}}> 
                             <Link to="/" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>
+                            <button class="circular ui icon facebook button"  data-inverted="" data-tooltip="Share to Facebook" data-position="bottom center" >
+                                    <i class="facebook icon"></i>
+                            </button>
+                            <button class="circular ui icon twitter button"  data-inverted="" data-tooltip="Share to Twitter" data-position="bottom center" >
+                                    <i class="twitter icon"></i>
+                            </button>
                             { user && isAdmin ? ( 
-                                            <>
-                                                <Link to={`/posts/${id}/edit`} className="circular ui icon inverted grey button">
-                                                    <i className="edit icon" style={{visibility: "visible"}}></i>
-                                                </Link>
-                                                <button className="circular ui icon inverted grey button" onClick={handleDeletePost}>
-                                                    <i className="trash icon" style={{visibility: "visible"}}></i>
-                                                </button>
+                            <>
+                                <Link to={`/posts/${id}/edit`} className="circular ui icon inverted grey button">
+                                    <i className="edit icon" style={{visibility: "visible"}}></i>
+                                </Link>
+                                <button className="circular ui icon inverted grey button" onClick={handleDeletePost}>
+                                    <i className="trash icon" style={{visibility: "visible"}}></i>
+                                </button>
 
-                                        </>
-                                            )
-                                            : <></>    
-                                        } 
+                            </>
+                                )
+                                : <></>    
+                            } 
                         </div>
                     </div>
                 </div>
