@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 # Standard library imports
 # Remote library imports
 from flask import request, abort, make_response, jsonify, request, session
@@ -7,13 +6,15 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from wtforms.validators import ValidationError
 from datetime import datetime, date
-
+from geopy.geocoders import Nominatim
 
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Post, Event, Release, Track, Saved, Comment, PostComment
+from models import User, Post, Event, Release, Track, Saved, Comment, PostComment, ForumMessage, ForumThread
 from werkzeug.exceptions import NotFound, Unauthorized, UnprocessableEntity
+
+geolocator = Nominatim(user_agent="superluminal")
 
 # Views go here!
 
@@ -22,15 +23,28 @@ def index():
     return '<h1>Project Server</h1>'
 
 class Users(Resource):
+    def get(self):
+        users = [user.to_dict() for user in User.query.all()]
+        reponse = make_response(users, 200)
+        return reponse
+    
     def post(self):
         try:
             form_json = request.get_json()
             if form_json['password'] == form_json['password_confirmation']:
+                address = form_json['city'] + ',' + form_json['country']
+                location = geolocator.geocode(address)
+                # print(location)
                 new_user = User(
                     username=form_json['username'],
                     password_hash=form_json['password'],
                     email=form_json['email'],
-                    is_admin=False
+                    is_admin=False,
+                    avatar=form_json['avatar'],
+                    city=form_json['city'],
+                    country=form_json['country'],
+                    latitude=location.latitude,
+                    longitude=location.longitude,
                 )
                 db.session.add(new_user)
                 db.session.commit()
@@ -57,9 +71,19 @@ class UpdateUser(Resource):
         user = User.query.filter_by(id=id).first()
         if user:
             try:
-                setattr(user, 'username', request.get_json()['username'])
-                setattr(user, 'password_hash', request.get_json()['password'])
-                setattr(user, 'email', request.get_json()['email'])
+                form_json = request.get_json()
+                address = form_json['city'] + ',' + form_json['country']
+                location = geolocator.geocode(address)
+                # print(location.latitude)
+                setattr(user, 'username', form_json['username'])
+                setattr(user, 'password_hash', form_json['password'])
+                setattr(user, 'email', form_json['email'])
+                setattr(user, 'avatar', form_json['avatar'])
+                setattr(user, 'city', form_json['city'])
+                setattr(user, 'country', form_json['country'])
+                setattr(user, 'latitude', location.latitude)
+                setattr(user, 'longitude', location.longitude)
+
                 db.session.commit()
                 response = make_response(user.to_dict(rules = ('-_password_hash', )), 200)
             except ValueError:
@@ -250,7 +274,8 @@ class Releases(Resource):
                 description=form_json['description'],
                 record_label=form_json['record_label'],
                 date_released=form_json['date_released'],
-                image=form_json['image']
+                image=form_json['image'],
+                buy_link=form_json['buy_link']
             )
             db.session.add(new_release)
             db.session.commit()
@@ -280,6 +305,7 @@ class ReleasesById(Resource):
             setattr(release, 'record_label', request.get_json()['record_label'])
             setattr(release, 'date_released', request.get_json()['date_released'])
             setattr(release, 'image', request.get_json()['image'])
+            setattr(release, 'buy_link', request.get_json()['buy_link'])
             db.session.commit()
             response = make_response(release.to_dict(), 200)
         except ValueError:
@@ -459,7 +485,6 @@ class CommentsById(Resource):
 api.add_resource(Comments, '/comments')
 api.add_resource(CommentsById, '/comments/<int:id>')
 
-
 class PostComments(Resource):
     def get(self):
         post_comments = [post_comment.to_dict() for post_comment in PostComment.query.all()]
@@ -495,6 +520,84 @@ class PostCommentsById(Resource):
     
 api.add_resource(PostComments, '/post_comments')
 api.add_resource(PostCommentsById, '/post_comments/<int:id>')
+
+
+class ForumThreads(Resource):
+    def get(self):
+        forum_threads = [forum_thread.to_dict() for forum_thread in ForumThread.query.all()]
+        reponse = make_response(forum_threads, 200)
+        return reponse
+
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_forum_thread = ForumThread(
+                name=form_json['name']
+            )
+            db.session.add(new_forum_thread)
+            db.session.commit()
+            response = make_response(new_forum_thread.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+    
+class ForumThreadsById(Resource):
+    def delete(self, id):
+        forum_thread = ForumThread.query.filter_by(id=id).first()
+        if not forum_thread:
+            raise NotFound
+        db.session.delete(forum_thread)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
+
+class ForumMessages(Resource):
+    def get(self):
+        forum_messages = [forum_message.to_dict() for forum_message in ForumMessage.query.all()]
+        reponse = make_response(forum_messages, 200)
+        return reponse
+     
+    def post(self):
+        user_id = session.get('user_id')
+        try:
+            form_json = request.get_json()
+            new_forum_message = ForumMessage(
+                message=form_json['message'],
+                date_added=form_json['date_added'],
+                user_id=user_id,
+                forum_thread_id=form_json['forum_thread_id'],
+            )
+            db.session.add(new_forum_message)
+            db.session.commit()
+            response = make_response(new_forum_message.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+
+class ForumMessagesById(Resource):
+    def delete(self, id):
+        forum_message = ForumMessage.query.filter_by(id=id).first()
+        if not forum_message:
+            raise NotFound
+        db.session.delete(forum_message)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
+    
+api.add_resource(ForumThreads, '/forum_threads')
+api.add_resource(ForumThreadsById, '/forum_threads/<int:id>')
+api.add_resource(ForumMessages, '/forum_messages')
+api.add_resource(ForumMessagesById, '/forum_messages/<int:id>')
+
+class ForumMessagesByThreadId(Resource):
+    def get(self, id):
+        messages = [message.to_dict() for message in ForumMessage.query.all() if message.forum_thread_id == id]
+        response = make_response(messages, 200)
+        return response 
+    
+api.add_resource(ForumMessagesByThreadId, '/messages_by_thread_id/<int:id>')
 
 
 @app.errorhandler(NotFound)

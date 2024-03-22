@@ -42,7 +42,7 @@ function CommentsList({ releaseId }){
     }
     
     return (
-        <div className="ui container">
+        <div className="ui text container">
             <div className="ui inverted comments">
             {commentsSection}
             </div>
@@ -57,7 +57,7 @@ function CommentsList({ releaseId }){
                 : 
                 <button 
                 onClick={changeIsComFormVis} 
-                className="ui inverted fluid button grey small">
+                className="ui inverted fluid button violet small">
                     Add Comment
                 </button>}
             </div>

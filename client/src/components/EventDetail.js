@@ -30,7 +30,7 @@ function EventDetail(){
     }    
 
     return (
-        <div className="ui container" style={{paddingTop:"5px", marginTop: "40px"}}>
+        <div className="ui container" style={{paddingTop:"5px", marginTop: "40px", minHeight:"100vh"}}>
         <div style={{marginTop: "10px"}} className="ui inverted horizontal card fluid">
             <div className="item">
                 <img className="ui big image" src={event.image_url} alt={event.name}></img>
@@ -52,13 +52,13 @@ function EventDetail(){
                     <p>{event.details}</p>
                 </div>
                 <div style={{padding: "10px"}}> 
-                    <Link to="/events" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>
+                    <Link to="/events" className="circular ui icon violet button"><i className="undo icon"></i></Link>
                     { user && isAdmin ? (
                         <>
-                            <Link to={`/events/${id}/edit`} className="circular ui icon inverted grey button">
+                            <Link to={`/events/${id}/edit`} className="circular ui icon violet button">
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                             </Link>
-                            <button className="circular ui icon inverted grey button" onClick={handleDeleteEvent}>
+                            <button className="circular ui icon violet button" onClick={handleDeleteEvent}>
                                 <i className="trash icon" style={{visibility: "visible"}}></i>
                             </button>
 
@@ -67,11 +67,12 @@ function EventDetail(){
                         )
                         : <></>    
                     } 
-                        <a href={event.event_link} style={{float: "right"}} className="ui button inverted button grey small" target="_blank" rel="noopener noreferrer">Buy Tickets</a>
+                        <a href={event.event_link} style={{float: "right"}} className="ui button violet small" target="_blank" rel="noopener noreferrer">Buy Tickets</a>
 
                 </div>
             </div>
-    </div>
+        </div>
+  
     </div>
     
     );

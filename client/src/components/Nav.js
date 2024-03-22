@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu } from 'semantic-ui-react'
 import { NavLink, Link } from "react-router-dom";
 import { useUser } from "../context/user.js"
+import Search from './Search.js';
 
 
 function Nav({onLogout}) {
@@ -21,7 +22,7 @@ function Nav({onLogout}) {
             <NavLink className="item"  to='/learn'>Video</NavLink>
             <NavLink className="item" to='/events'>Events</NavLink>
             <NavLink className="item" to='/about'>Bio</NavLink>
-            <NavLink className="item"  to='/shop'>Shop</NavLink>
+            <Link className="item" target="_blank" to='https://kabayun.bandcamp.com/'>Shop</Link>
             <NavLink className="item" to='/forum'>Forum</NavLink>  
             <div className='right menu'>
                 {/* <div className='item'>
@@ -29,30 +30,24 @@ function Nav({onLogout}) {
                         src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1525430860&color=%23626262&inverse=true&auto_play=false&show_user=true">
                         </iframe>            
                 </div> */}
-                <div style={{justifyContent: 'flex-end'}} className="ui category search item">
-                    <div className="ui transparent inverted icon input">
-                        <input className="prompt" type="text" placeholder="Search..."></input>
-                        <i className="search link icon"></i>
-                    </div>
-                    <div className="results"></div>
-                </div>
+                <Search/>
             </div>
             <div className="item">
                 { !user ? (
                     <>
-                    <Link to='/login' style={{marginRight: '3px'}} data-tooltip="Login" data-position="bottom center" className="ui circular inverted grey icon button small">
+                    <Link to='/login' style={{marginRight: '3px'}} data-inverted="" data-tooltip="Login" data-position="bottom center" className="ui circular violet icon button small">
                         <i className="sign in alternate icon"></i>
                     </Link>
-                    <Link to='/signup' style={{marginRight: '3px'}} data-tooltip="Sign Up" data-position="bottom right" className="ui circular inverted grey icon button small">
+                    <Link to='/signup' style={{marginRight: '3px'}} data-inverted="" data-tooltip="Sign Up" data-position="bottom right" className="ui circular violet icon button small">
                         <i className="plus icon"></i>
                     </Link>
                     </>
                 ) : (
                     <>
-                    <button onClick={handleLogout} style={{marginRight: '3px'}} data-tooltip="Logout" data-position="bottom center" className="ui circular inverted grey icon button small">
+                    <button onClick={handleLogout} style={{marginRight: '3px'}} data-inverted="" data-tooltip="Logout" data-position="bottom center" className="ui circular violet icon button small">
                         <i className="sign out alternate icon"></i>
                     </button>
-                    <Link to='/user' style={{marginRight: '3px'}} data-tooltip="User Profile" data-position="bottom right" className="ui circular inverted grey icon button small">
+                    <Link to='/user' style={{marginRight: '3px'}} data-inverted="" data-tooltip="User Profile" data-position="bottom right" className="ui circular violet icon button small">
                         <i className="user icon"></i>
                     </Link>
                     </>

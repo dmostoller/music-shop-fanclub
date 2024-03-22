@@ -1,10 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useUser } from "../context/user";
 
 
 function PostComment({username, comment, id, date_added, comment_user_id, onDeleteComment}){
 
     const {user} = useUser()
+        const [commentUser, setCommentUser] = useState({});
+
+    useEffect(() => {
+        fetch(`/users/${comment_user_id}`)
+        .then((res) => res.json())
+        .then((commentUser) => {setCommentUser(commentUser)})
+      }, [comment_user_id]);
 
     const handleDeleteComment = (e) => {
         fetch(`/post_comments/${id}`,{
@@ -16,8 +23,10 @@ function PostComment({username, comment, id, date_added, comment_user_id, onDele
     }
 
     return (
-        <div id={id} style={{margin: "25px"}} className="ui inverted comments">
-            <div className="comment card">
+            <div id={id} className="comment card">
+                <div className="avatar">
+                    <img src={commentUser.avatar}></img>
+                </div>
                 <div className="content">
                 <div className="author">{username}<div className="metadata"><span className="date">{date_added}</span></div></div>
                 <div className="text">{comment}</div>
@@ -30,7 +39,6 @@ function PostComment({username, comment, id, date_added, comment_user_id, onDele
             }
    
             </div>
-        </div>
         </div>
     )
 }

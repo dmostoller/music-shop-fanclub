@@ -21,7 +21,6 @@ function AddPost() {
       enableReinitialize: true, 
         initialValues: {
           title:'',
-          date_added: `${new Date().toLocaleDateString('en-US')} ${new Date().toLocaleTimeString('en-US')}`,
           content:'',
           image_url:`${imageLink}`,
 
@@ -59,7 +58,8 @@ function AddPost() {
                     <UploadWidget onSetImageUrl={setImageLink}/>
                     : (
                     <>
-                    <input type="text" name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
+                    <img className="ui circular centered image small" src={imageLink} alt=""></img>
+                    <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
                     </>
                     )}
@@ -73,7 +73,7 @@ function AddPost() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
-                <button className="ui button fluid inverted grey" type="submit">Submit</button>
+                <button className="ui button fluid violet" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

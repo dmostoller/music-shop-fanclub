@@ -5,18 +5,19 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../context/user";
-
-
+import UploadAvatarWidget from "./UploadAvatarWidget";
 
 function SignUp() {
+  
   const { setUser } = useUser();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [avatar, setAvatar] = useState("");
+
 
   function tryAgain() {
     setError(null)
   }
-
 
   const formSchema = yup.object().shape({
     username: yup.string()
@@ -31,13 +32,23 @@ function SignUp() {
     .required("Confirm password is required"),
     email: yup.string().email()
     .required("Must enter an email address"),
+    avatar: yup.string()
+    .required("Please upload an image for your avatar"),
+    city: yup.string()
+    .required("City is required"),
+    country: yup.string()
+    .required("Country is required"),
 })
 const formik = useFormik({
+  enableReinitialize: true,
   initialValues: {
       username:'',
       password:'',
       password_confirmation:'',
       email:'',
+      avatar:`${avatar}`,
+      city:'',
+      country:'',
   },
 validationSchema: formSchema,
 onSubmit: (values) => {
@@ -87,6 +98,17 @@ if(error) return (
           <div className="content">Create a new account</div>
         </h2>
         <form className="ui inverted form" onSubmit={formik.handleSubmit}>
+        <div className="field">
+                    <label><span className="ui italic text"> Upload a profile image then select a username and password.</span></label>
+                    <UploadAvatarWidget onSetImageUrl={setAvatar}/>
+                    <div style={{padding:"10px"}}>
+                      <img className="ui circular centered image small" src={avatar} alt=""></img>
+                    </div>
+                    <div className="ui mini input">
+                      <input  type="text" style={{visibility: "hidden"}} name="avatar" value={formik.values.avatar} placeholder="Image link..." onChange={formik.handleChange}></input>                
+                    </div>
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.avatar}</p>}
+                </div> 
             <div className="field">
                 {/* <label>Create New Account</label> */}
                 <div className="ui left icon input">
@@ -102,6 +124,50 @@ if(error) return (
                 </div>                 
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
             </div>
+            <div className="field">
+                {/* <label>Create New Account</label> */}
+                <div className="ui left icon input">
+                <i className="city icon"></i>
+                <input type="text" 
+                  id="city" 
+                  name="city" 
+                  value={formik.values.city} 
+                  placeholder="City..." 
+                  onChange={formik.handleChange}
+                  >    
+                </input>   
+                </div>                 
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.city}</p>}
+            </div>
+            <div className="field">
+                {/* <label>Create New Account</label> */}
+                <div className="ui left icon input">
+                <i className="globe americas icon"></i>
+                <input type="text" 
+                  id="country" 
+                  name="country" 
+                  value={formik.values.country} 
+                  placeholder="Country..." 
+                  onChange={formik.handleChange}
+                  >    
+                </input>   
+                </div>                 
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.country}</p>}
+            </div>
+            <div className="field">
+            <div className="ui left icon input">
+                <i className="mail icon"></i>
+                <input type="text" 
+                  id="email" 
+                  name="email" 
+                  value={formik.values.email} 
+                  placeholder="Email Address..." 
+                  onChange={formik.handleChange}
+                  >
+                </input>  
+                </div>              
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
+            </div>  
             <div className="field">
             <div className="ui left icon input">
                 <i className="lock icon"></i>
@@ -129,22 +195,8 @@ if(error) return (
                 </input>
               </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
-            </div>
-            <div className="field">
-            <div className="ui left icon input">
-                <i className="mail icon"></i>
-                <input type="text" 
-                  id="email" 
-                  name="email" 
-                  value={formik.values.email} 
-                  placeholder="Email Address..." 
-                  onChange={formik.handleChange}
-                  >
-                </input>  
-                </div>              
-                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
-            </div>    
-                <button className="ui fluid button inverted grey large" type="submit">Submit</button>
+            </div>  
+                <button className="ui fluid button violet large" type="submit">Submit</button>
                 <div className="ui inverted message tiny">
              Already have an account? 
               <Link to="/login">    Login</Link>

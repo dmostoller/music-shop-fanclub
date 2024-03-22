@@ -29,6 +29,8 @@ function PostDetail(){
             })
         }
     }    
+    const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fposts%2F${id}&amp;src=sdkpreparse`
+    
     return (
     <div className="ui container" style={{marginTop:"45px"}}>
         <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
@@ -48,20 +50,29 @@ function PostDetail(){
                             <p>{post.content}</p>
                         </div>
                         <div style={{padding: "10px"}}> 
-                            <Link to="/" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>
+                            <Link to="/" className="circular ui icon violet button"><i className="undo icon"></i></Link>
+                            <Link to={linkForFB}
+                            target="_blank"
+                            class="circular ui icon facebook button"  
+                            data-inverted="" 
+                            data-tooltip="Share to Facebook" 
+                            data-position="bottom center">
+                                    <i class="facebook icon"></i>
+                            </Link>
+                  
                             { user && isAdmin ? ( 
-                                            <>
-                                                <Link to={`/posts/${id}/edit`} className="circular ui icon inverted grey button">
-                                                    <i className="edit icon" style={{visibility: "visible"}}></i>
-                                                </Link>
-                                                <button className="circular ui icon inverted grey button" onClick={handleDeletePost}>
-                                                    <i className="trash icon" style={{visibility: "visible"}}></i>
-                                                </button>
+                            <>
+                                <Link to={`/posts/${id}/edit`} className="circular ui icon violet button">
+                                    <i className="edit icon" style={{visibility: "visible"}}></i>
+                                </Link>
+                                <button className="circular ui icon violet button" onClick={handleDeletePost}>
+                                    <i className="trash icon" style={{visibility: "visible"}}></i>
+                                </button>
 
-                                        </>
-                                            )
-                                            : <></>    
-                                        } 
+                            </>
+                                )
+                                : <></>    
+                            } 
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import { useUser } from "../context/user";
 import SavedList from "./SavedList";
 import EditUser from "./EditUser";
 
-export default function User ({}) {
+export default function User () {
     const [showEdit, setShowEdit] = useState(false);
     const {user} = useUser();
     const [savedItems, setSavedItems] = useState([]);
@@ -25,19 +25,22 @@ export default function User ({}) {
     
     return (
         <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
-
             {showEdit ? 
             <EditUser setShowEdit={showEditForm}/> 
             :
             <div className="ui inverted container" style={{marginTop: "75px"}}>
-                <h4  class="ui horizontal inverted divider">My Account</h4>
+                <h4 className="ui horizontal inverted divider">My Account</h4>
                 <div className="ui centered grid">
                     <div className="ui inverted card" style={{margin: "10px"}}>
+                        <div style={{padding: "10px"}}>
+                            <img className="ui circular tiny image centered" src={user.avatar}></img>
+                        </div>
                         <div className="content" style={{ padding: "25px"}}>
                                 <div className="header">{user.username}</div>
+                                <div className="meta">{user.city}, {user.country}</div>
                                 <div className="description">{user.email}</div>
                                 <div style={{paddingTop: "25px"}}> 
-                                    <button onClick={showEditForm} className="ui inverted fluid grey button tiny">Edit User / Change Password </button>
+                                    <button onClick={showEditForm} className="ui fluid violet button tiny">Edit User / Change Password </button>
                                 </div>
                         </div>  
                     </div>

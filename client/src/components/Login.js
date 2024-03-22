@@ -91,7 +91,7 @@ function LoginForm({ onLogin }) {
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}               
             </div>    
                 {/* <Link to="/" className="ui button inverted grey small">Back</Link> */}
-                <button className="ui fluid button inverted grey large" type="submit">Login</button>
+                <button className="ui fluid button violet large" type="submit">Login</button>
             <div>
             </div>
             <div className="ui inverted message tiny">

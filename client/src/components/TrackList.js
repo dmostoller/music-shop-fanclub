@@ -45,7 +45,7 @@ function TrackList({ releaseId }) {
                     {tracks_on_release}
                 {isAdmin ?     
                 <div className="item" style={{padding: "5px"}}>
-                    {isFormVis ? <AddTrackForm onAddTrack={addTrack} releaseId={releaseId} onChangeIsFormVis={changeIsFormVis} /> : <button onClick={changeIsFormVis} className="ui inverted grey button tiny">Add New Track</button>}
+                    {isFormVis ? <AddTrackForm onAddTrack={addTrack} releaseId={releaseId} onChangeIsFormVis={changeIsFormVis} /> : <button onClick={changeIsFormVis} className="ui violet button tiny">Add New Track</button>}
                 </div>
                 :
                     <></>

@@ -82,7 +82,7 @@ function AddEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.location}</p>}
                 </div>    
                 <div className="field">
-                    <input type="text"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
+                    <input type="date"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_date}</p>}
                 </div>  
                 <div className="field">
@@ -94,7 +94,7 @@ function AddEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.details}</p>}
                 </div>
                 <div className="field">  
-                  <button className="ui button inverted fluid grey" type="submit">Submit</button>
+                  <button className="ui button violet fluid" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

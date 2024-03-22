@@ -3,9 +3,9 @@ import Commerce from '@chec/commerce.js';
 import { Grid, Divider } from 'semantic-ui-react';
 import ProductCard from '../components/ProductCard';
 
-const ProductContainer = () => {
+const ProductContainer = ({addToCart}) => {
 
-    const commerce = new Commerce('pk_test_56414dee2201fa19cb0c2c4f8e281d8d9d87b71bf789c')
+    const commerce = new Commerce(process.env.REACT_APP_COMMERCE_API_KEY)
     const [products, setProducts] = useState([])
 
     useEffect(() => {
@@ -20,7 +20,9 @@ const ProductContainer = () => {
         <>
             <Divider horizontal>Shop All Products</Divider>
             <Grid stackable columns='equal' centered>
-                {products.map(product => <Grid.Column width={5} key={product.id}><ProductCard product={product} /></Grid.Column>)}
+                {products.map(product => <Grid.Column width={5} key={product.id}>
+                    <ProductCard product={product} addToCart={addToCart}/>
+            </Grid.Column>)}
             </Grid>
         </>
     );

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-
-function UploadWidget({onSetImageUrl}) {
+function UploadAvatarWidget({onSetImageUrl}) {
 
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
@@ -10,12 +9,14 @@ function UploadWidget({onSetImageUrl}) {
         cloudinaryRef.current = window.cloudinary;
         widgetRef.current = cloudinaryRef.current.createUploadWidget({
             cloudName: 'ddp2xfpyb',
-            uploadPreset: 'upload_photo',
+            uploadPreset: 'upload-avatar',
+            // cropping: true, //add a cropping step
+            clientAllowedFormats: ["image"], //restrict uploading to image files only
             multiple: false,  //restrict upload to a single file
             sources: [ "local", "url"], // restrict the upload sources to URL and local files
         }, function(error, result) { 
             if (!error && result && result.event === "success") {
-                console.log(result.info);
+                // console.log(result.info);
                 onSetImageUrl(result.info.secure_url);
     }});
     }, [onSetImageUrl])
@@ -29,4 +30,4 @@ return (
 )
 
 }
-export default UploadWidget;
+export default UploadAvatarWidget;

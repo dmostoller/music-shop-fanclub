@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import TrackList from "./TrackList";
 import CommentsList from "./CommentsList";
 
 
-export default function Release({id, title, artist, record_label, description, date_released, image, onDeleteRelease, savedItems, buyLink}) {
+export default function ReleaseDetail({ionDeleteRelease, savedItems}) {
     const { user } = useUser();
     const { isAdmin } = useAdmin();
     const [error, setError] = useState(null);
     const [isSaved, setIsSaved] = useState(false);
     const [savedId, setSavedId] = useState("");
+    const {id} = useParams();
+    const [release, setRelease] = useState({})
+    const navigate = useNavigate()
+
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
     }
+
+    useEffect(() => {
+        fetch(`/releases/${id}`)
+        .then((res) => res.json())
+        .then((release) => setRelease(release))
+    }, [id]);
+
 
 useEffect(() => {
     fetch(`/saved_by_release/${id}`)
@@ -39,7 +50,7 @@ useEffect(() => {
           method:"DELETE"
         })
         .then(() => {
-          onDeleteRelease(id)
+          navigate("/releases")
         })
     }}
 
@@ -81,46 +92,49 @@ useEffect(() => {
         }
         }
 
-        const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fposts%2F${id}&amp;src=sdkpreparse`
+    const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fposts%2F${id}&amp;src=sdkpreparse`
 
 
 return (
 <div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
+<div className="ui middle aligned center aligned grid" style={{paddingTop:"5px", marginTop: "20px", minHeight:"100vh"}}>
+
         <div style={{margin: "10px"}} className="ui inverted attached horizontal card fluid">
             <div className="item">
-                <img className="ui large image" src={image} alt={title}></img>
+                <img className="ui large image" src={release.image} alt={release.title}></img>
                 <div className="header">
-                    <h2 style={{color: "white", textAlign: "center", marginTop: "10px"}}>{title}</h2>
+                    <h2 style={{color: "white", textAlign: "center", marginTop: "10px"}}>{release.title}</h2>
                     <h4 class="ui inverted divider"></h4>
-                    <h4 style={{color: "white", textAlign: "center"}}>{artist}</h4>
+                    <h4 style={{color: "white", textAlign: "center"}}>{release.artist}</h4>
                 </div>
                 <div className="center aligned meta">
-                    {record_label}
+                    {release.record_label}
                 </div>
                 <div className="center aligned meta" style={{marginBottom:"25px"}}>
-                <p> {date_released}</p>
+                <p> {release.date_released}</p>
                 </div>
             </div>
             <div className="content">
                 <div classname="ui inverted segment" >
-                <h4 className="ui horizontal inverted divider">Tracklist</h4>
+                <h4 class="ui horizontal inverted divider">Tracklist</h4>
                     <TrackList releaseId={id}/>
                 </div>
 
                 <h4 class="ui horizontal inverted divider">Release Info</h4>
                 <div className="description">
-                    <p>{description}</p>
+                    <p>{release.description}</p>
+
                 </div>
                 <div className="center aligned grid" style={{padding: "10px"}}> 
-                <Link to={linkForFB}
+                    <Link to={linkForFB}
                     target="_blank"
-                    className="ui icon facebook button"  
+                    class="ui icon facebook button"  
                     data-inverted="" 
                     data-tooltip="Share to Facebook" 
                     data-position="bottom center">
                             <i class="facebook icon"></i> Share
                     </Link>
-                    <Link to={`${buyLink}`} 
+                    <Link to={`${release.buy_link}`} 
                     target="_blank" 
                     style={{marginRight: "10px", marginLeft: "10px"}} 
                     className="ui icon violet button"
@@ -129,24 +143,25 @@ return (
                     data-position="bottom center">
                         <i className="cart icon"></i>  Buy
                     </Link>
-
+       
                     { user && isAdmin ? (
                         <>
-                            <Link to={`/releases/${id}/edit`} className="circular ui icon violet button">
+                            <Link to={`/releases/${id}/edit`} className="circular ui icon inverted grey button">
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                             </Link>
-                            <button onClick={handleDeleteRelease} className="circular ui icon violet button">
+                            <button onClick={handleDeleteRelease} className="circular ui icon inverted grey button">
                                 <i className="trash icon" style={{visibility: "visible"}}></i>
                             </button>
+
                         </>
                         )
                         : <>
                         { user ? isSaved ? 
-                        <button onClick={unSaveRelease} className="circular ui icon inverted red button">
+                        <button onClick={unSaveRelease} className="circular ui icon red button">
                             <i className="heart icon" style={{visibility: "visible"}}></i>
                         </button>   
                         :
-                        <button onClick={saveRelease} className="circular ui icon inverted grey button">
+                        <button onClick={saveRelease} className="circular ui icon violet button">
                             <i className="heart icon" style={{visibility: "visible"}}></i>
                         </button>  
                         :<></>
@@ -158,10 +173,11 @@ return (
             </div>
             <div className="ui bottom attached inverted segment">
             <h4 className="ui horizontal inverted divider">Comments</h4>
-            <div><CommentsList releaseId={id}/></div> 
+            <div><CommentsList releaseId={release.id}/></div> 
 
             </div>
         </div>
+    </div>
     </div>
 
 );

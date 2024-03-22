@@ -29,6 +29,7 @@ function EditRelease() {
         record_label: yup.string().required("Must enter an record label"),
         date_released: yup.string().required("Must enter a release date"),
         image: yup.string().required("Must enter an image link"),
+        buy_link: yup.string().required("Must enter a purchase link"),
       })
     
     const initValues = release 
@@ -41,6 +42,7 @@ function EditRelease() {
           record_label:`${release.record_label}`,
           date_released:`${release.date_released}`,
           image:`${image}`,
+          buy_link:`${release.buy_link}`,
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -98,13 +100,15 @@ function EditRelease() {
                 </div>
                 <div className="field">
                     <label>Release Date</label>
-                    <input type="text" name="date_released" value={formik.values.date_released} placeholder="Release date..." onChange={formik.handleChange}></input>               
+                    <input type="date" name="date_released" value={formik.values.date_released} placeholder="Release date..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.date_released}</p>}
                 </div>
-
                 <div className="field">
-                
-                <button className="ui button inverted fluid grey" type="submit">Submit</button>
+                    <input type="text" name="buy_link" value={formik.values.buy_link} placeholder="Purchase link..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.buy_link}</p>}
+                </div>
+                <div className="field">
+                <button className="ui button violet fluid" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

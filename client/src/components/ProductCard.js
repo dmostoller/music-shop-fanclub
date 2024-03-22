@@ -1,8 +1,19 @@
-import React from 'react';
-import { Card, Grid } from 'semantic-ui-react';
+import React, {useEffect, useState} from 'react';
+import { Card, Grid, Button, Icon, Dropdown } from 'semantic-ui-react';
 
-const ProductCard = ({product}) => {
-    console.log(product, 'props from Container')
+const ProductCard = ({product, addToCart}) => {
+
+    const [sizes, setSizes] = useState([])
+    const [variantInfo, setVariantInfo] = useState()
+
+    const handleButtonAddCart = e => {
+        e.preventDefault()
+        addToCart(product.id)
+    }
+
+  
+    // console.log(product, 'props from Container')
+    
     return (
         <Grid.Column width={5}>
             <Card className='ui inverted segment'
@@ -11,6 +22,19 @@ const ProductCard = ({product}) => {
                 meta={product.price.formatted_with_symbol}
                 description={product.description.replace(/(<([^>]+)>)/ig,"")}
             />
+            <Dropdown
+            className="sizes-drop"
+            onChange=""
+            value={sizes.text}
+            fluid
+            placeholder='Select Size'
+            selection
+            options={sizes}
+        />
+            <Button fluid className='add-button' onClick={handleButtonAddCart}>
+                Add to Cart
+                <Icon name='arrow right' />
+            </Button>
         </Grid.Column>
     );
 };
