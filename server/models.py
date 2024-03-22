@@ -12,11 +12,15 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
+    username = db.Column(db.String, unique=True, nullable=False, index=True)
     _password_hash = db.Column(db.String, nullable=False)
-    email = db.Column(db.String)
-    is_admin = db.Column(db.Boolean)
+    email = db.Column(db.String, unique=True)
+    is_admin = db.Column(db.Boolean, default=False)
     avatar = db.Column(db.String)
+    city = db.Column(db.String)
+    country = db.Column(db.String)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
 
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
     saved_items = db.relationship('Saved', back_populates='user', cascade='all, delete')

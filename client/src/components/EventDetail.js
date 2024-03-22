@@ -30,7 +30,7 @@ function EventDetail(){
     }    
 
     return (
-        <div className="ui container" style={{paddingTop:"5px", marginTop: "40px"}}>
+        <div className="ui container" style={{paddingTop:"5px", marginTop: "40px", minHeight:"100vh"}}>
         <div style={{marginTop: "10px"}} className="ui inverted horizontal card fluid">
             <div className="item">
                 <img className="ui big image" src={event.image_url} alt={event.name}></img>
@@ -71,7 +71,8 @@ function EventDetail(){
 
                 </div>
             </div>
-    </div>
+        </div>
+  
     </div>
     
     );

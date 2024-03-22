@@ -139,14 +139,11 @@ if __name__ == '__main__':
         db.session.add_all(comments)
 
         print("Seeding threads")
-        threads = [
-            ForumThread(name="general-chat"
-                  ),
-            ForumThread(name="music-production"
-
-                  ),
-            ForumThread(name="upcoming-events"
-                  ),
+        threads = [            
+            ForumThread(name="forum-rules"),
+            ForumThread(name="general-chat"),
+            ForumThread(name="music-production" ),
+            ForumThread(name="upcoming-events"),
         ]
 
         db.session.add_all(threads)

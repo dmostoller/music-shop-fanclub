@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 # Standard library imports
 # Remote library imports
 from flask import request, abort, make_response, jsonify, request, session
@@ -7,13 +6,15 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from wtforms.validators import ValidationError
 from datetime import datetime, date
-
+from geopy.geocoders import Nominatim
 
 # Local imports
 from config import app, db, api
 # Add your model imports
 from models import User, Post, Event, Release, Track, Saved, Comment, PostComment, ForumMessage, ForumThread
 from werkzeug.exceptions import NotFound, Unauthorized, UnprocessableEntity
+
+geolocator = Nominatim(user_agent="superluminal")
 
 # Views go here!
 
@@ -22,16 +23,28 @@ def index():
     return '<h1>Project Server</h1>'
 
 class Users(Resource):
+    def get(self):
+        users = [user.to_dict() for user in User.query.all()]
+        reponse = make_response(users, 200)
+        return reponse
+    
     def post(self):
         try:
             form_json = request.get_json()
             if form_json['password'] == form_json['password_confirmation']:
+                address = form_json['city'] + ',' + form_json['country']
+                location = geolocator.geocode(address)
+                # print(location)
                 new_user = User(
                     username=form_json['username'],
                     password_hash=form_json['password'],
                     email=form_json['email'],
                     is_admin=False,
-                    avatar=form_json['avatar']
+                    avatar=form_json['avatar'],
+                    city=form_json['city'],
+                    country=form_json['country'],
+                    latitude=location.latitude,
+                    longitude=location.longitude,
                 )
                 db.session.add(new_user)
                 db.session.commit()
@@ -58,10 +71,19 @@ class UpdateUser(Resource):
         user = User.query.filter_by(id=id).first()
         if user:
             try:
-                setattr(user, 'username', request.get_json()['username'])
-                setattr(user, 'password_hash', request.get_json()['password'])
-                setattr(user, 'email', request.get_json()['email'])
-                setattr(user, 'avatar', request.get_json()['avatar'])
+                form_json = request.get_json()
+                address = form_json['city'] + ',' + form_json['country']
+                location = geolocator.geocode(address)
+                # print(location.latitude)
+                setattr(user, 'username', form_json['username'])
+                setattr(user, 'password_hash', form_json['password'])
+                setattr(user, 'email', form_json['email'])
+                setattr(user, 'avatar', form_json['avatar'])
+                setattr(user, 'city', form_json['city'])
+                setattr(user, 'country', form_json['country'])
+                setattr(user, 'latitude', location.latitude)
+                setattr(user, 'longitude', location.longitude)
+
                 db.session.commit()
                 response = make_response(user.to_dict(rules = ('-_password_hash', )), 200)
             except ValueError:

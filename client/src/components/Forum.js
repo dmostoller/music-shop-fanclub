@@ -3,7 +3,6 @@ import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import Thread from './Thread';
 import ThreadMessageList from './ThreadMessageList';
-import { useNavigate } from "react-router-dom"
 import AddThread from './AddThread';
 import ForumSearch from './ForumSearch';
 import Map from './Map';
@@ -11,11 +10,17 @@ import Map from './Map';
 function Forum() {
     const [threads, setThreads] = useState([]);  
     const [selectedThread, setSelectedThread] = useState(1);
-    const navigate = useNavigate();
     const [searchVal, setSearchVal] = useState();
     const [isFormVis, setIsFormVis] = useState();
     const {user} = useUser();
     const {isAdmin} = useAdmin();
+    const [users, setUsers] = useState([]);
+    
+    useEffect(() => {
+      fetch("/users")
+      .then((res) => res.json())
+      .then((users) => {setUsers(users)})
+    }, []);
 
     useEffect(() => {
         fetch("/forum_threads")
@@ -49,7 +54,6 @@ function Forum() {
         setThreads([...threads, newThread])
         showAddThread()
     } 
-
     return (
             <div className="ui grid" style={{width:"90%", margin:"auto", minHeight:"100vh", marginTop:"40px"}}>
                 <div className="six wide wide left attached column" style={{marginTop: "100px"}}>
@@ -83,7 +87,7 @@ function Forum() {
                         <></>
                         }
                         <ForumSearch searchVal={searchVal} onSearch={setSearchVal}/>
-                        <Map/>
+                        <Map users={users} />
                         </div>
 
                     </div>

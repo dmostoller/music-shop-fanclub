@@ -37,9 +37,10 @@ export default function User () {
                         </div>
                         <div className="content" style={{ padding: "25px"}}>
                                 <div className="header">{user.username}</div>
+                                <div className="meta">{user.city}, {user.country}</div>
                                 <div className="description">{user.email}</div>
                                 <div style={{paddingTop: "25px"}}> 
-                                    <button onClick={showEditForm} className="ui  fluid violet button tiny">Edit User / Change Password </button>
+                                    <button onClick={showEditForm} className="ui fluid violet button tiny">Edit User / Change Password </button>
                                 </div>
                         </div>  
                     </div>

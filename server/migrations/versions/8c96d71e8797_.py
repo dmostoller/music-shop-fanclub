@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: dac3340e8bd9
+Revision ID: 8c96d71e8797
 Revises: 
-Create Date: 2024-03-20 10:41:31.495844
+Create Date: 2024-03-21 23:36:36.629358
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dac3340e8bd9'
+revision = '8c96d71e8797'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -55,14 +55,21 @@ def upgrade():
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('username', sa.String(), nullable=True),
+    sa.Column('username', sa.String(), nullable=False),
     sa.Column('_password_hash', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('is_admin', sa.Boolean(), nullable=True),
     sa.Column('avatar', sa.String(), nullable=True),
+    sa.Column('city', sa.String(), nullable=True),
+    sa.Column('country', sa.String(), nullable=True),
+    sa.Column('latitude', sa.String(), nullable=True),
+    sa.Column('longitude', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('username')
+    sa.UniqueConstraint('email')
     )
+    with op.batch_alter_table('users', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_users_username'), ['username'], unique=True)
+
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.String(), nullable=True),
@@ -121,6 +128,9 @@ def downgrade():
     op.drop_table('post_comments')
     op.drop_table('forum_messages')
     op.drop_table('comments')
+    with op.batch_alter_table('users', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_users_username'))
+
     op.drop_table('users')
     op.drop_table('releases')
     op.drop_table('posts')

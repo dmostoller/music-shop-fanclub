@@ -26,7 +26,7 @@ function EditEvent() {
         venue: yup.string().required("Must enter a venue"),
         location: yup.string().required("Must enter a location"),
         details: yup.string().required("Must enter event details"),
-        image_url: yup.string().required("Must enter an image link"),
+        image_url: yup.string().required("You must upload an image"),
         event_date: yup.date().required("Must enter a date"),
         event_link: yup.string().required("Must enter an event link"),
     })
@@ -95,7 +95,7 @@ function EditEvent() {
 
                 <div className="field">
                     <label>Date</label>
-                    <input type="text"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
+                    <input type="date"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_date}</p>}
                 </div>  
                 <div className="field">

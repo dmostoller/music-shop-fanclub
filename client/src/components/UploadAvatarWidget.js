@@ -23,7 +23,7 @@ function UploadAvatarWidget({onSetImageUrl}) {
 
 return (
     <>
-    <button type="button" className="ui button fluid teal small" onClick={() => widgetRef.current.open()}>
+    <button type="button" className="ui button fluid violet small" onClick={() => widgetRef.current.open()}>
         Upload
     </button>
     </>

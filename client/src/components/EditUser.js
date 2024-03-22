@@ -29,6 +29,10 @@ function EditUser({setShowEdit}){
         .required("Confirm password is required"),
         avatar: yup.string()
         .required("Please upload an image for your avatar"),
+        city: yup.string()
+        .required("City is required"),
+        country: yup.string()
+        .required("Country is required"),
       })
     const initValues = user
     const formik = useFormik({
@@ -39,6 +43,9 @@ function EditUser({setShowEdit}){
           password_confirmation:`${user.password_confirmation}`,
           email:`${user.email}`,
           avatar:`${avatar}`,
+          city:`${user.city}`,
+          country:`${user.country}`,
+          
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -87,6 +94,14 @@ function EditUser({setShowEdit}){
                         <div className="field">
                             <input type="text" id="email" name="email" value={formik.values.email} onChange={formik.handleChange}></input>
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
+                        </div>
+                        <div className="field">
+                            <input type="text" id="city" name="city" value={formik.values.city} onChange={formik.handleChange}></input>
+                            {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.city}</p>}
+                        </div>
+                        <div className="field">
+                            <input type="text" id="country" name="country" value={formik.values.country} onChange={formik.handleChange}></input>
+                            {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.country}</p>}
                         </div>
                         <div className="field">
                         <div className="ui left icon input">
