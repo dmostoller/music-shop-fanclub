@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import {setKey, setDefaults, setLanguage, setRegion, fromAddress, fromLatLng, fromPlaceId, setLocationType, geocode, RequestType,} from "react-geocode";
 
 
+    const center = {
+      lat: 35.703806, // default latitude
+      lng: 19.350360, // default longitude
+    };
+        
+    const Map = ({ users }) => {
+ 
     const libraries = ['places'];
     const mapContainerStyle = {
       width: '100%',
       height: '338px',
+      disableDefaultUI: true,
     };
-    const center = {
-      lat: 39.952583, // default latitude
-      lng: -75.165222, // default longitude
-    };
-    
-    const Map = ({ users }) => {
-    const [userMarker, setUserMarker] = useState();
+
+      const markers = users.map((user) => {
+        return <Marker position={{
+            lat: user.latitude,
+            lng: user.longitude,
+        }} />
+    })
+
       const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: `${process.env.REACT_APP_YOUTUBE_API_KEY}`,
         libraries,
@@ -27,36 +35,15 @@ import {setKey, setDefaults, setLanguage, setRegion, fromAddress, fromLatLng, fr
       if (!isLoaded) {
         return <div>Loading maps</div>;
       }
-    
-      // Set default response language and region (optional).
-      // This sets default values for language and region for geocoding requests.
-      setDefaults({
-        key: `${process.env.REACT_APP_MAP_API_KEY}`, // Your API key here.
-        language: "en", // Default language for responses.
-        region: "es", // Default region for responses.
-      });
-
-
-    console.log(users)
-    //   const markers = users.map((user) => {
-    //     fromAddress(`${user.city}, ${user.country}`)
-    //     .then(({ results }) => {
-    //         setUserMarker(results[0].geometry.location);
-    //     //   console.log(lat, lng);
-    //     })
-    //     return <Marker 
-    //     position={userMarker}
-    //     />
-    //   })
-
-      
+          
       return (
-        <div>
+        // <div className='ui inverted rounded segment'>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
-            zoom={10}
+            zoom={0.8}
             center={center}
             options={{
+                disableDefaultUI: true,
                 styles:  [
                     { elementType: "geometry", stylers: [{ color: "#212121" }] },
                     { elementType: "labels.icon", stylers: [{ visibility: "#off" }] },
@@ -211,10 +198,9 @@ import {setKey, setDefaults, setLanguage, setRegion, fromAddress, fromLatLng, fr
                   ]
             }}
           >
-            {/* <Marker position={center} /> */}
-            {/* {markers} */}
+            {markers}
           </GoogleMap>
-        </div>
+        // </div>
       );
     };
 

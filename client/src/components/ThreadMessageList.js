@@ -40,7 +40,7 @@ export default function ThreadMessageList({threadId, searchVal}) {
 
     return(
         <>
-        <div className="ui resizable scrolling inverted segment" id="scrollWindow" style={{height: "700px"}}>
+        <div className="ui resizable scrolling inverted attached segment" id="scrollWindow" style={{height: "580px"}}>
             <div className="ui inverted minimal comments">
                 {threadMessages}
                 <div ref={divRef} />

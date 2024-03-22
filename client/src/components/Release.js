@@ -103,7 +103,7 @@ return (
             </div>
             <div className="content">
                 <div classname="ui inverted segment" >
-                <h4 class="ui horizontal inverted divider">Tracklist</h4>
+                <h4 className="ui horizontal inverted divider">Tracklist</h4>
                     <TrackList releaseId={id}/>
                 </div>
 
@@ -114,7 +114,7 @@ return (
                 <div className="center aligned grid" style={{padding: "10px"}}> 
                 <Link to={linkForFB}
                     target="_blank"
-                    class="ui icon facebook button"  
+                    className="ui icon facebook button"  
                     data-inverted="" 
                     data-tooltip="Share to Facebook" 
                     data-position="bottom center">

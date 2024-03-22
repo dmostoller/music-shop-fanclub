@@ -12,7 +12,7 @@ export default function ForumSearch({searchVal, onSearch,}) {
                 type="text" 
                 name="search" 
                 value={searchVal} 
-                placeholder="search messages..."
+                placeholder="search forum..."
                 onChange={(e) => onSearch(e.target.value)}>
                 </input>
                 <i className="ui search link icon"></i>

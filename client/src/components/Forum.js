@@ -57,6 +57,7 @@ function Forum() {
     return (
             <div className="ui grid" style={{width:"90%", margin:"auto", minHeight:"100vh", marginTop:"40px"}}>
                 <div className="six wide wide left attached column" style={{marginTop: "100px"}}>
+
                     <div className="ui inverted fluid large vertical pointing menu">
                         <div className='item'>
                             Channels
