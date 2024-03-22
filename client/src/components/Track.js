@@ -40,7 +40,7 @@ export default function Track({id, onDeleteTrack}) {
             <tbody>
                 <tr>
                     <th>
-                        <iframe style={{border: "0", width: "42px", height: "42px"}}
+                        <iframe title="track_audio" style={{border: "0", width: "42px", height: "42px"}}
                             src={track.audio} seamless>
                         </iframe>    
                     </th>

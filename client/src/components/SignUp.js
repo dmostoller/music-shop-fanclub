@@ -13,6 +13,7 @@ function SignUp() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [avatar, setAvatar] = useState("");
+  const [loading, setLoading] = useState(false);
 
 
   function tryAgain() {
@@ -53,7 +54,7 @@ const formik = useFormik({
 validationSchema: formSchema,
 onSubmit: (values) => {
   setError(null);
-
+  setLoading(true);
   fetch("/users", {
     method: "POST",
     headers: {
@@ -195,8 +196,12 @@ if(error) return (
                 </input>
               </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
-            </div>  
+            </div>
+            { !loading ?  
                 <button className="ui fluid button violet large" type="submit">Submit</button>
+             :
+                <button className="ui fluid massive primary double loading violet button"></button>
+            }
                 <div className="ui inverted message tiny">
              Already have an account? 
               <Link to="/login">    Login</Link>

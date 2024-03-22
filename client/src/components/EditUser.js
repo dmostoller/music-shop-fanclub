@@ -9,6 +9,8 @@ function EditUser({setShowEdit}){
     const [error, setError] = useState(null);
     const {user, setUser} = useUser();
     const [avatar, setAvatar] = useState("");
+    const [loading, setLoading] = useState(false);
+
 
     useEffect(() => {
       fetch(`/users/${user.id}`)
@@ -39,8 +41,8 @@ function EditUser({setShowEdit}){
         enableReinitialize: true,
         initialValues: {
           username:`${user.username}`,
-          password:`${user.password}`,
-          password_confirmation:`${user.password_confirmation}`,
+          password:'',
+          password_confirmation:'',
           email:`${user.email}`,
           avatar:`${avatar}`,
           city:`${user.city}`,
@@ -49,6 +51,7 @@ function EditUser({setShowEdit}){
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
+          setLoading(true)
           fetch(`/update_user/${user.id}`, {
             method: "PATCH",
             headers: {
@@ -131,7 +134,11 @@ function EditUser({setShowEdit}){
                         </div>
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
                         </div>
-                        <button className="ui button fluid violet small" type="submit">Submit</button>
+                        { !loading ?  
+                            <button className="ui fluid button violet small" type="submit">Submit</button>
+                          :
+                            <button className="ui fluid huge primary double loading violet button"></button>
+                        }
                     </form>
                 </div>
             </div>

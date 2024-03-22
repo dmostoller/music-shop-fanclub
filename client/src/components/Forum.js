@@ -54,6 +54,7 @@ function Forum() {
         setThreads([...threads, newThread])
         showAddThread()
     } 
+
     return (
             <div className="ui grid" style={{width:"90%", margin:"auto", minHeight:"100vh", marginTop:"40px"}}>
                 <div className="six wide wide left attached column" style={{marginTop: "100px"}}>
@@ -85,7 +86,7 @@ function Forum() {
                             }
                         </div>
                         :
-                        <></>
+                        <div className='item' style={{height: "56px"}}></div>
                         }
                         <ForumSearch searchVal={searchVal} onSearch={setSearchVal}/>
                         <Map users={users} />
@@ -93,7 +94,7 @@ function Forum() {
 
                     </div>
                 <div className="ten wide right attached column"  style={{marginTop: "100px"}}>
-                    <ThreadMessageList threadId={selectedThread} searchVal={searchVal}/>                                   
+                    <ThreadMessageList threadId={selectedThread} searchVal={searchVal} />                                   
                 </div>
         </div> 
     )

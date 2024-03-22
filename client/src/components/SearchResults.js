@@ -5,11 +5,9 @@ import PostSearchResult from "./PostSearchResult";
 
 
 function SearchResults() {
-    // const [searchResults, setSearchResults] = useState([]);
     const {searchParams} = useParams("");
     const [releases, setReleases] = useState([]);
     const [posts, setPosts] = useState([]);
-    const [noResults, setNoResults] = useState(false);
     const [events, setEvents] = useState([]);
 
 

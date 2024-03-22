@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
         print("Seeding users...")
         users = [
-            User(username="Kabayun", email="kabayun@gmail.com", password_hash="bassline", is_admin=True),
+            User(username="Site-Admin", email="kabayun@gmail.com", password_hash="bass", is_admin=True),
             # User(username="Dave", email="dmostoller@gmail.com", password_hash="bass", is_admin=True),
             # User(username="Yasi", email="yasmin.nunsy@gmail.com", password_hash="lily", is_admin=True),
             # User(username="frodo", email="frodo@frodo.com", password_hash="frodo", is_admin=False)

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function PostCommentForm({onAddMessage, threadId}){
     const [error, setError] = useState(null);
-    const {user} = useUser()
+    const {user} = useUser();
     const [inputStr, setInputStr] = useState("");
     const [showPicker, setShowPicker] = useState(false);
 
@@ -60,15 +60,28 @@ function PostCommentForm({onAddMessage, threadId}){
               <div className="field">
                   <div className="ui fluid transparent inverted input" >
                       <em data-emoji=":alien:" className="small link" onClick={() => setShowPicker((val) => !val)}></em>
+                      {(threadId !==1) ?
                       <input type="fluid text" 
                       name="message" 
                       id="message" 
-                      value={formik.values.message} 
+                      value={formik.values.message}
                       onChange={(e) => setInputStr(e.target.value)} 
                       // onChange={formik.handleChange}
                       className="prompt" 
                       placeholder="Message...">
-                      </input>                
+                      </input>      
+                      :
+                      <input type="fluid text" 
+                      name="message" 
+                      id="message" 
+                      readOnly
+                      value={formik.values.message}
+                      onChange={(e) => setInputStr(e.target.value)} 
+                      // onChange={formik.handleChange}
+                      className="prompt" 
+                      placeholder="forum-rules is a read-only channel">
+                      </input>
+                      }      
                       {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.message}</p>}
                   </div> 
               </div>
