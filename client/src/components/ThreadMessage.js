@@ -27,13 +27,16 @@ export default function ThreadMessage({messageObj, onDeleteMessage}) {
                     </div>
                 </div>
                 <div className="text">{messageObj.message}</div>
-                { (user.id == messageObj.user_id) ? ( 
+
                 <div className="actions">
+                {/* <em data-emoji=":astonished:" class="small"></em> */}
+
+                { (user.id == messageObj.user_id) ? ( 
                     <button onClick={handleDeleteMessage} className="ui circular delete inverted icon violet button mini"><i className="trash icon"></i></button>
-                </div>
                 ):
                 <></>
-                }
+                }            
+                </div>
             </div>
         </div>
         </>

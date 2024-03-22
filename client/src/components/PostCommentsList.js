@@ -57,7 +57,7 @@ function PostCommentsList({ postId }){
                 : 
                 <button 
                 onClick={changeIsComFormVis} 
-                className="ui inverted fluid button black small">
+                className="ui inverted fluid button violet small">
                     Add Comment
                 </button>}
             </div>

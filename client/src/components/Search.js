@@ -8,8 +8,9 @@ function Search() {
 
     function handleSearch(event) {
         event.preventDefault();
+        if (event.target.search.value !== "") {
         navigate(`/search_results/${event.target.search.value}`)
-        // setSearchVal("")
+        }
     }
 
     return (

@@ -10,6 +10,7 @@ function SearchResults() {
     const [releases, setReleases] = useState([]);
     const [posts, setPosts] = useState([]);
     const [noResults, setNoResults] = useState(false);
+    const [events, setEvents] = useState([]);
 
 
     useEffect(() => {
@@ -63,6 +64,30 @@ function SearchResults() {
         />
     })
 
+    useEffect(() => {
+        fetch(`/events`)
+        .then((res) => res.json())
+        .then((events) => {setEvents(events)})
+      }, []);
+
+
+    const eventResults = events
+    .filter(event => {
+        return (
+            event.name.toLowerCase().includes(searchParams.toLowerCase())        
+        )
+    })
+
+    const eventResultsList = eventResults.map((eventResult) => {
+        return <PostSearchResult 
+        key={eventResult.id}
+        id={eventResult.id}
+        title={eventResult.name}
+        image={eventResult.image_url}
+        date={eventResult.event_date}
+        />
+    })
+
 
     return (
         <>
@@ -72,17 +97,23 @@ function SearchResults() {
             :
             <h4 style={{padding: "50px"}} className="ui horizontal inverted divider">Search Results</h4>
          }
-            <div className="ui centered grid" style={{marginBottom: "25px"}}>
+            <div className="ui centered equal width grid" style={{marginBottom: "25px"}}>
                 <div className="ui inverted stackable link cards">
                     { (searchResults.length === 0) ?
                     <></>
                 :
                 resultsList
                 }
-            { (postResults.length === 0) ?
+                { (postResults.length === 0) ?
                     <></>
                 :
                 postResultsList
+                
+                }
+                { (eventResults.length === 0) ?
+                    <></>
+                :
+                eventResultsList
                 
                 }
                 </div> 

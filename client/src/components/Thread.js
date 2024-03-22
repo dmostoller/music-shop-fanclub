@@ -5,16 +5,19 @@ export default function Thread({ id, onSelectThread, name, selectedThread, onDel
     const [active, setActive] = useState(false);
     const [a, setA] = useState("item");
     const [spin, setSpin] = useState("galactic republic violet icon large");
+    const [color, setColor] = useState("ui teal large text")
     const {isAdmin} = useAdmin();
 
 
     useEffect(() => {
         if (selectedThread == id) {
             setA("active item")
-            setSpin("galactic republic loading violet icon large")
+            setSpin("galactic republic loading white icon large")
+            setColor("ui white large text")
         } else {
             setA("item")
             setSpin("galactic republic violet icon large")
+            setColor("ui violet large text")
         }
     }
     )
@@ -35,11 +38,11 @@ export default function Thread({ id, onSelectThread, name, selectedThread, onDel
     return (
         
         <a className={a} onClick={handleClick}>
-            <i style={{float: "left"}} className={spin}></i>
-            <span className="ui violet large text">  | {name}</span>
+            <i style={{float: "left"}} className={spin}></i>            
+            <span className={color}>  | {name}</span>
             { isAdmin ?
             <button onClick={handleDeleteThread} style={{float: "right"}} className="ui circular black icon button mini">
-                <i className="violet trash icon"></i>
+                <i className="trash violet icon"></i>
             </button>
             :
             <></>

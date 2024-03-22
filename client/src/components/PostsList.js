@@ -39,7 +39,7 @@ function PostsList () {
 
             {(user && isAdmin) ? 
             <div className="ui grid container centered">
-                <Link to={`/posts/new`} style={{margin: "10px"}} className="ui icon secondary button"><i className="plus icon"></i>  New Post</Link>
+                <Link to={`/posts/new`} style={{margin: "10px"}} className="ui icon violet button"><i className="plus icon"></i>  New Post</Link>
             </div>
             : 
             <div></div>

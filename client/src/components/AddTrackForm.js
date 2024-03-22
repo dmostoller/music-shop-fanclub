@@ -61,7 +61,7 @@ function AddTrackForm({onAddTrack, releaseId, onChangeIsFormVis}){
                 <input type="text" id="audio" name="audio" value={formik.values.audio} placeholder="Audio Link..." onChange={formik.handleChange}></input>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.audio}</p>}
             </div>
-            <button className="ui button fluid inverted grey tiny" type="submit">Submit</button>
+            <button className="ui button fluid violet tiny" type="submit">Submit</button>
         </form>
          
          </div>

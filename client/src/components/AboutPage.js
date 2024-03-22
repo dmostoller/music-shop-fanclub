@@ -44,8 +44,8 @@ return (
                     </Link>
 
                 </div>
-                <div className="ui centered grid" style={{padding: "10px"}}> 
-                    <Link to="/contact" className="ui inverted fluid black button small">Contact Us</Link>
+                <div className="ui centered grid" style={{padding: "20px"}}> 
+                    <Link to="/contact" className="ui inverted fluid violet button small">Contact Us</Link>
                 </div>
             </div>
 

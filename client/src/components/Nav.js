@@ -35,19 +35,19 @@ function Nav({onLogout}) {
             <div className="item">
                 { !user ? (
                     <>
-                    <Link to='/login' style={{marginRight: '3px'}} data-inverted="" data-tooltip="Login" data-position="bottom center" className="ui circular inverted grey icon button small">
+                    <Link to='/login' style={{marginRight: '3px'}} data-inverted="" data-tooltip="Login" data-position="bottom center" className="ui circular violet icon button small">
                         <i className="sign in alternate icon"></i>
                     </Link>
-                    <Link to='/signup' style={{marginRight: '3px'}} data-inverted="" data-tooltip="Sign Up" data-position="bottom right" className="ui circular inverted grey icon button small">
+                    <Link to='/signup' style={{marginRight: '3px'}} data-inverted="" data-tooltip="Sign Up" data-position="bottom right" className="ui circular violet icon button small">
                         <i className="plus icon"></i>
                     </Link>
                     </>
                 ) : (
                     <>
-                    <button onClick={handleLogout} style={{marginRight: '3px'}} data-inverted="" data-tooltip="Logout" data-position="bottom center" className="ui circular inverted grey icon button small">
+                    <button onClick={handleLogout} style={{marginRight: '3px'}} data-inverted="" data-tooltip="Logout" data-position="bottom center" className="ui circular violet icon button small">
                         <i className="sign out alternate icon"></i>
                     </button>
-                    <Link to='/user' style={{marginRight: '3px'}} data-inverted="" data-tooltip="User Profile" data-position="bottom right" className="ui circular inverted grey icon button small">
+                    <Link to='/user' style={{marginRight: '3px'}} data-inverted="" data-tooltip="User Profile" data-position="bottom right" className="ui circular violet icon button small">
                         <i className="user icon"></i>
                     </Link>
                     </>

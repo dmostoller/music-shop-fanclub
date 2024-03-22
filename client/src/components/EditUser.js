@@ -116,7 +116,7 @@ function EditUser({setShowEdit}){
                         </div>
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
                         </div>
-                        <button className="ui button fluid inverted grey tiny" type="submit">Submit</button>
+                        <button className="ui button fluid violet small" type="submit">Submit</button>
                     </form>
                 </div>
             </div>

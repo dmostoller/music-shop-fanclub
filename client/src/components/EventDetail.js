@@ -52,13 +52,13 @@ function EventDetail(){
                     <p>{event.details}</p>
                 </div>
                 <div style={{padding: "10px"}}> 
-                    <Link to="/events" className="circular ui icon inverted grey button"><i className="undo icon"></i></Link>
+                    <Link to="/events" className="circular ui icon violet button"><i className="undo icon"></i></Link>
                     { user && isAdmin ? (
                         <>
-                            <Link to={`/events/${id}/edit`} className="circular ui icon inverted grey button">
+                            <Link to={`/events/${id}/edit`} className="circular ui icon violet button">
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                             </Link>
-                            <button className="circular ui icon inverted grey button" onClick={handleDeleteEvent}>
+                            <button className="circular ui icon violet button" onClick={handleDeleteEvent}>
                                 <i className="trash icon" style={{visibility: "visible"}}></i>
                             </button>
 
@@ -67,7 +67,7 @@ function EventDetail(){
                         )
                         : <></>    
                     } 
-                        <a href={event.event_link} style={{float: "right"}} className="ui button inverted button grey small" target="_blank" rel="noopener noreferrer">Buy Tickets</a>
+                        <a href={event.event_link} style={{float: "right"}} className="ui button violet small" target="_blank" rel="noopener noreferrer">Buy Tickets</a>
 
                 </div>
             </div>

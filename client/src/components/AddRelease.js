@@ -97,7 +97,7 @@ function AddRelease() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.buy_link}</p>}
                 </div>
                 <div className="field">
-                  <button className="ui button fluid inverted grey small" type="submit">Submit</button>
+                  <button className="ui button fluid violet small" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

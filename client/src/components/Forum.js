@@ -5,6 +5,8 @@ import Thread from './Thread';
 import ThreadMessageList from './ThreadMessageList';
 import { useNavigate } from "react-router-dom"
 import AddThread from './AddThread';
+import ForumSearch from './ForumSearch';
+import Map from './Map';
 
 function Forum() {
     const [threads, setThreads] = useState([]);  
@@ -50,7 +52,7 @@ function Forum() {
 
     return (
             <div className="ui grid" style={{width:"90%", margin:"auto", minHeight:"100vh", marginTop:"40px"}}>
-                <div className="five wide left attached column" style={{marginTop: "100px"}}>
+                <div className="six wide wide left attached column" style={{marginTop: "100px"}}>
                     <div className="ui inverted fluid large vertical pointing menu">
                         <div className='item'>
                             Channels
@@ -80,21 +82,10 @@ function Forum() {
                         :
                         <></>
                         }
-
-                        <div className='item' style={{height: "55px"}}></div>
-                            <div className='item'>
-                                <div className="ui transparent inverted fluid icon input small">
-                                    <input 
-                                    type="text" 
-                                    name="search" 
-                                    value={searchVal} 
-                                    placeholder="search messages..."
-                                    onChange={(e) => setSearchVal(e.target.value)}>
-                                    </input>
-                                    <i className="ui search link icon"></i>
-                                </div>
-                            </div>
+                        <ForumSearch searchVal={searchVal} onSearch={setSearchVal}/>
+                        <Map/>
                         </div>
+
                     </div>
                 <div className="ten wide right attached column"  style={{marginTop: "100px"}}>
                     <ThreadMessageList threadId={selectedThread} searchVal={searchVal}/>                                   

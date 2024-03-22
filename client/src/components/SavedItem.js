@@ -41,12 +41,12 @@ export default function SavedItem({ releaseId, id, onDeleteSaved }) {
                 </div>
                 <div className="extra content">
                     <span className="right floated">
-                        <button onClick={unSave} className="ui circular inverted icon button mini">
+                        <button onClick={unSave} className="ui circular violet icon button mini">
                             <i className="trash icon"></i>
                         </button>
                     </span>
                     <span className="left floated">
-                        <Link to={`/releases/${release.id}`} className="ui circular inverted icon button mini"><i className="arrows alternate icon"></i></Link>
+                        <Link to={`/releases/${release.id}`} className="ui circular violet icon button mini"><i className="arrows alternate icon"></i></Link>
                     </span>
                 </div>
             </div>

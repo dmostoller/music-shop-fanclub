@@ -20,13 +20,13 @@ function EventsPage () {
 
     return (
         <div className="ui container" style={{backgroundColor: "#303030"}} >
-        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
-        <h4  style={{marginTop: "100px"}} class="ui horizontal inverted divider">Events</h4>
+        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh", marginTop: "40px"}}>
+        {/* <h4  style={{marginTop: "100px"}} class="ui horizontal inverted divider">Events</h4> */}
                 <EventsList events={sortedEvents} isAdmin={isAdmin} deleteEvent={deleteEvent}/>
             </div>
             { user && isAdmin ?
             <div className="ui grid container centered">
-            <Link to={`/events/new`} style={{margin: "20px"}} className="ui icon secondary button"><i className="plus icon"></i>  New Event</Link>
+            <Link to={`/events/new`} style={{margin: "20px"}} className="ui icon violet button"><i className="plus icon"></i>  New Event</Link>
             </div>
             : <></>
             }

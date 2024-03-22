@@ -73,7 +73,7 @@ function AddPost() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
-                <button className="ui button fluid inverted grey" type="submit">Submit</button>
+                <button className="ui button fluid violet" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

@@ -6,7 +6,6 @@ export default function PostSearchResult({ title, image, description, id, date})
 
     return (
         <>
-
             <Link to={`/posts/${id}`}  style={{margin:"25px"}} className="ui centered card">
                 <div className="image">
                     <img src={image}></img>
@@ -28,7 +27,5 @@ export default function PostSearchResult({ title, image, description, id, date})
                 </div>
             </Link>
         </>
-
     )
-
 }

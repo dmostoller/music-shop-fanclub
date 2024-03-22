@@ -160,7 +160,7 @@ if(error) return (
                 </div>              
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
             </div>    
-                <button className="ui fluid button inverted grey large" type="submit">Submit</button>
+                <button className="ui fluid button violet large" type="submit">Submit</button>
                 <div className="ui inverted message tiny">
              Already have an account? 
               <Link to="/login">    Login</Link>

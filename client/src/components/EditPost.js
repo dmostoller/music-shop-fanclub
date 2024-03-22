@@ -80,7 +80,7 @@ function EditPost() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
-                  <button className="ui button inverted fluid grey" type="submit">Submit</button>
+                  <button className="ui button violet fluid" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

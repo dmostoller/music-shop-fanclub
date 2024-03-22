@@ -110,7 +110,7 @@ function EditEvent() {
                 </div>
                 <div className="field">
                 
-                <button className="ui button inverted fluid grey" type="submit">Submit</button>
+                <button className="ui button violet fluid" type="submit">Submit</button>
                 </div>
             </form> 
         </div>
