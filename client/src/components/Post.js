@@ -6,7 +6,7 @@ import {Link } from "react-router-dom";
 export default function Post ({id, title, content, image_url, date_added}) {
     return (
             
-            <Link to={`/posts/${id}`} className="ui centered card" style={{margin:"25px", marginBottom: "15px"}}>
+            <Link to={`/posts/${id}`} className="ui centered card" style={{margin:"10px", marginBottom: "15px"}}>
                 <div className="image">
                     <img className="ui fluid image" src={image_url} alt={title}></img>
                 </div>

@@ -89,7 +89,9 @@ function PostCommentForm({onAddMessage, threadId}){
           </>
         :
         <>
-          <span className="ui medium violet text">Please <Link to='/login'>Login</Link> or <Link to='/signup'>Create an Account</Link> to use the forum</span>
+          <span className="ui medium violet text">
+            Please <Link to='/login'>Login</Link> or <Link to='/signup'>Create an Account</Link> to use the forum
+          </span>
         </>
 
           }

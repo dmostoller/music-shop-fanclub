@@ -22,7 +22,7 @@ function Nav({onLogout}) {
             <NavLink className="item"  to='/learn'>Video</NavLink>
             <NavLink className="item" to='/events'>Events</NavLink>
             <NavLink className="item" to='/about'>Bio</NavLink>
-            <Link className="item" target="_blank" to='https://kabayun.bandcamp.com/'>Shop</Link>
+            {/* <Link className="item" target="_blank" to='https://kabayun.bandcamp.com/'>Shop</Link> */}
             <NavLink className="item" to='/forum'>Forum</NavLink>  
             <div className='right menu'>
                 {/* <div className='item'>

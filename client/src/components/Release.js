@@ -117,12 +117,26 @@ return (
                     className="ui icon facebook button"  
                     data-inverted="" 
                     data-tooltip="Share to Facebook" 
+                    style={{marginRight: "5px"}}
                     data-position="bottom center">
                             <i class="facebook icon"></i> Share
                     </Link>
+
+                    { user ? isSaved ? 
+                        <button onClick={unSaveRelease} className="circular ui icon red button" style={{marginRight: "5px"}}>
+                            <i className="heart icon" style={{visibility: "visible"}}></i>
+                        </button>   
+                        :
+                        <button onClick={saveRelease} className="circular ui icon violet button" style={{marginRight: "5px"}}>
+                            <i className="heart icon" style={{visibility: "visible"}}></i>
+                        </button>  
+                        :<></>
+                        }   
+
+
                     <Link to={`${buyLink}`} 
                     target="_blank" 
-                    style={{marginRight: "10px", marginLeft: "10px"}} 
+                    style={{marginRight: "5px"}} 
                     className="ui icon violet button"
                     data-inverted="" 
                     data-tooltip="Buy on Bandcamp" 
@@ -132,7 +146,7 @@ return (
 
                     { user && isAdmin ? (
                         <>
-                            <Link to={`/releases/${id}/edit`} className="circular ui icon violet button">
+                            <Link to={`/releases/${id}/edit`} className="circular ui icon violet button" style={{marginRight: "5px"}}>
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                             </Link>
                             <button onClick={handleDeleteRelease} className="circular ui icon violet button">
@@ -140,20 +154,9 @@ return (
                             </button>
                         </>
                         )
-                        : <>
-                        { user ? isSaved ? 
-                        <button onClick={unSaveRelease} className="circular ui icon inverted red button">
-                            <i className="heart icon" style={{visibility: "visible"}}></i>
-                        </button>   
-                        :
-                        <button onClick={saveRelease} className="circular ui icon inverted grey button">
-                            <i className="heart icon" style={{visibility: "visible"}}></i>
-                        </button>  
-                        :<></>
-                        }                      
-                        </>    
-                    } 
-
+                        : <></>
+                    }
+                                         
                 </div>
             </div>
             <div className="ui bottom attached inverted segment">
