@@ -15,7 +15,6 @@ function SignUp() {
   const [avatar, setAvatar] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   function tryAgain() {
     setError(null)
   }
@@ -75,11 +74,6 @@ onSubmit: (values) => {
 },
 })
 
-
-
-// {errors.map((err) => (
-//   <Error key={err}>{err}</Error>
-// ))}
 if(error) return (
   <>
    <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
@@ -111,7 +105,6 @@ if(error) return (
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.avatar}</p>}
                 </div> 
             <div className="field">
-                {/* <label>Create New Account</label> */}
                 <div className="ui left icon input">
                 <i className="user icon"></i>
                 <input type="text" 
@@ -126,7 +119,6 @@ if(error) return (
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
             </div>
             <div className="field">
-                {/* <label>Create New Account</label> */}
                 <div className="ui left icon input">
                 <i className="city icon"></i>
                 <input type="text" 
@@ -141,7 +133,6 @@ if(error) return (
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.city}</p>}
             </div>
             <div className="field">
-                {/* <label>Create New Account</label> */}
                 <div className="ui left icon input">
                 <i className="globe americas icon"></i>
                 <input type="text" 
@@ -206,12 +197,6 @@ if(error) return (
              Already have an account? 
               <Link to="/login">    Login</Link>
             </div>
-      
-            {/* <div className="field">
-            {errors.map((err) => (
-                <Error key={err}>{err}</Error>
-            ))}
-            </div>  */}
         </form> 
         </div>
     </div>

@@ -32,14 +32,12 @@ function PostDetail(){
     const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fposts%2F${id}&amp;src=sdkpreparse`
     
     return (
-    <div className="ui container" style={{marginTop:"45px"}}>
-        <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
-            <div className="ui relaxed inverted divided items">
-                <div className="item" >
-                    <div className="ui huge image" style={{marginTop:"25px"}}>
-                        <img src={post.image_url} alt={post.title}></img>
+        <div className="ui container" style={{paddingTop:"5px", marginTop: "40px", minHeight:"100vh"}}>
+        <div style={{marginTop: "10px"}} className="ui inverted horizontal card fluid">
+                    <div className="item" >
+                        <img className="ui big image" src={post.image_url} alt={post.title}></img>
                     </div>
-                    <div className="content" style={{marginTop:"75px"}}>
+                    <div className="content">
                         <div className="header">
                             {post.title}
                         </div>
@@ -62,10 +60,10 @@ function PostDetail(){
                   
                             { user && isAdmin ? ( 
                             <>
-                                <Link to={`/posts/${id}/edit`} className="circular ui icon violet button">
+                                <Link to={`/posts/${id}/edit`} className="circular ui icon secondary button">
                                     <i className="edit icon" style={{visibility: "visible"}}></i>
                                 </Link>
-                                <button className="circular ui icon violet button" onClick={handleDeletePost}>
+                                <button className="circular ui icon secondary button" onClick={handleDeletePost}>
                                     <i className="trash icon" style={{visibility: "visible"}}></i>
                                 </button>
 
@@ -76,7 +74,6 @@ function PostDetail(){
                         </div>
                     </div>
                 </div>
-            </div>
             <div className="ui bottom attached inverted segment">
             <h4 className="ui horizontal inverted divider">Comments</h4>
             <div>
@@ -85,7 +82,6 @@ function PostDetail(){
 
             </div>
         </div>
-    </div>
     
     );
 }

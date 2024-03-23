@@ -4,6 +4,7 @@ import Release from "./Release";
 
 function ReleasesList ({ releases, onDeleteRelease }) {
     const discography = releases.map((release) => {
+        // console.log(release)
         return <Release
         key={release.id}
         id={release.id}

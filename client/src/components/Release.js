@@ -10,27 +10,22 @@ export default function Release({id, title, artist, record_label, description, d
     const { user } = useUser();
     const { isAdmin } = useAdmin();
     const [error, setError] = useState(null);
-    const [isSaved, setIsSaved] = useState(false);
+    const [isSaved, setIsSaved] = useState();
     const [savedId, setSavedId] = useState("");
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
     }
 
-useEffect(() => {
-    fetch(`/saved_by_release/${id}`)
-    .then((r) => {
-        if (r.ok) {
-        r.json().then(saved_release => {
-            changeIsSaved(true)
-            setSavedId(parseInt(saved_release.id))
-            // console.log(saved_release.id)
-        })
-        } else {
-            r.json().then(error => setError(error.message))
-        }
-    })
-}, [id]);
+// useEffect(() => {
+//     fetch(`/saved_by_release/${id}`)
+//     .then((r) => {
+//         if (r.ok) {
+//             setIsSaved(true)
+//             setSavedId(parseInt(id))
+//         }
+//     })
+// }, [id]);
 
 
     const handleDeleteRelease = (e) => {
@@ -97,9 +92,23 @@ return (
                 <div className="center aligned meta">
                     {record_label}
                 </div>
-                <div className="center aligned meta" style={{marginBottom:"25px"}}>
+                <div className="center aligned meta" style={{marginBottom:"10px"}}>
                 <p> {date_released}</p>
                 </div>
+                <div className="center aligned grid" style={{padding: "10px"}}>
+                { user && isAdmin ? (
+                        <>
+                            <Link to={`/releases/${id}/edit`} className="circular ui icon secondary button small" style={{marginRight: "5px"}}>
+                                <i className="edit icon" style={{visibility: "visible"}}></i>
+                            </Link>
+                            <button onClick={handleDeleteRelease} className="circular ui icon secondary button small">
+                                <i className="trash icon" style={{visibility: "visible"}}></i>
+                            </button>
+                        </>
+                        )
+                        : <></>
+                    }
+                    </div>
             </div>
             <div className="content">
                 <div classname="ui inverted segment" >
@@ -114,7 +123,7 @@ return (
                 <div className="center aligned grid" style={{padding: "10px"}}> 
                 <Link to={linkForFB}
                     target="_blank"
-                    className="ui icon facebook button"  
+                    className="ui circular icon facebook button small"  
                     data-inverted="" 
                     data-tooltip="Share to Facebook" 
                     style={{marginRight: "5px"}}
@@ -123,12 +132,12 @@ return (
                     </Link>
 
                     { user ? isSaved ? 
-                        <button onClick={unSaveRelease} className="circular ui icon red button" style={{marginRight: "5px"}}>
-                            <i className="heart icon" style={{visibility: "visible"}}></i>
+                        <button onClick={unSaveRelease} className="ui circular icon red button small" style={{marginRight: "5px"}}>
+                            <i className="heart icon" style={{visibility: "visible"}}></i> Saved
                         </button>   
                         :
-                        <button onClick={saveRelease} className="circular ui icon violet button" style={{marginRight: "5px"}}>
-                            <i className="heart icon" style={{visibility: "visible"}}></i>
+                        <button onClick={saveRelease} className="ui circular icon violet button small" style={{marginRight: "5px"}}>
+                            <i className="heart icon" style={{visibility: "visible"}}></i> Save
                         </button>  
                         :<></>
                         }   
@@ -137,25 +146,14 @@ return (
                     <Link to={`${buyLink}`} 
                     target="_blank" 
                     style={{marginRight: "5px"}} 
-                    className="ui icon violet button"
+                    className="ui circular icon violet button small"
                     data-inverted="" 
                     data-tooltip="Buy on Bandcamp" 
                     data-position="bottom center">
                         <i className="cart icon"></i>  Buy
                     </Link>
 
-                    { user && isAdmin ? (
-                        <>
-                            <Link to={`/releases/${id}/edit`} className="circular ui icon violet button" style={{marginRight: "5px"}}>
-                                <i className="edit icon" style={{visibility: "visible"}}></i>
-                            </Link>
-                            <button onClick={handleDeleteRelease} className="circular ui icon violet button">
-                                <i className="trash icon" style={{visibility: "visible"}}></i>
-                            </button>
-                        </>
-                        )
-                        : <></>
-                    }
+
                                          
                 </div>
             </div>

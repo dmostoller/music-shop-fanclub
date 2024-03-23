@@ -55,11 +55,14 @@ function PostCommentsList({ postId }){
                 postId={postId} 
                 onChangeIsComFormVis={changeIsComFormVis} /> 
                 : 
-                <button 
-                onClick={changeIsComFormVis} 
-                className="ui inverted fluid button violet small">
-                    Add Comment
-                </button>}
+                <div 
+                    onClick={changeIsComFormVis} 
+                    className="ui circular fluid animated fade button secondary tiny" tabindex="0">
+                    <div className="visible content"><i className="plus icon"></i></div>
+                    <div className="hidden content">
+                        Add Comment
+                    </div>   
+                </div>}
             </div>
             : <></>
             }

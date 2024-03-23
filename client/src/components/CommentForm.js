@@ -49,7 +49,7 @@ function CommentForm({onAddComment, releaseId, onChangeIsComFormVis}){
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.comment}</p>}
             </div>
             <div className="field"></div>
-            <button className="ui fluid button violet small " type="submit">Submit</button>
+            <button className="ui fluid button secondary small " type="submit">Submit</button>
         </form>
          
          </div>
