@@ -427,12 +427,8 @@ api.add_resource(SavedItemsByUserId, '/saved_by_user/<int:id>')
 
 class SavedItemsByReleaseId(Resource):
     def get(self, id):
-        user_id = session.get('user_id')
-        saved_item = Saved.query.filter(Saved.release_id == id, Saved.user_id == user_id)
-        if saved_item:
-            response = make_response(saved_item.to_dict(), 200)
-        else:
-            raise NotFound
+        saved_items = [saved_item.to_dict() for saved_item in Saved.query.all() if saved_item.release_id == id]
+        response = make_response(saved_items, 200)
         return response 
 
 api.add_resource(SavedItemsByReleaseId, '/saved_by_release/<int:id>')

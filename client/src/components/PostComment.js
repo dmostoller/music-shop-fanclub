@@ -25,7 +25,9 @@ function PostComment({username, comment, id, date_added, comment_user_id, onDele
     return (
             <div id={id} className="comment card">
                 <div className="avatar">
+                <a className="ui circular image">
                     <img src={commentUser.avatar}></img>
+                </a>
                 </div>
                 <div className="content">
                 <div className="author">{username}<div className="metadata"><span className="date">{date_added}</span></div></div>

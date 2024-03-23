@@ -17,16 +17,11 @@ export default function Release({id, title, artist, record_label, description, d
         setIsSaved(!isSaved)
     }
 
-// useEffect(() => {
-//     fetch(`/saved_by_release/${id}`)
-//     .then((r) => {
-//         if (r.ok) {
-//             setIsSaved(true)
-//             setSavedId(parseInt(id))
-//         }
-//     })
-// }, [id]);
-
+    const savedAvatars = savedItems.map((saved_item) => {
+            return (
+                <div className="ui rounded image mini" style={{margin: "5px"}}><img src={saved_item.user.avatar}></img></div>
+            )
+    })
 
     const handleDeleteRelease = (e) => {
         if(window.confirm("Are you sure you want to delete this release?")){ 
@@ -108,7 +103,10 @@ return (
                         )
                         : <></>
                     }
+                    <div className="center aligned grid" style={{padding: "10px"}}> 
+                        {savedAvatars}
                     </div>
+                </div>
             </div>
             <div className="content">
                 <div classname="ui inverted segment" >

@@ -30,7 +30,7 @@ export default function ThreadMessage({messageObj, onDeleteMessage, messageId}) 
         
         <div className="comment" style={{margin:"10px"}}>
             <div className="avatar">
-                <a className="ui image" style={{cursor: "pointer"}} onClick={handleOpen}><img alt="user avatar" src={messageObj.user.avatar} ></img></a>
+                <a className="ui circular image" style={{cursor: "pointer"}} onClick={handleOpen}><img alt="user avatar" src={messageObj.user.avatar} ></img></a>
             </div>
             <Modal
             open={modalOpen}

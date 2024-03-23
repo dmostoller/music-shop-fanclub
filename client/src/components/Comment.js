@@ -25,7 +25,9 @@ function Comment({username, comment, id, date_added, comment_user_id, onDeleteCo
     return (
         <div id={id} className="comment">
                 <div className="avatar">
+                    <a className="ui circular image">
                     <img src={commentUser.avatar}></img>
+                    </a>
                 </div>
                 <div className="content">
                 <div className="author">{username}<div className="metadata"><span className="date">{date_added}</span></div></div>
