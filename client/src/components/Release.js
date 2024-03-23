@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
+import {Link, useAsyncError} from "react-router-dom";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import TrackList from "./TrackList";
@@ -12,13 +12,26 @@ export default function Release({id, title, artist, record_label, description, d
     const [error, setError] = useState(null);
     const [isSaved, setIsSaved] = useState();
     const [savedId, setSavedId] = useState("");
+    // const [savedAvatars, setSavedAvatars] = useState([])
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
     }
 
+    useEffect(() => {
+        savedItems.map((saved_item) => {
+            if (saved_item.user.id == user.id) {
+                setIsSaved(true)
+                setSavedId(parseInt(saved_item.id))
+
+            }
+        }
+        )
+      }, [savedItems]);
+  
+
     const savedAvatars = savedItems.map((saved_item) => {
-            return (
+        return (
                 <div className="ui rounded image mini" style={{margin: "5px"}}><img src={saved_item.user.avatar}></img></div>
             )
     })
@@ -103,7 +116,8 @@ return (
                         )
                         : <></>
                     }
-                    <div className="center aligned grid" style={{padding: "10px"}}> 
+                    <div className="center aligned grid" style={{padding: "10px"}}>
+                        <div className="meta"><span class="ui small inverted grey text">Saved by</span></div>
                         {savedAvatars}
                     </div>
                 </div>
