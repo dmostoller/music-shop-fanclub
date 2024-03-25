@@ -78,7 +78,18 @@ function PostDetail(){
             <h4 className="ui horizontal inverted divider">Comments</h4>
             <div>
                 <PostCommentsList postId={id}/>
-            </div> 
+            
+                { !user ?
+            <div className="ui centered grid" style={{padding: "5px"}}>
+                <div className="ui inverted message">
+                <span className="ui medium violet text">
+                    Please <Link to='/login'>Login</Link> or <Link to='/signup'>Create an Account</Link> to leave a comment
+                </span>
+                </div>
+            </div>
+            :
+            <></>
+            }</div> 
 
             </div>
         </div>

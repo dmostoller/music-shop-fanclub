@@ -20,7 +20,7 @@ export default function Release({id, title, artist, record_label, description, d
 
     useEffect(() => {
         savedItems.map((saved_item) => {
-            if (saved_item.user.id == user.id) {
+            if (user && saved_item.user.id == user.id) {
                 setIsSaved(true)
                 setSavedId(parseInt(saved_item.id))
 
@@ -50,7 +50,7 @@ export default function Release({id, title, artist, record_label, description, d
     function saveRelease() {
         if (user) {
             const userId = user.id
-            fetch("saved", {
+            fetch("/saved", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export default function Release({id, title, artist, record_label, description, d
 
 
 return (
-<div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
+<div className="ui container" style={{paddingTop:"5px", marginTop: "5px"}}>
         <div style={{margin: "10px"}} className="ui inverted attached horizontal card fluid">
             <div className="item">
                 <img className="ui large image" src={image} alt={title}></img>
@@ -173,6 +173,17 @@ return (
             <div className="ui bottom attached inverted segment">
             <h4 className="ui horizontal inverted divider">Comments</h4>
             <div><CommentsList releaseId={id}/></div> 
+            { !user ?
+            <div className="ui centered grid" style={{padding: "5px"}}>
+                <div className="ui inverted message">
+                <span className="ui medium violet text">
+                    Please <Link to='/login'>Login</Link> or <Link to='/signup'>Create an Account</Link> to leave a comment
+                </span>
+                </div>
+            </div>
+            :
+            <></>
+            }
 
             </div>
         </div>

@@ -6,16 +6,17 @@ import TrackList from "./TrackList";
 import CommentsList from "./CommentsList";
 
 
-export default function ReleaseDetail({ionDeleteRelease, savedItems}) {
+export default function ReleaseDetail() {
     const { user } = useUser();
     const { isAdmin } = useAdmin();
     const [error, setError] = useState(null);
     const [isSaved, setIsSaved] = useState(false);
     const [savedId, setSavedId] = useState("");
     const {id} = useParams();
-    const [release, setRelease] = useState({})
-    const navigate = useNavigate()
-
+    const [release, setRelease] = useState({});
+    const navigate = useNavigate();
+    const [savedAvatars, setSavedAvatars] = useState([]);
+    // const [savedItems, setSavedItems] = useState([]);
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
@@ -24,25 +25,20 @@ export default function ReleaseDetail({ionDeleteRelease, savedItems}) {
     useEffect(() => {
         fetch(`/releases/${id}`)
         .then((res) => res.json())
-        .then((release) => setRelease(release))
-    }, [id]);
+        .then((release) => {
+            setRelease(release)
+            setSavedAvatars(release.saved_items.map((saved_item) => {
+                if (user && saved_item.user.id == user.id) {
+                    setIsSaved(true)
+                    setSavedId(parseInt(saved_item.id))
+                }
+                return (
+                        <div className="ui rounded image mini" style={{margin: "5px"}}><img src={saved_item.user.avatar}></img></div>
+                    )
+            }))        
 
-
-useEffect(() => {
-    fetch(`/saved_by_release/${id}`)
-    .then((r) => {
-        if (r.ok) {
-        r.json().then(saved_release => {
-            changeIsSaved(true)
-            setSavedId(parseInt(saved_release.id))
-            // console.log(saved_release.id)
         })
-        } else {
-            r.json().then(error => setError(error.message))
-        }
-    })
-}, [id]);
-
+    }, [id]);
 
     const handleDeleteRelease = (e) => {
         if(window.confirm("Are you sure you want to delete this release?")){ 
@@ -57,7 +53,7 @@ useEffect(() => {
     function saveRelease() {
         if (user) {
             const userId = user.id
-            fetch("saved", {
+            fetch("/saved", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -71,7 +67,6 @@ useEffect(() => {
                 r.json().then(saved_release => {
                     changeIsSaved()
                     setSavedId(parseInt(saved_release.id))
-                    // console.log(saved_release.id)
                 })
                 } else {
                     r.json().then(error => setError(error.message))
@@ -110,8 +105,26 @@ return (
                 <div className="center aligned meta">
                     {release.record_label}
                 </div>
-                <div className="center aligned meta" style={{marginBottom:"25px"}}>
+                <div className="center aligned meta" style={{marginBottom:"5px"}}>
                 <p> {release.date_released}</p>
+                </div>
+                <div className="center aligned grid" style={{padding: "10px"}}>
+                { user && isAdmin ? (
+                        <>
+                            <Link to={`/releases/${id}/edit`} className="circular ui icon secondary button">
+                                <i className="edit icon" style={{visibility: "visible"}}></i>
+                            </Link>
+                            <button onClick={handleDeleteRelease} className="circular ui icon secondary button">
+                                <i className="trash icon" style={{visibility: "visible"}}></i>
+                            </button>
+                        </>
+                        )
+                        : <></>
+                        }
+                        <div className="center aligned grid" style={{padding: "10px"}}>
+                        <div className="meta"><span class="ui small inverted grey text">Saved by</span></div>
+                        {savedAvatars}
+                    </div>
                 </div>
             </div>
             <div className="content">
@@ -128,54 +141,49 @@ return (
                 <div className="center aligned grid" style={{padding: "10px", marginRight: "5px"}}> 
                     <Link to={linkForFB}
                     target="_blank"
-                    class="ui icon facebook button"  
+                    class="ui circular icon facebook button"  
                     data-inverted="" 
                     data-tooltip="Share to Facebook" 
                     data-position="bottom center">
-                            <i class="facebook icon"></i> Share
+                        <i class="facebook icon"></i> Share
                     </Link>
-                    {/* { user ? isSaved ? 
-                        <button onClick={unSaveRelease} className="circular ui icon red button" style={{marginRight: "5px"}}>
-                            <i className="heart icon" style={{visibility: "visible"}}></i>
+                    { user ? isSaved ? 
+                        <button onClick={unSaveRelease} className="ui circular icon red button small" style={{marginRight: "5px"}}>
+                            <i className="heart icon" style={{visibility: "visible"}}></i> Saved
                         </button>   
                         :
-                        <button onClick={saveRelease} className="circular ui icon violet button" style={{marginRight: "5px"}}>
-                            <i className="heart icon" style={{visibility: "visible"}}></i>
+                        <button onClick={saveRelease} className="ui circular icon violet button small" style={{marginRight: "5px"}}>
+                            <i className="heart icon" style={{visibility: "visible"}}></i> Save
                         </button>  
                         :<></>
                         }   
-                  */}
-                        
+                 
                     <Link to={`${release.buy_link}`} 
                     target="_blank" 
                     style={{marginRight: "5px"}} 
-                    className="ui icon violet button"
+                    className="ui circular icon violet button"
                     data-inverted="" 
                     data-tooltip="Buy on Bandcamp" 
                     data-position="bottom center">
                         <i className="cart icon"></i>  Buy
                     </Link>
-       
-                    { user && isAdmin ? (
-                        <>
-                            <Link to={`/releases/${id}/edit`} className="circular ui icon violet button">
-                                <i className="edit icon" style={{visibility: "visible"}}></i>
-                            </Link>
-                            <button onClick={handleDeleteRelease} className="circular ui icon violet button">
-                                <i className="trash icon" style={{visibility: "visible"}}></i>
-                            </button>
-
-                        </>
-                        )
-                        : <></>
-                        }
-
-
+    
                 </div>
             </div>
             <div className="ui bottom attached inverted segment">
             <h4 className="ui horizontal inverted divider">Comments</h4>
             <div><CommentsList releaseId={release.id}/></div> 
+            { !user ?
+            <div className="ui centered grid" style={{padding: "5px"}}>
+                <div className="ui inverted message">
+                <span className="ui medium violet text">
+                    Please <Link to='/login'>Login</Link> or <Link to='/signup'>Create an Account</Link> to leave a comment
+                </span>
+                </div>
+            </div>
+            :
+            <></>
+            }
 
             </div>
         </div>
