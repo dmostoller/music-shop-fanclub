@@ -32,7 +32,7 @@ function PostsList () {
     return (
         <>
             <div className="ui middle aligned center aligned grid" >
-                    <div className="ui inverted stackable link cards">
+                    <div className="ui inverted stackable three link cards">
                         {blog}
                     </div>
                 </div>

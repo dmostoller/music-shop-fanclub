@@ -21,10 +21,33 @@ function ReleasesPage() {
     }
     const sortedReleases = releases.sort((a, b) => (a.date_released) > (b.date_released) ? -1 : 1)
 
+    const [compact, setCompact] = useState(true);
+        function changeTab(){
+            setCompact(!compact)
+        }
+
+
     return (
         <div className="ui container" style={{backgroundColor: "#303030", marginTop:"40px"}} >
-            <div className="ui container" style={{paddingTop:"5px", marginTop: "40px"}}>
-                <ReleasesList releases={sortedReleases} onDeleteRelease={deleteRelease}/>
+
+            <div className="ui inverted centered secondary pointing menu" style={{marginTop: "10px"}}>
+                { compact ?
+                <a onClick={changeTab} className="active item">Collapsed View</a>
+                :
+                <a onClick={changeTab} className="item">Collapsed View</a>
+                }
+                
+                
+                { !compact ? 
+                <a onClick={changeTab} className="active item">Expanded View</a>
+                :
+                <a onClick={changeTab} className="item">Expanded View</a>
+                }
+            </div>
+            
+            
+            <div className="ui container">
+                <ReleasesList releases={sortedReleases} onDeleteRelease={deleteRelease} compact={compact}/>
             </div>
             { user && isAdmin ?
             <div className="ui grid container centered">
@@ -32,6 +55,9 @@ function ReleasesPage() {
             </div>
             : <></>
             }
+
+
+
         </div>
     )
 }

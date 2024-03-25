@@ -17,7 +17,7 @@ export default function SavedList({savedItems, onDeleteSaved}) {
     })
     return (
         <div className="ui centered grid" style={{marginBottom: "25px"}}>
-            <div class="ui inverted link cards">
+            <div class="ui inverted five link cards">
                 {favorites}
             </div> 
         </div>

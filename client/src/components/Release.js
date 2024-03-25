@@ -12,7 +12,7 @@ export default function Release({id, title, artist, record_label, description, d
     const [error, setError] = useState(null);
     const [isSaved, setIsSaved] = useState();
     const [savedId, setSavedId] = useState("");
-    // const [savedAvatars, setSavedAvatars] = useState([])
+    const [savedAvatars, setSavedAvatars] = useState([])
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
@@ -29,12 +29,13 @@ export default function Release({id, title, artist, record_label, description, d
         )
       }, [savedItems]);
   
-
-    const savedAvatars = savedItems.map((saved_item) => {
+    useEffect(() => {
+     setSavedAvatars(savedItems.map((saved_item) => {
         return (
                 <div className="ui rounded image mini" style={{margin: "5px"}}><img src={saved_item.user.avatar}></img></div>
             )
     })
+     )}, [savedItems, isSaved, savedId]);
 
     const handleDeleteRelease = (e) => {
         if(window.confirm("Are you sure you want to delete this release?")){ 
