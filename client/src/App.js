@@ -29,6 +29,8 @@ import User from "./components/User.js";
 import Forum from "./components/Forum.js";
 import SearchResults from "./components/SearchResults.js";
 import ReleaseDetail from "./components/ReleaseDetail.js";
+import FormTest from "./components/TestForm.js";
+
 
 
 function App() {
@@ -90,6 +92,7 @@ function App() {
           <Route path="/user" element={<User/>}/>
           <Route path="/forum" element={<Forum/>}/>
           <Route path="/search_results/:searchParams" element={<SearchResults/>}/>
+          <Route path="/formtest" element={<FormTest />}/>
       </Routes>
     <Footer />
   </div>
