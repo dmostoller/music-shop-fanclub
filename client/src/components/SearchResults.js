@@ -5,11 +5,9 @@ import PostSearchResult from "./PostSearchResult";
 
 
 function SearchResults() {
-    // const [searchResults, setSearchResults] = useState([]);
     const {searchParams} = useParams("");
     const [releases, setReleases] = useState([]);
     const [posts, setPosts] = useState([]);
-    const [noResults, setNoResults] = useState(false);
     const [events, setEvents] = useState([]);
 
 
@@ -98,8 +96,8 @@ function SearchResults() {
             <h4 style={{padding: "50px"}} className="ui horizontal inverted divider">Search Results</h4>
          }
             <div className="ui centered equal width grid" style={{marginBottom: "25px"}}>
-                <div className="ui inverted stackable link cards">
-                    { (searchResults.length === 0) ?
+                <div className="ui inverted stackable five link cards">
+                { (searchResults.length === 0) ?
                     <></>
                 :
                 resultsList

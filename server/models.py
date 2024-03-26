@@ -192,6 +192,7 @@ class ForumMessage(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.String)
     date_added = db.Column(db.String)
+    gif = db.Column(db.String)
     
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', back_populates='forum_messages')

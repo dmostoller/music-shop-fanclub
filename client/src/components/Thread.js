@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { useAdmin } from "../context/admin";
 
 export default function Thread({ id, onSelectThread, name, selectedThread, onDeleteThread}) {
-    const [active, setActive] = useState(false);
     const [a, setA] = useState("item");
     const [spin, setSpin] = useState("galactic republic violet icon large");
     const [color, setColor] = useState("ui teal large text")
@@ -19,8 +18,7 @@ export default function Thread({ id, onSelectThread, name, selectedThread, onDel
             setSpin("galactic republic violet icon large")
             setColor("ui violet large text")
         }
-    }
-    )
+    }, [selectedThread, id])
 
     const handleClick = (e) => {
         onSelectThread(id)

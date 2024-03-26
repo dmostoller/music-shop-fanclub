@@ -55,7 +55,7 @@ function EditRelease() {
           }).then((res) => {
             if(res.ok) {
               res.json().then(release => {
-                navigate(`/releases/`)
+                navigate(`/releases/${id}`)
               })
             } else {
                 res.json().then(error => setError(error.message))
@@ -72,7 +72,7 @@ function EditRelease() {
             <form style={{marginTop: "40px", padding:"25px"}} className="ui inverted form" onSubmit={formik.handleSubmit}>
             <h4  style={{marginTop: "100px"}} class="ui horizontal inverted divider">Edit Release</h4>
                 <div className="field">
-                    <label>Image <Link style={{float:"right"}} to="/releases">  Back to Release Page</Link></label>
+                    <label>Image <Link style={{float:"right"}} to={`/releases/${id}`}>  Back to Release Page</Link></label>
                     <UploadWidget onSetImageUrl={setImage}/>
                     <input type="text" style={{visibility: "hidden"}} name="image" value={formik.values.image} placeholder="Image link..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image}</p>}

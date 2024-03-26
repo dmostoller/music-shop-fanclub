@@ -6,17 +6,17 @@ export default function PostSearchResult({ title, image, description, id, date})
 
     return (
         <>
-            <Link to={`/posts/${id}`}  style={{margin:"25px"}} className="ui centered card">
+            <Link to={`/posts/${id}`}  style={{margin:"10px"}} className="ui centered card">
                 <div className="image">
                     <img src={image}></img>
                 </div>
                 <div className="content">
                     <div className="header">{title}</div>
                     <div className="meta">
-                        <a>{date}</a>
+                        {date}
                     </div>
                     <div className="meta">
-                        <a>{description}</a>
+                        {description}
                     </div>
                 </div>
                 <div className="extra content">

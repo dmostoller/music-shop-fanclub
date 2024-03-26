@@ -59,7 +59,7 @@ function AddPost() {
                     : (
                     <>
                     <img className="ui circular centered image small" src={imageLink} alt=""></img>
-                    <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
+                    <input type="text" style={{visibility: "hidden"}} name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
                     </>
                     )}

@@ -33,7 +33,7 @@ export default function User () {
                 <div className="ui centered grid">
                     <div className="ui inverted card" style={{margin: "10px"}}>
                         <div style={{padding: "10px"}}>
-                            <img className="ui circular tiny image centered" src={user.avatar}></img>
+                            <img className="ui circular tiny image centered" src={user.avatar} alt="user avatar"></img>
                         </div>
                         <div className="content" style={{ padding: "25px"}}>
                                 <div className="header">{user.username}</div>
@@ -49,7 +49,7 @@ export default function User () {
             }
             
             <div className="ui inverted container" style={{marginTop: "15px"}}>
-                <h4  style={{marginBottom: "50px"}} class="ui horizontal inverted divider">My Collection</h4> 
+                <h4 style={{marginBottom: "50px"}} className="ui horizontal inverted divider">My Collection</h4> 
                     <SavedList onDeleteSaved={deleteSaved} savedItems={savedItems}/>
             </div>
         </div>

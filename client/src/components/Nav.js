@@ -22,14 +22,11 @@ function Nav({onLogout}) {
             <NavLink className="item"  to='/learn'>Video</NavLink>
             <NavLink className="item" to='/events'>Events</NavLink>
             <NavLink className="item" to='/about'>Bio</NavLink>
-            <Link className="item" target="_blank" to='https://kabayun.bandcamp.com/'>Shop</Link>
+            {/* <Link className="item" target="_blank" to='https://kabayun.bandcamp.com/'>Shop</Link> */}
             <NavLink className="item" to='/forum'>Forum</NavLink>  
+
+
             <div className='right menu'>
-                {/* <div className='item'>
-                        <iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" 
-                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1525430860&color=%23626262&inverse=true&auto_play=false&show_user=true">
-                        </iframe>            
-                </div> */}
                 <Search/>
             </div>
             <div className="item">

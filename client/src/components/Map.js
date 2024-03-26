@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 
-
+    const libraries = ['places'];
     const center = {
       lat: 35.703806, // default latitude
       lng: 19.350360, // default longitude
@@ -9,7 +9,7 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
         
     const Map = ({ users }) => {
  
-    const libraries = ['places'];
+
     const mapContainerStyle = {
       width: '100%',
       height: '338px',
@@ -37,7 +37,6 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
       }
           
       return (
-        // <div className='ui inverted rounded segment'>
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={0.8}
@@ -200,7 +199,6 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
           >
             {markers}
           </GoogleMap>
-        // </div>
       );
     };
 

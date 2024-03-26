@@ -9,7 +9,6 @@ import { useAdmin } from "./context/admin.js"
 
 import Nav from './components/Nav'
 import Footer from './components/Footer'
-import Shop from "./components/Shop";
 import HomePage from "./components/HomePage";
 import Learn from "./components/Learn.js";
 import LoginForm from "./components/Login";
@@ -30,6 +29,8 @@ import User from "./components/User.js";
 import Forum from "./components/Forum.js";
 import SearchResults from "./components/SearchResults.js";
 import ReleaseDetail from "./components/ReleaseDetail.js";
+import FormTest from "./components/TestForm.js";
+
 
 
 function App() {
@@ -73,7 +74,6 @@ function App() {
       <Routes>
           <Route path="/" element={<HomePage/>}/>        
           <Route path="/learn" element={<Learn/>}/>
-          <Route path="/shop" element={<Shop/>}/>
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>}/>
           <Route path="/signup" element={<SignUp/>} /> 
           <Route path="/posts/:id" element={<PostDetail/>} />
@@ -92,6 +92,7 @@ function App() {
           <Route path="/user" element={<User/>}/>
           <Route path="/forum" element={<Forum/>}/>
           <Route path="/search_results/:searchParams" element={<SearchResults/>}/>
+          <Route path="/formtest" element={<FormTest />}/>
       </Routes>
     <Footer />
   </div>

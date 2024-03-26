@@ -32,14 +32,16 @@ function PostsList () {
     return (
         <>
             <div className="ui middle aligned center aligned grid" >
-                    <div className="ui inverted stackable link cards">
+                    <div className="ui centered inverted stackable three link cards">
                         {blog}
                     </div>
                 </div>
 
             {(user && isAdmin) ? 
             <div className="ui grid container centered">
-                <Link to={`/posts/new`} style={{margin: "10px"}} className="ui icon violet button"><i className="plus icon"></i>  New Post</Link>
+                <Link to={`/posts/new`} style={{marginTop: "10px"}} className="ui circular icon secondary button">
+                    <i className="plus icon"></i> 
+                </Link>
             </div>
             : 
             <div></div>

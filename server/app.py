@@ -33,7 +33,7 @@ class Users(Resource):
             form_json = request.get_json()
             if form_json['password'] == form_json['password_confirmation']:
                 address = form_json['city'] + ',' + form_json['country']
-                location = geolocator.geocode(address)
+                location = geolocator.geocode(address, timeout=200)
                 # print(location)
                 new_user = User(
                     username=form_json['username'],
@@ -73,7 +73,7 @@ class UpdateUser(Resource):
             try:
                 form_json = request.get_json()
                 address = form_json['city'] + ',' + form_json['country']
-                location = geolocator.geocode(address)
+                location = geolocator.geocode(address, timeout=200)
                 # print(location.latitude)
                 setattr(user, 'username', form_json['username'])
                 setattr(user, 'password_hash', form_json['password'])
@@ -427,12 +427,8 @@ api.add_resource(SavedItemsByUserId, '/saved_by_user/<int:id>')
 
 class SavedItemsByReleaseId(Resource):
     def get(self, id):
-        user_id = session.get('user_id')
-        saved_item = Saved.query.filter(Saved.release_id == id, Saved.user_id == user_id)
-        if saved_item:
-            response = make_response(saved_item.to_dict(), 200)
-        else:
-            raise NotFound
+        saved_items = [saved_item.to_dict() for saved_item in Saved.query.all() if saved_item.release_id == id]
+        response = make_response(saved_items, 200)
         return response 
 
 api.add_resource(SavedItemsByReleaseId, '/saved_by_release/<int:id>')
@@ -567,6 +563,7 @@ class ForumMessages(Resource):
                 date_added=form_json['date_added'],
                 user_id=user_id,
                 forum_thread_id=form_json['forum_thread_id'],
+                gif=form_json['gif'],
             )
             db.session.add(new_forum_message)
             db.session.commit()

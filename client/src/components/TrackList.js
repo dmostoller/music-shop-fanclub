@@ -40,12 +40,13 @@ function TrackList({ releaseId }) {
     }
 
     return (
-            <div className="ui one column inverted stackable grid" style={{margin: "5px"}}>
+            <div className="ui one column inverted centered stackable grid" style={{margin: "5px"}}>
                 <div className="ui inverted items">
                     {tracks_on_release}
                 {isAdmin ?     
-                <div className="item" style={{padding: "5px"}}>
-                    {isFormVis ? <AddTrackForm onAddTrack={addTrack} releaseId={releaseId} onChangeIsFormVis={changeIsFormVis} /> : <button onClick={changeIsFormVis} className="ui violet button tiny">Add New Track</button>}
+                <div className="center aligned grid" style={{padding: "5px"}}>
+                    
+                    {isFormVis ? <AddTrackForm onAddTrack={addTrack} releaseId={releaseId} onChangeIsFormVis={changeIsFormVis} /> : <button onClick={changeIsFormVis} className="ui circular icon secondary button tiny"><i class="plus icon"></i></button>}
                 </div>
                 :
                     <></>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Link} from "react-router-dom";
+import {Link, useAsyncError} from "react-router-dom";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import TrackList from "./TrackList";
@@ -10,28 +10,32 @@ export default function Release({id, title, artist, record_label, description, d
     const { user } = useUser();
     const { isAdmin } = useAdmin();
     const [error, setError] = useState(null);
-    const [isSaved, setIsSaved] = useState(false);
+    const [isSaved, setIsSaved] = useState();
     const [savedId, setSavedId] = useState("");
+    const [savedAvatars, setSavedAvatars] = useState([])
 
     function changeIsSaved() {
         setIsSaved(!isSaved)
     }
 
-useEffect(() => {
-    fetch(`/saved_by_release/${id}`)
-    .then((r) => {
-        if (r.ok) {
-        r.json().then(saved_release => {
-            changeIsSaved(true)
-            setSavedId(parseInt(saved_release.id))
-            // console.log(saved_release.id)
-        })
-        } else {
-            r.json().then(error => setError(error.message))
-        }
-    })
-}, [id]);
+    useEffect(() => {
+        savedItems.map((saved_item) => {
+            if (user && saved_item.user.id == user.id) {
+                setIsSaved(true)
+                setSavedId(parseInt(saved_item.id))
 
+            }
+        }
+        )
+      }, [savedItems]);
+  
+    useEffect(() => {
+     setSavedAvatars(savedItems.map((saved_item) => {
+        return (
+                <div className="ui rounded image mini" style={{margin: "5px"}}><img src={saved_item.user.avatar}></img></div>
+            )
+    })
+     )}, [savedItems, isSaved, savedId]);
 
     const handleDeleteRelease = (e) => {
         if(window.confirm("Are you sure you want to delete this release?")){ 
@@ -46,7 +50,7 @@ useEffect(() => {
     function saveRelease() {
         if (user) {
             const userId = user.id
-            fetch("saved", {
+            fetch("/saved", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -85,7 +89,7 @@ useEffect(() => {
 
 
 return (
-<div className="ui container" style={{paddingTop:"5px", marginTop: "20px"}}>
+<div className="ui container" style={{paddingTop:"5px", marginTop: "5px"}}>
         <div style={{margin: "10px"}} className="ui inverted attached horizontal card fluid">
             <div className="item">
                 <img className="ui large image" src={image} alt={title}></img>
@@ -97,8 +101,26 @@ return (
                 <div className="center aligned meta">
                     {record_label}
                 </div>
-                <div className="center aligned meta" style={{marginBottom:"25px"}}>
+                <div className="center aligned meta" style={{marginBottom:"10px"}}>
                 <p> {date_released}</p>
+                </div>
+                <div className="center aligned grid" style={{padding: "10px"}}>
+                { user && isAdmin ? (
+                        <>
+                            <Link to={`/releases/${id}/edit`} className="circular ui icon secondary button small" style={{marginRight: "5px"}}>
+                                <i className="edit icon" style={{visibility: "visible"}}></i>
+                            </Link>
+                            <button onClick={handleDeleteRelease} className="circular ui icon secondary button small">
+                                <i className="trash icon" style={{visibility: "visible"}}></i>
+                            </button>
+                        </>
+                        )
+                        : <></>
+                    }
+                    <div className="center aligned grid" style={{padding: "10px"}}>
+                        <div className="meta"><span class="ui small inverted grey text">Saved by</span></div>
+                        {savedAvatars}
+                    </div>
                 </div>
             </div>
             <div className="content">
@@ -114,51 +136,54 @@ return (
                 <div className="center aligned grid" style={{padding: "10px"}}> 
                 <Link to={linkForFB}
                     target="_blank"
-                    className="ui icon facebook button"  
+                    className="ui circular icon facebook button small"  
                     data-inverted="" 
                     data-tooltip="Share to Facebook" 
+                    style={{marginRight: "5px"}}
                     data-position="bottom center">
                             <i class="facebook icon"></i> Share
                     </Link>
+
+                    { user ? isSaved ? 
+                        <button onClick={unSaveRelease} className="ui circular icon red button small" style={{marginRight: "5px"}}>
+                            <i className="heart icon" style={{visibility: "visible"}}></i> Saved
+                        </button>   
+                        :
+                        <button onClick={saveRelease} className="ui circular icon violet button small" style={{marginRight: "5px"}}>
+                            <i className="heart icon" style={{visibility: "visible"}}></i> Save
+                        </button>  
+                        :<></>
+                        }   
+
+
                     <Link to={`${buyLink}`} 
                     target="_blank" 
-                    style={{marginRight: "10px", marginLeft: "10px"}} 
-                    className="ui icon violet button"
+                    style={{marginRight: "5px"}} 
+                    className="ui circular icon violet button small"
                     data-inverted="" 
                     data-tooltip="Buy on Bandcamp" 
                     data-position="bottom center">
                         <i className="cart icon"></i>  Buy
                     </Link>
 
-                    { user && isAdmin ? (
-                        <>
-                            <Link to={`/releases/${id}/edit`} className="circular ui icon violet button">
-                                <i className="edit icon" style={{visibility: "visible"}}></i>
-                            </Link>
-                            <button onClick={handleDeleteRelease} className="circular ui icon violet button">
-                                <i className="trash icon" style={{visibility: "visible"}}></i>
-                            </button>
-                        </>
-                        )
-                        : <>
-                        { user ? isSaved ? 
-                        <button onClick={unSaveRelease} className="circular ui icon inverted red button">
-                            <i className="heart icon" style={{visibility: "visible"}}></i>
-                        </button>   
-                        :
-                        <button onClick={saveRelease} className="circular ui icon inverted grey button">
-                            <i className="heart icon" style={{visibility: "visible"}}></i>
-                        </button>  
-                        :<></>
-                        }                      
-                        </>    
-                    } 
 
+                                         
                 </div>
             </div>
             <div className="ui bottom attached inverted segment">
             <h4 className="ui horizontal inverted divider">Comments</h4>
             <div><CommentsList releaseId={id}/></div> 
+            { !user ?
+            <div className="ui centered grid" style={{padding: "5px"}}>
+                <div className="ui inverted message">
+                <span className="ui medium violet text">
+                    Please <Link to='/login'>Login</Link> or <Link to='/signup'>Create an Account</Link> to leave a comment
+                </span>
+                </div>
+            </div>
+            :
+            <></>
+            }
 
             </div>
         </div>

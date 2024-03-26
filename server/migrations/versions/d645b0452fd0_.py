@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8c96d71e8797
+Revision ID: d645b0452fd0
 Revises: 
-Create Date: 2024-03-21 23:36:36.629358
+Create Date: 2024-03-26 01:13:08.306131
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8c96d71e8797'
+revision = 'd645b0452fd0'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -62,8 +62,8 @@ def upgrade():
     sa.Column('avatar', sa.String(), nullable=True),
     sa.Column('city', sa.String(), nullable=True),
     sa.Column('country', sa.String(), nullable=True),
-    sa.Column('latitude', sa.String(), nullable=True),
-    sa.Column('longitude', sa.String(), nullable=True),
+    sa.Column('latitude', sa.Float(), nullable=True),
+    sa.Column('longitude', sa.Float(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -84,6 +84,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('message', sa.String(), nullable=True),
     sa.Column('date_added', sa.String(), nullable=True),
+    sa.Column('gif', sa.String(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('forum_thread_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['forum_thread_id'], ['forum_threads.id'], name=op.f('fk_forum_messages_forum_thread_id_forum_threads')),

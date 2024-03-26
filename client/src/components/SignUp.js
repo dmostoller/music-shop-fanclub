@@ -13,7 +13,7 @@ function SignUp() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [avatar, setAvatar] = useState("");
-
+  const [loading, setLoading] = useState(false);
 
   function tryAgain() {
     setError(null)
@@ -53,7 +53,7 @@ const formik = useFormik({
 validationSchema: formSchema,
 onSubmit: (values) => {
   setError(null);
-
+  setLoading(true);
   fetch("/users", {
     method: "POST",
     headers: {
@@ -74,11 +74,6 @@ onSubmit: (values) => {
 },
 })
 
-
-
-// {errors.map((err) => (
-//   <Error key={err}>{err}</Error>
-// ))}
 if(error) return (
   <>
    <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
@@ -110,7 +105,6 @@ if(error) return (
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.avatar}</p>}
                 </div> 
             <div className="field">
-                {/* <label>Create New Account</label> */}
                 <div className="ui left icon input">
                 <i className="user icon"></i>
                 <input type="text" 
@@ -125,7 +119,6 @@ if(error) return (
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
             </div>
             <div className="field">
-                {/* <label>Create New Account</label> */}
                 <div className="ui left icon input">
                 <i className="city icon"></i>
                 <input type="text" 
@@ -140,7 +133,6 @@ if(error) return (
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.city}</p>}
             </div>
             <div className="field">
-                {/* <label>Create New Account</label> */}
                 <div className="ui left icon input">
                 <i className="globe americas icon"></i>
                 <input type="text" 
@@ -195,18 +187,16 @@ if(error) return (
                 </input>
               </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
-            </div>  
+            </div>
+            { !loading ?  
                 <button className="ui fluid button violet large" type="submit">Submit</button>
+             :
+                <button className="ui fluid massive primary double loading violet button"></button>
+            }
                 <div className="ui inverted message tiny">
              Already have an account? 
               <Link to="/login">    Login</Link>
             </div>
-      
-            {/* <div className="field">
-            {errors.map((err) => (
-                <Error key={err}>{err}</Error>
-            ))}
-            </div>  */}
         </form> 
         </div>
     </div>

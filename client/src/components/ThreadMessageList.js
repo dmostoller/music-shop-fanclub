@@ -23,16 +23,23 @@ export default function ThreadMessageList({threadId, searchVal}) {
     const addMessage = (newMessage) => {
         setMessages(messages => ([...messages, newMessage]))
     }
-    // const filteredMessages = messages
-    // .filter(message => {
-    //     return (
-    //         message.message.toLowerCase().includes(searchVal.toLowerCase()) || message.user.username.toLowerCase().includes(searchVal.toLowerCase())        
-    //     )
-    // })
 
-    const threadMessages = messages.map((message) => {
+    const filteredMessages = messages
+    .filter(message => {
+        { if (searchVal) {
+        return (
+            message.message.toLowerCase().includes(searchVal.toLowerCase()) || message.user.username.toLowerCase().includes(searchVal.toLowerCase())        
+        )}
+        else {
+        return (message)
+        }}
+    })
+
+    // console.log(searchVal)
+    const threadMessages = filteredMessages.map((message) => {
     return <ThreadMessage
     key={message.id}
+    messageId={message.id}
     messageObj={message}
     onDeleteMessage={deleteMessage}
     />
@@ -40,14 +47,13 @@ export default function ThreadMessageList({threadId, searchVal}) {
 
     return(
         <>
-        <div className="ui resizable scrolling inverted attached segment" id="scrollWindow" style={{height: "580px"}}>
+        <div className="ui resizable scrolling inverted attached segment" id="scrollWindow" style={{height: "635px"}}>
             <div className="ui inverted minimal comments">
                 {threadMessages}
                 <div ref={divRef} />
             </div>      
         </div>
         <div className="ui bottom attached inverted segment" >
-            {/* <MessageForm onAddMessage={addMessage} threadId={threadId} /> */}
             <ThreadMessageForm onAddMessage={addMessage} threadId={threadId} divRef={divRef}/>
 
         </div>      

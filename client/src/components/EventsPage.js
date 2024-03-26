@@ -26,7 +26,7 @@ function EventsPage () {
             </div>
             { user && isAdmin ?
             <div className="ui grid container centered">
-            <Link to={`/events/new`} style={{margin: "20px"}} className="ui icon violet button"><i className="plus icon"></i>  New Event</Link>
+            <Link to={`/events/new`} style={{marginTop: "15px", marginBottom: "15px"}} className="ui circular icon secondary button"><i className="plus icon"></i></Link>
             </div>
             : <></>
             }
