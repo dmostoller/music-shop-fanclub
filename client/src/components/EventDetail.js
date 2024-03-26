@@ -55,7 +55,7 @@ function EventDetail(){
                     <Link to="/events" className="circular ui icon violet button"><i className="undo icon"></i></Link>
                     { user && isAdmin ? (
                         <>
-                            <Link to={`/events/${id}/edit`} className="circular ui icon violet button">
+                            <Link to={`/events/${id}/edit`} className="circular ui icon secondary button">
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
                             </Link>
                             <button className="circular ui icon secondary button" onClick={handleDeleteEvent}>

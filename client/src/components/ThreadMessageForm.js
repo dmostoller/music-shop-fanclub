@@ -7,8 +7,6 @@ import GifPicker from 'gif-picker-react';
 import { Link } from "react-router-dom";
 
 
-const REACT_APP_TENOR_API_KEY='AIzaSyD8IIaxutwoxDDPdfZAC33_vACCtuLSZIs';
-
 function PostCommentForm({onAddMessage, threadId}){
     const [error, setError] = useState(null);
     const {user} = useUser();
@@ -130,7 +128,7 @@ function PostCommentForm({onAddMessage, threadId}){
          </div>
             {showGifPicker && (
             <div className="gif-container">
-                <GifPicker tenorApiKey={REACT_APP_TENOR_API_KEY} onGifClick={onGifClick}/>
+                <GifPicker tenorApiKey={process.env.REACT_APP_TENOR_API_KEY} onGifClick={onGifClick}/>
             </div>
             )}
 
