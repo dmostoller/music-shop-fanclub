@@ -47,8 +47,11 @@ export default function ThreadMessage({messageObj, onDeleteMessage, messageId}) 
                         <span className="date">{messageObj.date_added}</span>
                     </div>
                 </div>
+                {messageObj.gif ? 
+                 <div className="ui small image"><img src={messageObj.gif} alt="gif"></img></div>
+                :
                 <div className="text">{messageObj.message}</div>
-
+                }
                 <div className="actions">
                 {/* <em data-emoji=":astonished:" class="small"></em> */}
                 { user ? 

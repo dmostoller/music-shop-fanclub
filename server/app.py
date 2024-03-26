@@ -563,6 +563,7 @@ class ForumMessages(Resource):
                 date_added=form_json['date_added'],
                 user_id=user_id,
                 forum_thread_id=form_json['forum_thread_id'],
+                gif=form_json['gif'],
             )
             db.session.add(new_forum_message)
             db.session.commit()
