@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useUser } from "../context/user";
 import { Modal } from "semantic-ui-react";
 import UserModal from "./UserModal";
-
+import { useAdmin } from "../context/admin";
 
 export default function ThreadMessage({messageObj, onDeleteMessage, messageId}) {
     const {user} = useUser();
+    const {isAdmin} = useAdmin();
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleDeleteMessage = (e) => {
@@ -55,7 +56,7 @@ export default function ThreadMessage({messageObj, onDeleteMessage, messageId}) 
                 <div className="actions">
                 {/* <em data-emoji=":astonished:" class="small"></em> */}
                 { user ? 
-                 (user.id == messageObj.user_id) ? ( 
+                 (user.id == messageObj.user_id) || isAdmin ? ( 
                     <button onClick={handleDeleteMessage} className="ui circular delete inverted icon violet button mini"><i className="trash icon"></i></button>
                 ):
                 <></>

@@ -23,7 +23,7 @@ function UploadWidget({onSetImageUrl}) {
 return (
     <>
     <button type="button" className="ui button fluid violet small" onClick={() => widgetRef.current.open()}>
-        Upload
+        Upload Image
     </button>
     </>
 )

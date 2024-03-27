@@ -86,9 +86,10 @@ function PostCommentForm({onAddMessage, threadId}){
           <form className="ui inverted form" onSubmit={formik.handleSubmit}>  
               <div className="field">
                   <div className="ui fluid transparent inverted input" >
-                      <em data-emoji=":globe_with_meridians:" className="small link" onClick={() => setShowGifPicker((val) => !val)}></em>
-                      <em data-emoji=":alien:" className="small link" onClick={() => setShowPicker((val) => !val)}></em>
                       {(threadId !==1) ?
+                      <>
+                      <em data-emoji=":globe_with_meridians:" className="small link" onClick={() => setShowGifPicker((val) => !val)}></em>
+                      <em data-emoji=":grinning:" className="small link" onClick={() => setShowPicker((val) => !val)}></em>
                       <input type="fluid text" 
                       name="message" 
                       id="message" 
@@ -97,7 +98,8 @@ function PostCommentForm({onAddMessage, threadId}){
                       // onChange={formik.handleChange}
                       className="prompt" 
                       placeholder="Message...">
-                      </input>      
+                      </input>
+                      </>      
                       :
                       <input type="fluid text" 
                       name="message" 
@@ -123,7 +125,7 @@ function PostCommentForm({onAddMessage, threadId}){
         </>
 
           }
-        <div className="picker-container">
+          <div className="picker-container">
             {showPicker && (
             <Picker pickerStyle={{ width: "70%" }} onEmojiClick={onEmojiClick} reactionsDefaultOpen={true}/>
             )}
