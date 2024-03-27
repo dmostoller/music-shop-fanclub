@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import UploadWidget from "./UploadWidget";
 import UploadTrackWidget from "./UploadTrackWidget";
 
 function AddTrackForm({onAddTrack, releaseId, onChangeIsFormVis}){

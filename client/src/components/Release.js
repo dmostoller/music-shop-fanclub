@@ -85,7 +85,8 @@ export default function Release({id, title, artist, record_label, description, d
         }
         }
 
-        const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fposts%2F${id}&amp;src=sdkpreparse`
+        // const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fposts%2F${id}&amp;src=sdkpreparse`
+        const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.kabayun.com%2Fsuperluminal&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore`
 
 
 return (

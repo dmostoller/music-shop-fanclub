@@ -29,7 +29,7 @@ function PostDetail(){
             })
         }
     }    
-    const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fposts%2F${id}&amp;src=sdkpreparse`
+    const linkForFB = `https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.kabayun.com%2Fsuperluminal&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore`
     
     return (
         <div className="ui container" style={{paddingTop:"5px", marginTop: "40px", minHeight:"100vh"}}>
