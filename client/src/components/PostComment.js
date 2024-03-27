@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin";
 
 
 function PostComment({username, comment, id, date_added, comment_user_id, onDeleteComment}){
 
     const {user} = useUser()
-        const [commentUser, setCommentUser] = useState({});
+    const {isAdmin} = useAdmin();
+    const [commentUser, setCommentUser] = useState({});
 
     useEffect(() => {
         fetch(`/users/${comment_user_id}`)
@@ -33,7 +35,7 @@ function PostComment({username, comment, id, date_added, comment_user_id, onDele
                 <div className="author">{username}<div className="metadata"><span className="date">{date_added}</span></div></div>
                 <div className="text">{comment}</div>
 
-            {user && user.id === comment_user_id ? 
+            {user && user.id === comment_user_id || isAdmin ? 
                 <div className="actions">
                 <a onClick={handleDeleteComment} className="delete">Delete</a>
             </div>

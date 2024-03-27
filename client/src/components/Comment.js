@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin";
 
 
 function Comment({username, comment, id, date_added, comment_user_id, onDeleteComment}){
 
     const {user} = useUser();
+    const {isAdmin} = useAdmin();
     const [commentUser, setCommentUser] = useState({});
 
     useEffect(() => {
@@ -33,7 +35,7 @@ function Comment({username, comment, id, date_added, comment_user_id, onDeleteCo
                 <div className="author">{username}<div className="metadata"><span className="date">{date_added}</span></div></div>
                 <div className="text">{comment}</div>
 
-            {user && user.id === comment_user_id ? 
+            {user && user.id === comment_user_id || isAdmin ? 
                 <div className="actions">
                 <a onClick={handleDeleteComment} className="delete">Delete</a>
             </div>

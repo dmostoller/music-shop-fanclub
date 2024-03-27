@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UploadTrackWidget from "./UploadTrackWidget";
 
 function EditTrackForm({onEditTrack, id, onChangeIsFormVis}){
     const [error, setError] = useState(null);
     const [track, setTrack] = useState({});
+    const [trackUrl, setTrackUrl] = useState("");
+
 
     useEffect(() => {
       fetch(`/tracks/${id}`)
@@ -21,7 +24,13 @@ function EditTrackForm({onEditTrack, id, onChangeIsFormVis}){
     const initValues = track
     const formik = useFormik({
         enableReinitialize: true,
-        initialValues: initValues,
+        initialValues: {
+          title:`${track.title}`,
+          artist_names:`${track.artist_names}`,
+          bpm: `${track.bpm}`,
+          audio:`${trackUrl}`,
+          release_id: parseInt(id),
+        },
         validationSchema: formSchema,
         onSubmit: (values) => {
           fetch(`/tracks/${id}`, {
@@ -48,7 +57,15 @@ function EditTrackForm({onEditTrack, id, onChangeIsFormVis}){
         <div className="item">
         <form className="ui inverted form tiny" style={{width: "350px"}} onSubmit={formik.handleSubmit}>  
             <div className="field">
-            <label>Edit Track  <a onClick={onChangeIsFormVis}>  Hide</a></label>
+                <label>Add New Track  <a onClick={onChangeIsFormVis}>  Hide</a></label>
+                    <UploadTrackWidget onSetTrackUrl={setTrackUrl}/>
+                    <input type="text" id="audio" name="audio" style={{visibility: "hidden"}} value={formik.values.audio} placeholder="Audio Link..." onChange={formik.handleChange}></input>
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.audio}</p>}                    
+                    { trackUrl &&
+                    <iframe style={{border: "none"}} src={trackUrl} seamless></iframe>
+                    }
+             </div>
+             <div className="field">
                 <input type="text" id="title" name="title" value={formik.values.title} placeholder="Track title..." onChange={formik.handleChange}></input>               
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
             </div>
@@ -60,10 +77,10 @@ function EditTrackForm({onEditTrack, id, onChangeIsFormVis}){
                 <input type="text" id="bpm" name="bpm" value={formik.values.bpm} placeholder="Track BPM..." onChange={formik.handleChange}></input>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.bpm}</p>}
             </div>
-            <div className="field">
+            {/* <div className="field">
                 <input type="text" id="audio" name="audio" value={formik.values.audio} placeholder="Audio Link..." onChange={formik.handleChange}></input>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.audio}</p>}
-            </div>
+            </div> */}
             <button className="ui button fluid violet tiny" type="submit">Submit</button>
         </form>
          

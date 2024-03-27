@@ -91,22 +91,27 @@ function EditUser({setShowEdit}){
                             </div>
                        </div> 
                         <div className="field">
+                          <label>Username</label>
                             <input type="text" id="username" name="username" value={formik.values.username} onChange={formik.handleChange}></input>               
                                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
                          </div>
                         <div className="field">
+                          <label>Email</label>
                             <input type="text" id="email" name="email" value={formik.values.email} onChange={formik.handleChange}></input>
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
                         </div>
                         <div className="field">
+                          <label>City</label>
                             <input type="text" id="city" name="city" value={formik.values.city} onChange={formik.handleChange}></input>
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.city}</p>}
                         </div>
                         <div className="field">
+                          <label>Country</label>
                             <input type="text" id="country" name="country" value={formik.values.country} onChange={formik.handleChange}></input>
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.country}</p>}
                         </div>
                         <div className="field">
+                        <label>Password</label>
                         <div className="ui left icon input">
                             <i className="lock icon"></i>
                             <input type="password" 

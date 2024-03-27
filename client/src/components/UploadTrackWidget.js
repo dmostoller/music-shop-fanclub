@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
 
-function UploadWidget({onSetImageUrl}) {
+function UploadTrackWidget({onSetTrackUrl}) {
 
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
@@ -10,23 +10,23 @@ function UploadWidget({onSetImageUrl}) {
         cloudinaryRef.current = window.cloudinary;
         widgetRef.current = cloudinaryRef.current.createUploadWidget({
             cloudName: 'ddp2xfpyb',
-            uploadPreset: 'upload_photo',
+            uploadPreset: 'upload_track',
             multiple: false,  //restrict upload to a single file
             sources: [ "local", "url"], // restrict the upload sources to URL and local files
         }, function(error, result) { 
             if (!error && result && result.event === "success") {
                 // console.log(result.info);
-                onSetImageUrl(result.info.secure_url);
+                onSetTrackUrl(result.info.secure_url);
     }});
-    }, [onSetImageUrl])
+    }, [onSetTrackUrl])
 
 return (
     <>
-    <button type="button" className="ui button fluid violet small" onClick={() => widgetRef.current.open()}>
-        Upload Image
+    <button type="button" className="ui button fluid violet tiny" onClick={() => widgetRef.current.open()}>
+        Upload Track
     </button>
     </>
 )
 
 }
-export default UploadWidget;
+export default UploadTrackWidget;
