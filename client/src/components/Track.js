@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import EditTrackForm from "./EditTrackForm";
 import { useAdmin } from "../context/admin";
+import Player from "./Player";
 
 export default function Track({id, onDeleteTrack}) {
     const [isFormVis, setIsFormVis] = useState(false);
@@ -40,27 +41,35 @@ export default function Track({id, onDeleteTrack}) {
             <tbody>
                 <tr>
                     <th>
-                        <iframe title="track_audio" style={{border: "0", width: "42px", height: "42px"}}
-                            src={track.audio} seamless>
-                        </iframe>    
+                        {/* <iframe title="track_audio" style={{border: "0", width: "42px", height: "42px"}}
+                            src="{track.audio}" seamless>
+                        </iframe>     */}
+ 
                     </th>
-                    <th style={{padding: "5px", width: "300px"}}>
+                    <th style={{padding: "5px", width: "500px"}}>
                         <div className="content">
-                            <h5>{track.title}</h5>
+                            <h5>{track.title}
+                            { isAdmin && 
+                                <span style={{float: "right"}}>
+                                    <button onClick={showEditForm} className="circular ui icon inverted secondary button mini">
+                                        <i className="edit icon" style={{visibility: "visible"}}></i>
+                                    </button>
+                                    <button className="circular ui icon inverted secondary button mini" onClick={handleDeleteTrack}>
+                                        <i className="trash icon" style={{visibility: "visible"}}></i>
+                                    </button>
+                                </span>
+                                }
+                            </h5>
                         </div>
                         <div className="meta">
                             <span className="ui small text">{track.artist_names}</span>
                             <span className="ui small text">{track.bpm} bpm</span>
                         </div>
-
-                        { isAdmin ? 
-                        <div>
-                            <a onClick={showEditForm}><span className="ui small text">Edit  </span></a>
-                            <a onClick={handleDeleteTrack}> <span className="ui small text">   Delete</span></a>
+                        <div className="content">
+                        <Player track={track.audio}/>
                         </div>
-                        :
-                        <></> 
-                        }
+
+
                     </th>
                 </tr>
             </tbody>
