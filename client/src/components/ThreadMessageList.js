@@ -26,7 +26,7 @@ export default function ThreadMessageList({threadId, searchVal}) {
 
     const filteredMessages = messages
     .filter(message => {
-        { if (searchVal) {
+        { if (searchVal && message.message) {
         return (
             message.message.toLowerCase().includes(searchVal.toLowerCase()) || message.user.username.toLowerCase().includes(searchVal.toLowerCase())        
         )}

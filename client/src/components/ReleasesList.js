@@ -41,7 +41,7 @@ function ReleasesList ({ releases, onDeleteRelease, compact }) {
         { !compact ?
         <div className="ui grid">{discography}</div> 
         :
-        <div className="ui centered grid" style={{marginTop:"10px"}}>
+        <div className="ui centered grid" style={{marginTop:"10px", marginBottom: "25px"}}>
             <div className="ui four stackable inverted centered cards">
             {thumbGallery}
             </div>

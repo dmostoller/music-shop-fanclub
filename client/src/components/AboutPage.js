@@ -8,7 +8,7 @@ return (
     <div style={{width: "90%", margin: "auto", marginTop:"20px", marginBottom:"20px"}} className="ui inverted card">
         <div className="image">
             <img className="ui large image" 
-            src="https://res.cloudinary.com/ddp2xfpyb/image/upload/v1710797990/superluminal/sjmzwwua5f9gg8pw8ck9.jpg" 
+            src="https://res.cloudinary.com/ddp2xfpyb/image/upload/v1711600118/superluminal/DSC03154-JK_asmosr.jpg" 
             alt="Superluminal - Sangoma Records"/>
         </div>
         <div className="content">

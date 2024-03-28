@@ -31,7 +31,7 @@ export default function User () {
             <div className="ui inverted container" style={{marginTop: "75px"}}>
                 <h4 className="ui horizontal inverted divider">My Account</h4>
                 <div className="ui centered grid">
-                    <div className="ui inverted card" style={{margin: "10px"}}>
+                    <div className="ui inverted card" style={{margin: "25px"}}>
                         <div style={{padding: "10px"}}>
                             <img className="ui circular tiny image centered" src={user.avatar} alt="user avatar"></img>
                         </div>

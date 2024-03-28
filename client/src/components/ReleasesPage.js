@@ -51,7 +51,7 @@ function ReleasesPage() {
             </div>
             { user && isAdmin ?
             <div className="ui grid container centered">
-            <Link to={`/releases/new`} style={{margin: "20px"}} className="ui circular icon secondary button"><i className="plus icon"></i></Link>
+            <Link to={`/releases/new`} style={{margin: "25px"}} className="ui circular icon secondary button"><i className="plus icon"></i></Link>
             </div>
             : <></>
             }

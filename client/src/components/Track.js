@@ -66,7 +66,7 @@ export default function Track({id, onDeleteTrack}) {
                             <span className="ui small text">{track.bpm} bpm</span>
                         </div>
                         <div className="content">
-                        <Player track={track.audio}/>
+                            <Player track={track.audio}/>
                         </div>
 
 
