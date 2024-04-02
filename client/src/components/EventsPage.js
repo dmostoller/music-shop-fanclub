@@ -15,7 +15,7 @@ function EventsPage () {
       .then((events) => {setEvents(events)})
     }, []);
 
-    const sortedEvents = events.sort((a, b) => (a.event_date) > (b.event_date) ? -1 :1)
+    const sortedEvents = events.sort((a, b) => (a.event_date) < (b.event_date) ? -1 :1)
     const deleteEvent = (deleted_event) => setEvents(events => events.filter((event) => event.id !== deleted_event.id))
 
     return (
