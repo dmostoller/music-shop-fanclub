@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-export default function SearchResult({ title, image, artist, recordLabel, id }) {
+export default function SearchResult({ title, image, artist, recordLabel, description, id }) {
 
     return (
         <>
@@ -18,6 +18,9 @@ export default function SearchResult({ title, image, artist, recordLabel, id }) 
                     </div>
                     <div className="meta">
                         {recordLabel}
+                    </div>
+                    <div className="description">
+                        {description.substring(0,50)}...
                     </div>
                 </div>
                 <div className="extra content">

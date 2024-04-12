@@ -2,21 +2,21 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 
 
-export default function EventSearchResult({ title, image, description, id, date}) {
+export default function EventSearchResult({ title, image, details, id, date}) {
 
     return (
         <>
-            <Link to={`/posts/${id}`}  style={{margin:"25px"}} className="ui centered card">
+            <Link to={`/events/${id}`}  style={{margin:"25px"}} className="ui centered card">
                 <div className="image">
                     <img src={image}></img>
                 </div>
                 <div className="content">
                     <div className="header">{title}</div>
                     <div className="meta">
-                        <a>{date}</a>
+                        {date}
                     </div>
                     <div className="meta">
-                        <a>{description}</a>
+                        {details.substring(0,50)}...
                     </div>
                 </div>
                 <div className="extra content">

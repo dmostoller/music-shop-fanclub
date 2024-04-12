@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react"
 import { useParams } from "react-router-dom"
 import SearchResult from "./SearchResult";
 import PostSearchResult from "./PostSearchResult";
+import EventSearchResult from "./EventSearchResult";
 
 
 function SearchResults() {
@@ -33,7 +34,7 @@ function SearchResults() {
         image={searchResult.image}
         artist={searchResult.artist}
         description={searchResult.description}
-        record_label={searchResult.record_label}
+        recordLabel={searchResult.record_label}
         />
     })
     // console.log(searchResults)
@@ -58,6 +59,7 @@ function SearchResults() {
         id={postResult.id}
         title={postResult.title}
         image={postResult.image_url}
+        content={postResult.content}
         date={postResult.date_added}
         />
     })
@@ -77,12 +79,13 @@ function SearchResults() {
     })
 
     const eventResultsList = eventResults.map((eventResult) => {
-        return <PostSearchResult 
+        return <EventSearchResult 
         key={eventResult.id}
         id={eventResult.id}
         title={eventResult.name}
         image={eventResult.image_url}
         date={eventResult.event_date}
+        details={eventResult.details}
         />
     })
 

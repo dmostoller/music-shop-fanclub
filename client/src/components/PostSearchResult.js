@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 
 
-export default function PostSearchResult({ title, image, description, id, date}) {
+export default function PostSearchResult({ title, image, content, id, date}) {
 
     return (
         <>
@@ -15,8 +15,8 @@ export default function PostSearchResult({ title, image, description, id, date})
                     <div className="meta">
                         {date}
                     </div>
-                    <div className="meta">
-                        {description}
+                    <div className="description">
+                        {content.substring(0,50)}...
                     </div>
                 </div>
                 <div className="extra content">
