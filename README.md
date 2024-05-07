@@ -36,3 +36,4 @@ Wavesurfer
 GeoPy
 Google API
 Email.js
+Fomantic-UI
