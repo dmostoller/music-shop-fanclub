@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ThreadMessage from "./ThreadMessage";
 import ThreadMessageForm from "./ThreadMessageForm";
 
-export default function ThreadMessageList({threadId, searchVal}) {
+export default function ThreadMessageList({threadId, searchVal, setVisible, mobile }) {
     const [messages, setMessages] = useState([]);
     const divRef = useRef(null);
 
@@ -54,7 +54,7 @@ export default function ThreadMessageList({threadId, searchVal}) {
             </div>      
         </div>
         <div className="ui bottom attached inverted segment" >
-            <ThreadMessageForm onAddMessage={addMessage} threadId={threadId} divRef={divRef}/>
+            <ThreadMessageForm onAddMessage={addMessage} threadId={threadId} divRef={divRef} mobile={mobile} setVisible={setVisible}/>
 
         </div>      
         </>

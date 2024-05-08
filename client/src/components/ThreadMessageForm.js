@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const REACT_APP_TENOR_API_KEY='AIzaSyD8IIaxutwoxDDPdfZAC33_vACCtuLSZIs';
 
-function PostCommentForm({onAddMessage, threadId}){
+function PostCommentForm({onAddMessage, threadId, setVisible, mobile}){
     const [error, setError] = useState(null);
     const {user} = useUser();
     const [inputStr, setInputStr] = useState("");
@@ -86,6 +86,13 @@ function PostCommentForm({onAddMessage, threadId}){
           <form className="ui inverted form" onSubmit={formik.handleSubmit}>  
               <div className="field">
                   <div className="ui fluid transparent inverted input" >
+                  {mobile && 
+                    <i className="large hamburger icon" 
+                    style={{paddingTop: "6px"}}
+                    onClick={setVisible}
+                    >
+                    </i>
+                   }
                       {(threadId !==1) ?
                       <>
                       <em data-emoji=":globe_with_meridians:" className="small link" onClick={() => setShowGifPicker((val) => !val)}></em>

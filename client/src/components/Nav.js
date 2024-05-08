@@ -4,8 +4,6 @@ import { NavLink, Link } from "react-router-dom";
 import { useUser } from "../context/user.js"
 import Search from './Search.js';
 
-
-
 function Nav({onLogout}) {
     const { user } = useUser()
 

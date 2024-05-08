@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin";
 import Thread from './Thread';
@@ -6,6 +6,7 @@ import ThreadMessageList from './ThreadMessageList';
 import AddThread from './AddThread';
 import ForumSearch from './ForumSearch';
 import Map from './Map';
+import MobileForum from './MobileForum'
 
 function Forum() {
     const [threads, setThreads] = useState([]);  
@@ -15,7 +16,16 @@ function Forum() {
     const {user} = useUser();
     const {isAdmin} = useAdmin();
     const [users, setUsers] = useState([]);
-    
+
+    const [deviceSize, setDeviceSize] = useState(window.innerWidth);
+
+    useEffect(() => {
+      const resizeW = () => setDeviceSize(window.innerWidth);
+      window.addEventListener("resize", resizeW); // Update the width on resize
+      return () => window.removeEventListener("resize", resizeW);
+    });
+  // console.log(deviceSize)
+
     useEffect(() => {
       fetch("/users")
       .then((res) => res.json())
@@ -42,6 +52,7 @@ function Forum() {
         onDeleteThread={deleteThread}
         />
     })
+
     function changeThread(id) {
         setSelectedThread(id)
     }
@@ -54,11 +65,26 @@ function Forum() {
         setThreads([...threads, newThread])
         showAddThread()
     } 
+    
+  
 
     return (
+        <>
+        {(deviceSize < 768) ?
+            <MobileForum 
+            threads={threads} 
+            selectedThread={selectedThread} 
+            searchVal={searchVal} 
+            onSelectThread={changeThread}
+            setSearchVal={setSearchVal}
+            onDeleteThread={deleteThread}
+            onAddNewThread={addNewThread} 
+            showAddThread={showAddThread}
+            isFormVis={isFormVis} 
+            /> 
+            :
             <div className="ui grid" style={{width:"90%", margin:"auto", minHeight:"100vh", marginTop:"40px"}}>
                 <div className="six wide wide left attached column" style={{marginTop: "100px"}}>
-
                     <div className="ui inverted fluid large vertical pointing menu">
                         <div className='item'>
                             Channels
@@ -94,9 +120,13 @@ function Forum() {
 
                     </div>
                 <div className="ten wide right attached column"  style={{marginTop: "100px"}}>
-                    <ThreadMessageList threadId={selectedThread} searchVal={searchVal} />                                   
+                    <ThreadMessageList threadId={selectedThread} searchVal={searchVal} mobile={false}/>                                   
                 </div>
-        </div> 
+            </div>
+
+        }
+        </>
+             
     )
 }
 
