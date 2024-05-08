@@ -45,7 +45,27 @@ export default function ThreadMessageList({threadId, searchVal, setVisible, mobi
     />
 })
 
+    // if (mobile === true) {
+    //     divStyle = {height: "100vh"}
+    // }
+    // else {
+    //     divStyle = {height: "635px"}
+    // }
+    
     return(
+        mobile == true ?
+        <>
+            <div className="ui very long scrolling inverted attached segment" id="scrollWindow">
+                <div className="ui inverted minimal comments">
+                    {threadMessages}
+                    <div ref={divRef} />
+                </div>      
+            </div>
+            <div className="ui bottom attached inverted segment" >
+                <ThreadMessageForm onAddMessage={addMessage} threadId={threadId} divRef={divRef} mobile={mobile} setVisible={setVisible}/>
+            </div>   
+        </>
+        : 
         <>
         <div className="ui resizable scrolling inverted attached segment" id="scrollWindow" style={{height: "635px"}}>
             <div className="ui inverted minimal comments">
@@ -55,8 +75,8 @@ export default function ThreadMessageList({threadId, searchVal, setVisible, mobi
         </div>
         <div className="ui bottom attached inverted segment" >
             <ThreadMessageForm onAddMessage={addMessage} threadId={threadId} divRef={divRef} mobile={mobile} setVisible={setVisible}/>
-
-        </div>      
+        </div>     
         </>
+    
     )
 }

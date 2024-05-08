@@ -71,6 +71,7 @@ function Forum() {
     return (
         <>
         {(deviceSize < 768) ?
+            <div className='ui container' style={{minHeight:"94vh", marginTop:"40px"}}>
             <MobileForum 
             threads={threads} 
             selectedThread={selectedThread} 
@@ -82,6 +83,7 @@ function Forum() {
             showAddThread={showAddThread}
             isFormVis={isFormVis} 
             /> 
+            </div>
             :
             <div className="ui grid" style={{width:"90%", margin:"auto", minHeight:"100vh", marginTop:"40px"}}>
                 <div className="six wide wide left attached column" style={{marginTop: "100px"}}>

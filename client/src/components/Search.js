@@ -18,7 +18,7 @@ function Search() {
         
         <div style={{justifyContent: 'flex-end'}} className="ui category search item">
         <form onSubmit={handleSearch} id="search">
-            <div className="ui mini transparent inverted icon input">
+            <div className="ui transparent inverted icon input" style={{maxWidth: "100px"}}>
                 <input 
                 className="prompt" 
                 type="text" 
